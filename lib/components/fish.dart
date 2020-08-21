@@ -13,51 +13,47 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   static const FISH_WIDTH = 100.0;
   static const FISH_HEIGHT = 50.0;
 
-  Position _direction = Position.empty();
   Random _random = Random();
+  Position _target;
 
   Fish() {
     width = FISH_WIDTH;
     height = FISH_HEIGHT;
 
-    _initialDirection();
   }
 
-  double _randomDirectionValue() {
-    return _random.nextBool() ? 1 : -1;
+  @override
+  void onMount() {
+    _randomTarget();
   }
 
-  void _initialDirection() {
-    _direction = Position(
-        _randomDirectionValue(),
-        _randomDirectionValue(),
+  void _randomTarget() {
+    _target = Position(
+        _random.nextDouble() * gameRef.size.width - FISH_WIDTH,
+        _random.nextDouble() * gameRef.size.height - FISH_HEIGHT,
     );
-  }
-
-  double _invert(double value) {
-    return value > 0 ? -1 : 1;
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    final _s = _direction.clone().times(NORMAL_SPEED * dt);
+    final _s = _target.clone().minus(Position(x, y)).normalize();
 
     x += _s.x;
     y += _s.y;
 
     if (
-        (_direction.x < 0 && x <= 0) ||
-        (_direction.x > 0 && x + width >= gameRef.size.width)
+        (_s.x < 0 && x.round() == _target.x.round()) ||
+        (_s.x > 0 && x.round() + width == _target.x.round())
     ) {
-      _direction.x = _invert(_direction.x);
+      _randomTarget();
     }
 
     if (
-        (_direction.y < 0 && y <= 0) ||
-        (_direction.y > 0 && y + height >= gameRef.size.height)) {
-      _direction.y = _invert(_direction.y);
+        (_s.y < 0 && y.round() == _target.y.round()) ||
+        (_s.y > 0 && y.round() + height == _target.y.round())) {
+      _randomTarget();
     }
   }
 
