@@ -1,26 +1,39 @@
 import 'package:dextraquario/fish_info.dart';
-import 'package:flame/palette.dart';
 import 'package:flame/position.dart';
+import 'package:flame/animation.dart';
+import 'package:flame/text_config.dart';
+import 'package:flame/anchor.dart';
 import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/has_game_ref.dart';
 
 import 'dart:ui';
 import 'dart:math';
 
+import '../assets.dart';
 import '../dextra_quario.dart';
 
 class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   static const NORMAL_SPEED = 50.0;
-  static const FISH_WIDTH = 100.0;
-  static const FISH_HEIGHT = 50.0;
+  static const FISH_WIDTH = 180.0;
+  static const FISH_HEIGHT = 90.0;
+
+  static final TextConfig _nameLabel = TextConfig(
+      fontFamily: 'Roboto',
+      fontSize: 12,
+      color: Color(0xFFFFFFFF),
+      textAlign: TextAlign.center,
+  );
 
   Random _random = Random();
   Position _target;
   FishInfo fishInfo;
+  Animation fishAnimation;
 
   Fish({this.fishInfo}) {
     width = FISH_WIDTH;
     height = FISH_HEIGHT;
+
+    fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
   }
 
   @override
@@ -38,8 +51,11 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   @override
   void update(double dt) {
     super.update(dt);
+    fishAnimation.update(dt);
 
     final _s = _target.clone().minus(Position(x, y)).normalize();
+
+    renderFlipX = _s.x > 0;
 
     x += _s.x;
     y += _s.y;
@@ -55,6 +71,9 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   @override
   void render(Canvas canvas) {
-    canvas.drawRect(toRect(), BasicPalette.white.paint);
+    final tp = _nameLabel.toTextPainter("${fishInfo.name}");
+    tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - 10));
+    prepareCanvas(canvas);
+    fishAnimation.getSprite().render(canvas, width: width, height: height);
   }
 }
