@@ -1,25 +1,25 @@
+import 'package:dextraquario/load_fishes.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
+import 'dart:math';
 import './dextra_quario.dart';
 import './components/fish.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final screenSize = await Flame.util.initialDimensions();
   final game = DextraQuario(screenSize);
 
-  // Mocking some fishs
-  game.add(
-      Fish()
-      ..x = 100
-      ..y = 100
-  );
+  final fishes = await LoadFishes.loadFishes();
 
-  game.add(
-      Fish()
-      ..x = 300
-      ..y = 300
-  );
+  final Random random = Random();
+
+  fishes.forEach((fishInfo) {
+    game.add(Fish(fishInfo: fishInfo)
+      ..x = random.nextDouble() * screenSize.width
+      ..y = random.nextDouble() * screenSize.height);
+  });
 
   runApp(game.widget);
 }

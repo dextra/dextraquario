@@ -1,3 +1,4 @@
+import 'package:dextraquario/fish_info.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/position.dart';
 import 'package:flame/components/component.dart';
@@ -15,11 +16,11 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   Random _random = Random();
   Position _target;
+  FishInfo fishInfo;
 
-  Fish() {
+  Fish({this.fishInfo}) {
     width = FISH_WIDTH;
     height = FISH_HEIGHT;
-
   }
 
   @override
@@ -29,8 +30,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   void _randomTarget() {
     _target = Position(
-        _random.nextDouble() * gameRef.size.width - FISH_WIDTH,
-        _random.nextDouble() * gameRef.size.height - FISH_HEIGHT,
+      _random.nextDouble() * gameRef.size.width - FISH_WIDTH,
+      _random.nextDouble() * gameRef.size.height - FISH_HEIGHT,
     );
   }
 
@@ -43,16 +44,11 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     x += _s.x;
     y += _s.y;
 
-    if (
-        (_s.x < 0 && x.round() == _target.x.round()) ||
-        (_s.x > 0 && x.round() + width == _target.x.round())
-    ) {
+    if ((_s.x < 0 && x.round() == _target.x.round()) || (_s.x > 0 && x.round() + width == _target.x.round())) {
       _randomTarget();
     }
 
-    if (
-        (_s.y < 0 && y.round() == _target.y.round()) ||
-        (_s.y > 0 && y.round() + height == _target.y.round())) {
+    if ((_s.y < 0 && y.round() == _target.y.round()) || (_s.y > 0 && y.round() + height == _target.y.round())) {
       _randomTarget();
     }
   }
