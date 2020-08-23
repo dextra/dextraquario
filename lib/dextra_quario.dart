@@ -7,5 +7,3 @@ class DextraQuario extends BaseGame {
     this.size = screenSize;
   }
 }
-
-
