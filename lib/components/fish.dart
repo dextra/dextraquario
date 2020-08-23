@@ -2,9 +2,10 @@ import 'package:dextraquario/fish_info.dart';
 import 'package:flame/position.dart';
 import 'package:flame/animation.dart';
 import 'package:flame/text_config.dart';
-import 'package:flame/anchor.dart';
 import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/has_game_ref.dart';
+import 'package:flame/components/mixins/tapable.dart';
+import 'package:dextraquario/overlays/fish_overlay.dart';
 
 import 'dart:ui';
 import 'dart:math';
@@ -12,16 +13,16 @@ import 'dart:math';
 import '../assets.dart';
 import '../dextra_quario.dart';
 
-class Fish extends PositionComponent with HasGameRef<DextraQuario> {
+class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
   static const NORMAL_SPEED = 50.0;
   static const FISH_WIDTH = 180.0;
   static const FISH_HEIGHT = 90.0;
 
   static final TextConfig _nameLabel = TextConfig(
-      fontFamily: 'Roboto',
-      fontSize: 12,
-      color: Color(0xFFFFFFFF),
-      textAlign: TextAlign.center,
+    fontFamily: 'Roboto',
+    fontSize: 12,
+    color: Color(0xFFFFFFFF),
+    textAlign: TextAlign.center,
   );
 
   Random _random = Random();
@@ -75,5 +76,15 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - 10));
     prepareCanvas(canvas);
     fishAnimation.getSprite().render(canvas, width: width, height: height);
+  }
+
+  @override
+  void onTapUp(_) {
+    gameRef.addWidgetOverlay(
+        'fishOverlay',
+        FishOverlay(
+          fishInfo: fishInfo,
+          onCloseInfo: () => gameRef.removeWidgetOverlay('fishOverlay'),
+        ));
   }
 }

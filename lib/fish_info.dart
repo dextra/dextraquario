@@ -14,12 +14,12 @@ class FishInfo {
 class FishItem {
   String name;
   String description;
-  String url;
+  String link;
 
-  FishItem({this.name, this.description, this.url});
+  FishItem({this.name, this.description, this.link});
 
   FishItem.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         description = json['description'],
-        url = json['url'];
+        link = json['link'];
 }
