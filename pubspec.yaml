@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   flame: 0.25.0
   flame_fire_atlas: 0.0.4
+  carousel_slider: ^2.2.1
 
   cupertino_icons: ^0.1.3
 

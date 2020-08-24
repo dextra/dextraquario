@@ -1,3 +1,4 @@
+import 'package:dextraquario/components/carousel.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flutter/material.dart';
 
@@ -29,31 +30,7 @@ class FishOverlay extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  color: Colors.red[300],
-                  width: 250,
-                  height: 250,
-                ),
-                Text(fishInfo.fishItems[1].getItemDescription(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    )),
-                SizedBox(height: 5),
-                Text(fishInfo.fishItems[1].description,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    )),
-                SizedBox(height: 20),
-                fishInfo.fishItems[1].link != null
-                    ? Text(fishInfo.fishItems[1].link,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ))
-                    : Text(''),
+                Carousel(items: fishInfo.fishItems),
               ],
             ),
             decoration: BoxDecoration(
