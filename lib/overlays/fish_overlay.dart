@@ -15,7 +15,7 @@ class FishOverlay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 600,
+            width: 500,
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
@@ -35,10 +35,24 @@ class FishOverlay extends StatelessWidget {
                   width: 250,
                   height: 250,
                 ),
-                Text(fishInfo.fishItems[1].name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text(fishInfo.fishItems[1].description, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(fishInfo.fishItems[1].getItemDescription(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    )),
+                SizedBox(height: 5),
+                Text(fishInfo.fishItems[1].description,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    )),
+                SizedBox(height: 20),
                 fishInfo.fishItems[1].link != null
-                    ? Text(fishInfo.fishItems[1].link, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
+                    ? Text(fishInfo.fishItems[1].link,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ))
                     : Text(''),
               ],
             ),

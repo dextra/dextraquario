@@ -5,12 +5,12 @@
       "fishColor": "red",
       "items": [
         {
-          "name": "Café com código",
+          "name": "CAFE_COM_CODIGO",
           "description": "dia x assunto y",
           "link": ""
         },
         {
-          "name": "Desafio Técnico",
+          "name": "DESAFIO_TECNICO",
           "description": "CSS battle",
           "link": "http://google.com.br"
         }
@@ -21,7 +21,7 @@
       "fishColor": "blue",
       "items": [
         {
-          "name": "Artigo no blog da Dextra",
+          "name": "ARTIGO_BLOG_DEXTRA",
           "description": "Assunto y",
           "link": ""
         }
