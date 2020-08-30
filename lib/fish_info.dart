@@ -11,6 +11,9 @@ class FishInfo {
         fishColor = json['fishColor'],
         ranking = json['ranking'],
         fishItems = json['items'].map((fishItem) => FishItem.fromJson(fishItem)).cast<FishItem>().toList();
+
+  Map<String, dynamic> toJson() =>
+      {'name': name, 'fishColor': fishColor, 'ranking': ranking, 'items': fishItems.map((item) => item.toJson()).toList()};
 }
 
 class FishItem {
@@ -24,6 +27,8 @@ class FishItem {
       : name = ItemType.values.firstWhere((e) => e.toString() == 'ItemType.${json['name']}'),
         description = json['description'],
         link = json['link'];
+
+  Map<String, dynamic> toJson() => {'name': name.toString().replaceAll('ItemType.', ''), 'description': description, 'link': link};
 
   String getItemDescription() {
     String label;
