@@ -25,16 +25,17 @@ class FishOverlay extends StatelessWidget {
                   children: [
                     Text(fishInfo.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
                     GestureDetector(
-                      child: Text('Fechar'),
+                      child: Image.asset('images/close.png'),
                       onTap: onCloseInfo,
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 CarouselItems(items: fishInfo.fishItems),
               ],
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
               color: Colors.white,
               boxShadow: [
                 BoxShadow(color: Colors.white, spreadRadius: 3),

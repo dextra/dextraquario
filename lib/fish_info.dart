@@ -31,19 +31,19 @@ class FishItem {
         label = 'Desafio Técnico';
         break;
       case ItemType.ENTREVISTA_PARTICIPACAO:
-        label = 'Desafio Técnico';
+        label = 'Apoio técnico em Entrevista';
         break;
       case ItemType.ENTREVISTA_AVALIACAO_TESTE:
-        label = 'Desafio Técnico';
+        label = 'Avaliação de código de candidato';
         break;
       case ItemType.CAFE_COM_CODIGO:
-        label = 'Desafio Técnico';
+        label = 'Café com código';
         break;
       case ItemType.CONTRIBUICAO_COMUNIDADE:
-        label = 'Desafio Técnico';
+        label = 'Contribuição para comunidade';
         break;
       case ItemType.ARTIGO_BLOG_DEXTRA:
-        label = 'Desafio Técnico';
+        label = 'Artigo no blog da Dextra';
         break;
     }
 

@@ -1,3 +1,4 @@
+import 'package:dextraquario/components/card_item.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -24,35 +25,7 @@ class _CarouselItemsState extends State<CarouselItems> {
               margin: EdgeInsets.all(5.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      color: Colors.red[300],
-                      width: 250,
-                      height: 250,
-                    ),
-                    Text(item.getItemDescription(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        )),
-                    SizedBox(height: 5),
-                    Text(item.description,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        )),
-                    SizedBox(height: 20),
-                    item.link != null
-                        ? Text(item.link,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ))
-                        : Text(''),
-                  ],
-                ),
+                child: CardItem(fishItem: item),
               ),
             ),
           ),

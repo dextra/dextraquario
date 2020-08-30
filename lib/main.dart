@@ -24,5 +24,9 @@ void main() async {
       ..y = random.nextDouble() * screenSize.height);
   });
 
-  runApp(game.widget);
+  runApp(MaterialApp(
+    home: Scaffold(
+      body: game.widget,
+    ),
+  ));
 }
