@@ -1,6 +1,7 @@
 class FishInfo {
   String name;
   String fishColor;
+  int ranking;
   List<FishItem> fishItems;
 
   FishInfo({this.name, this.fishColor, this.fishItems});
@@ -8,6 +9,7 @@ class FishInfo {
   FishInfo.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         fishColor = json['fishColor'],
+        ranking = json['ranking'],
         fishItems = json['items'].map((fishItem) => FishItem.fromJson(fishItem)).cast<FishItem>().toList();
 }
 

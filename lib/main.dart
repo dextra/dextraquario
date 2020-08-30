@@ -11,9 +11,8 @@ void main() async {
   final screenSize = await Flame.util.initialDimensions();
   await Assets.load();
 
-  final game = DextraQuario(screenSize);
-
   final fishes = await LoadFishes.loadFishes();
+  final game = DextraQuario(screenSize, fishes.length);
 
   fishes.forEach((fishInfo) {
     game.add(Fish(fishInfo: fishInfo));

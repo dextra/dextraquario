@@ -4,8 +4,7 @@ import 'package:flame/animation.dart';
 import 'package:flame/text_config.dart';
 import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/has_game_ref.dart';
-import 'package:flame/components/mixins/tapable.dart';
-import 'package:dextraquario/overlays/fish_overlay.dart';
+import 'package:flutter/animation.dart' hide Animation;
 
 import 'dart:ui';
 import 'dart:math';
@@ -13,10 +12,15 @@ import 'dart:math';
 import '../assets.dart';
 import '../dextra_quario.dart';
 
-class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
+class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   static const NORMAL_SPEED = 20.0;
   static const FISH_WIDTH = 48.0;
   static const FISH_HEIGHT = 32.0;
+
+  static final _tween = Tween<double>(
+      begin: 1.0,
+      end: 4.0,
+  );
 
   static final TextConfig _nameLabel = TextConfig(
     fontFamily: 'Roboto',
@@ -31,24 +35,27 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
   Animation fishAnimation;
 
   Fish({this.fishInfo}) {
-    width = FISH_WIDTH;
-    height = FISH_HEIGHT;
-
-    x = _random.nextDouble() * (DextraQuario.GAME_WIDTH - FISH_WIDTH);
-    y = _random.nextDouble() * (DextraQuario.GAME_HEIGHT - FISH_HEIGHT);
-
     fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
   }
 
   @override
   void onMount() {
+    final _scale = _tween.transform(
+        (gameRef.numberOfFishes - fishInfo.ranking) / gameRef.numberOfFishes,
+    );
+    width = (FISH_WIDTH * _scale).roundToDouble();
+    height = (FISH_HEIGHT * _scale).roundToDouble();
+
+    x = _random.nextDouble() * (DextraQuario.GAME_WIDTH - width);
+    y = _random.nextDouble() * (DextraQuario.GAME_HEIGHT - height);
+
     _randomTarget();
   }
 
   void _randomTarget() {
     _target = Position(
-      _random.nextDouble() * (DextraQuario.GAME_WIDTH - FISH_WIDTH),
-      _random.nextDouble() * (DextraQuario.GAME_HEIGHT - FISH_HEIGHT),
+      _random.nextDouble() * (DextraQuario.GAME_WIDTH - width),
+      _random.nextDouble() * (DextraQuario.GAME_HEIGHT - height),
     );
   }
 
@@ -57,20 +64,25 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
     super.update(dt);
     fishAnimation.update(dt);
 
-    final _s = _target.clone().minus(Position(x, y)).normalize();
+    final _dir = _target.clone().minus(Position(x, y)).normalize();
+    final _s = _dir.times(NORMAL_SPEED * dt);
 
     renderFlipX = _s.x > 0;
 
     x += _s.x;
     y += _s.y;
 
-    if ((_s.x < 0 && x.round() == _target.x.round()) || (_s.x > 0 && x.round() + width == _target.x.round())) {
+    if ((_s.x < 0 && _match(x, _target.x)) || (_s.x > 0 && _match(x + width, _target.x))) {
       _randomTarget();
     }
 
-    if ((_s.y < 0 && y.round() == _target.y.round()) || (_s.y > 0 && y.round() + height == _target.y.round())) {
+    if ((_s.y < 0 && _match(y, _target.y)) || (_s.y > 0 && _match(y + height,_target.y))) {
       _randomTarget();
     }
+  }
+
+  bool _match(double a, double b) {
+    return (a - b).abs() <= 1;
   }
 
   @override
@@ -79,16 +91,6 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
     tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - 10));
     prepareCanvas(canvas);
     fishAnimation.getSprite().render(canvas, width: width, height: height);
-  }
-
-  @override
-  void onTapUp(_) {
-    gameRef.addWidgetOverlay(
-        'fishOverlay',
-        FishOverlay(
-          fishInfo: fishInfo,
-          onCloseInfo: () => gameRef.removeWidgetOverlay('fishOverlay'),
-        ));
   }
 
   @override

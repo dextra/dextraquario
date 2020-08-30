@@ -1,4 +1,4 @@
-import 'package:flame/components/mixins/tapable.dart';
+import 'package:flame/gestures.dart';
 import 'package:flame/game.dart';
 import 'package:flame/position.dart';
 
@@ -7,16 +7,20 @@ import 'dart:math';
 
 import './components/background.dart';
 import './components/foreground.dart';
+import './components/fish.dart';
 
-class DextraQuario extends BaseGame with HasWidgetsOverlay, HasTapableComponents {
+import './overlays/fish_overlay.dart';
+
+class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
   static const GAME_WIDTH = 320;
   static const GAME_HEIGHT = 320;
 
   double _scaleFactor;
   Position _translateFactor;
 
+  int numberOfFishes;
 
-  DextraQuario(Size screenSize) {
+  DextraQuario(Size screenSize, this.numberOfFishes) {
     this.size = screenSize;
     _calcScaleFactor();
 
@@ -50,5 +54,31 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, HasTapableComponents
     canvas.translate(_translateFactor.x, _translateFactor.y);
     canvas.scale(_scaleFactor);
     super.render(canvas);
+  }
+
+  @override
+  void onTapUp(details) {
+
+    final projectedOffset = Offset(
+        (details.localPosition.dx - _translateFactor.x) / _scaleFactor,
+        (details.localPosition.dy - _translateFactor.y) / _scaleFactor,
+    );
+
+    final fish = components
+        .where((c) => c is Fish)
+        .cast<Fish>()
+        .firstWhere(
+            (o) => o.toRect().contains(projectedOffset),
+            orElse: () => null,
+        );
+
+    if (fish != null) {
+      addWidgetOverlay(
+          'fishOverlay',
+          FishOverlay(
+              fishInfo: fish.fishInfo,
+              onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
+          ));
+    }
   }
 }
