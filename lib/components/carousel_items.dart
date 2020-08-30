@@ -40,8 +40,9 @@ class _CarouselItemsState extends State<CarouselItems> {
         CarouselSlider(
           items: _getCarouselItems(widget.items),
           options: CarouselOptions(
-              height: 450,
-              enlargeCenterPage: true,
+              height: 480,
+              enlargeCenterPage: false,
+              viewportFraction: 1.0,
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;
