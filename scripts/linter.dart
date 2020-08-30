@@ -2,12 +2,16 @@ import '../lib/fish_info.dart';
 import 'read_files.dart';
 
 void main() {
-  ReadFiles.itemsByPath().values.reduce((value, element) {
-    value.addAll(element);
-    return value;
-  }).forEach((element) {
-    checkItem(element);
-  });
+  final itemsByPath = ReadFiles.itemsByPath();
+
+  if (itemsByPath.length > 0) {
+    itemsByPath.values.reduce((value, element) {
+      value.addAll(element);
+      return value;
+    }).forEach((element) {
+      checkItem(element);
+    });
+  }
 }
 
 void checkItem(item) {

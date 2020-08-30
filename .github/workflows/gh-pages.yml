@@ -19,7 +19,7 @@ jobs:
       - run: flutter config --enable-web
       - run: flutter --version
       - run: flutter pub get
-      - run: dart ./scripts/build_json_file.dart
+      - run: dart --enable-asserts ./scripts/build_json_file.dart
       - run: flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
       - run : git config user.name github-actions
       - run : git config user.email github-actions@github.com

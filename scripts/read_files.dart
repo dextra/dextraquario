@@ -8,23 +8,28 @@ class ReadFiles {
     Map<String, List<Item>> items = {};
 
     contributions.listSync(recursive: false, followLinks: false).forEach((element) {
-      final userDir = Directory(element.path);
+      if (element.path != 'contributions/.gitkeep') {
+        final userDir = Directory(element.path);
 
-      userDir.listSync(recursive: false, followLinks: false).forEach((element) {
-        final fileRaw = File(element.path).readAsStringSync();
-        final fileJson = jsonDecode(fileRaw);
+        userDir.listSync(recursive: false, followLinks: false).forEach((element) {
+          final fileRaw = File(element.path).readAsStringSync();
 
-        if (!items.containsKey(userDir.path)) {
-          items.putIfAbsent(userDir.path, () => []);
-        }
+          assert(fileRaw != null && fileRaw != '', 'Empty file');
 
-        items[userDir.path].add(Item(
-            name: fileJson['name'],
-            fishColor: fileJson['fishColor'],
-            contributionType: fileJson['contributionType'],
-            contributionDescription: fileJson['contributionDescription'],
-            contributionLinkRepository: fileJson['contributionLinkRepository']));
-      });
+          final fileJson = jsonDecode(fileRaw);
+
+          if (!items.containsKey(userDir.path)) {
+            items.putIfAbsent(userDir.path, () => []);
+          }
+
+          items[userDir.path].add(Item(
+              name: fileJson['name'],
+              fishColor: fileJson['fishColor'],
+              contributionType: fileJson['contributionType'],
+              contributionDescription: fileJson['contributionDescription'],
+              contributionLinkRepository: fileJson['contributionLinkRepository']));
+        });
+      }
     });
 
     return items;
