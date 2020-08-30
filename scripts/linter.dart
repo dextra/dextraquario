@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-import 'lib/fish_info.dart';
+import '../lib/fish_info.dart';
 
 void main() {
   final contributions = Directory('contributions');
