@@ -14,9 +14,9 @@ import '../assets.dart';
 import '../dextra_quario.dart';
 
 class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
-  static const NORMAL_SPEED = 50.0;
-  static const FISH_WIDTH = 180.0;
-  static const FISH_HEIGHT = 90.0;
+  static const NORMAL_SPEED = 20.0;
+  static const FISH_WIDTH = 48.0;
+  static const FISH_HEIGHT = 32.0;
 
   static final TextConfig _nameLabel = TextConfig(
     fontFamily: 'Roboto',
@@ -34,6 +34,9 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
     width = FISH_WIDTH;
     height = FISH_HEIGHT;
 
+    x = _random.nextDouble() * (DextraQuario.GAME_WIDTH - FISH_WIDTH);
+    y = _random.nextDouble() * (DextraQuario.GAME_HEIGHT - FISH_HEIGHT);
+
     fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
   }
 
@@ -44,8 +47,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
 
   void _randomTarget() {
     _target = Position(
-      _random.nextDouble() * gameRef.size.width - FISH_WIDTH,
-      _random.nextDouble() * gameRef.size.height - FISH_HEIGHT,
+      _random.nextDouble() * (DextraQuario.GAME_WIDTH - FISH_WIDTH),
+      _random.nextDouble() * (DextraQuario.GAME_HEIGHT - FISH_HEIGHT),
     );
   }
 
@@ -87,4 +90,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario>, Tapable {
           onCloseInfo: () => gameRef.removeWidgetOverlay('fishOverlay'),
         ));
   }
+
+  @override
+  int priority() => 2;
 }
