@@ -6,6 +6,7 @@
 Queremos incentivar a essência programadora incansável que existe dentro de cada um de vocês, premiando quem mais colaborar! :trophy:
 
 Confira todas as regras em nosso regulamento **REGULAMENTO**
+
 Se tiver qualquer dúvida, basta abrir um issue nesse mesmo repositório
 
 ## Como participar? 
