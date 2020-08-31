@@ -1,6 +1,9 @@
 import 'package:dextraquario/components/carousel_items.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flame/widgets/sprite_widget.dart';
+
+import '../assets.dart';
 
 class FishOverlay extends StatelessWidget {
   final FishInfo fishInfo;
@@ -25,7 +28,13 @@ class FishOverlay extends StatelessWidget {
                   children: [
                     Text(fishInfo.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
                     GestureDetector(
-                      child: Image.asset('images/close.png'),
+                        child: Container(
+                            width: 40,
+                            height: 40,
+                            child: SpriteWidget(
+                                sprite: Assets.ui.getSprite('close'),
+                            ),
+                        ),
                       onTap: onCloseInfo,
                     ),
                   ],
