@@ -31,6 +31,7 @@ Se tiver qualquer dúvida, basta abrir um issue nesse mesmo repositório
 3. Abrir o Pull Request 
     - Se tiver dúvidas em como abrir o Pull Request, pode consultar o passo a passo [**aqui**](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
 
+Obs.: Após cada merge de PR no Dextraquário um GH Actions faz a atualização automática dos peixinhos, devido ao cache dos browsers e do GH pages seu peixinho pode demorar um pouco para aparecer. 
 
 ### Quando a comissão mergear sua primeira requisição, você ganha um peixinho no **Dextraquário** :fish:. Você pode conferir o estado da competição por aqui https://dextra.github.io/dextraquario.
 
