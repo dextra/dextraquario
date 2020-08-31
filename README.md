@@ -5,7 +5,7 @@
 
 Queremos incentivar a essência programadora incansável que existe dentro de cada um de vocês, premiando quem mais colaborar! :trophy:
 
-Confira todas as regras em nosso regulamento **REGULAMENTO**
+Confira todas as regras em nosso [REGULAMENTO](https://drive.google.com/file/d/1km2JxZgbeSivb5_uaYCfuWdXi5sbyPV4/view?usp=sharing)
 
 Se tiver qualquer dúvida, basta abrir um issue nesse mesmo repositório
 
