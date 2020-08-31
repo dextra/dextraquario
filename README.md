@@ -29,7 +29,7 @@ Se tiver qualquer dúvida, basta abrir um issue nesse mesmo repositório
 }
 ```
 3. Abrir o Pull Request 
-    - Se tiver dúvidas em como abrir o Pull Request, pode consultar o passo a passo [**aqui**](https://docs.github.com/en/enterprise/2.15/user/articles/creating-a-pull-request-from-a-fork).
+    - Se tiver dúvidas em como abrir o Pull Request, pode consultar o passo a passo [**aqui**](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
 
 
 ### Quando a comissão mergear sua primeira requisição, você ganha um peixinho no **Dextraquário** :fish:. Você pode conferir o estado da competição por aqui https://dextra.github.io/dextraquario.
