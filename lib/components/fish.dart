@@ -18,8 +18,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   static const FISH_HEIGHT = 32.0;
 
   static final _tween = Tween<double>(
-      begin: 1.0,
-      end: 4.0,
+    begin: 1.0,
+    end: 4.0,
   );
 
   static final TextConfig _nameLabel = TextConfig(
@@ -41,7 +41,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   @override
   void onMount() {
     final _scale = _tween.transform(
-        (gameRef.numberOfFishes - fishInfo.ranking) / gameRef.numberOfFishes,
+      (gameRef.numberOfFishes - fishInfo.ranking) / gameRef.numberOfFishes,
     );
     width = (FISH_WIDTH * _scale).roundToDouble();
     height = (FISH_HEIGHT * _scale).roundToDouble();
@@ -76,7 +76,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
       _randomTarget();
     }
 
-    if ((_s.y < 0 && _match(y, _target.y)) || (_s.y > 0 && _match(y + height,_target.y))) {
+    if ((_s.y < 0 && _match(y, _target.y)) || (_s.y > 0 && _match(y + height, _target.y))) {
       _randomTarget();
     }
   }
@@ -87,7 +87,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   @override
   void render(Canvas canvas) {
-    final tp = _nameLabel.toTextPainter("${fishInfo.name}");
+    final tp = _nameLabel.toTextPainter("${fishInfo.name} (${fishInfo.fishItems.length})");
     tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - 10));
     prepareCanvas(canvas);
     fishAnimation.getSprite().render(canvas, width: width, height: height);
