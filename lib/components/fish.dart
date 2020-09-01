@@ -18,8 +18,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   static const FISH_HEIGHT = 32.0;
 
   static final _tween = Tween<double>(
-    begin: 1.0,
-    end: 4.0,
+    begin: 0.5,
+    end: 2.5,
   );
 
   static final TextConfig _nameLabel = TextConfig(
@@ -33,16 +33,15 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   Position _target;
   FishInfo fishInfo;
   Animation fishAnimation;
+  double size;
 
-  Fish({this.fishInfo}) {
+  Fish({this.fishInfo, this.size}) {
     fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
   }
 
   @override
   void onMount() {
-    final _scale = _tween.transform(
-      (gameRef.numberOfFishes - fishInfo.ranking) / gameRef.numberOfFishes,
-    );
+    final _scale = _tween.transform(size);
     width = (FISH_WIDTH * _scale).roundToDouble();
     height = (FISH_HEIGHT * _scale).roundToDouble();
 
