@@ -62,13 +62,13 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
         (details.localPosition.dy - _translateFactor.y) / _scaleFactor,
     );
 
-    final fish = components
-        .where((c) => c is Fish)
-        .cast<Fish>()
-        .firstWhere(
-            (o) => o.toRect().contains(projectedOffset),
-            orElse: () => null,
-        );
+    List<Fish> fishes() => components.where((c) => c is Fish).cast<Fish>().toList();
+
+    final fish = fishes().firstWhere(
+        (o) => o.toRect().contains(projectedOffset),
+        orElse: () => null,
+    );
+
 
     if (fish != null) {
       addWidgetOverlay(
@@ -78,10 +78,7 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
               onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
           ));
     } else {
-      components
-          .where((c) => c is Fish)
-          .cast<Fish>()
-          .forEach((f) { 
+          fishes().forEach((f) { 
               f.setTarget(Position(projectedOffset.dx, projectedOffset.dy));
           });
     }
