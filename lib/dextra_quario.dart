@@ -77,6 +77,13 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
               fishInfo: fish.fishInfo,
               onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
           ));
+    } else {
+      components
+          .where((c) => c is Fish)
+          .cast<Fish>()
+          .forEach((f) { 
+              f.setTarget(Position(projectedOffset.dx, projectedOffset.dy));
+          });
     }
   }
 }
