@@ -29,6 +29,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     textAlign: TextAlign.center,
   );
 
+  bool _runningForFood = false;
   Random _random = Random();
   Position _target;
   FishInfo fishInfo;
@@ -37,6 +38,11 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   Fish({this.fishInfo, this.size}) {
     fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
+  }
+
+  void setTarget(Position target) {
+    _target = target;
+    _runningForFood = true;
   }
 
   @override
@@ -64,7 +70,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     fishAnimation.update(dt);
 
     final _dir = _target.clone().minus(Position(x, y)).normalize();
-    final _s = _dir.times(NORMAL_SPEED * dt);
+    final _s = _dir.times((_runningForFood ? 10 : 1) * NORMAL_SPEED * dt);
 
     renderFlipX = _s.x > 0;
 
@@ -72,10 +78,17 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     y += _s.y;
 
     if ((_s.x < 0 && _match(x, _target.x)) || (_s.x > 0 && _match(x + width, _target.x))) {
+      if (_runningForFood) {
+          _runningForFood = false;
+      }
+
       _randomTarget();
     }
 
     if ((_s.y < 0 && _match(y, _target.y)) || (_s.y > 0 && _match(y + height, _target.y))) {
+      if (_runningForFood) {
+          _runningForFood = false;
+      }
       _randomTarget();
     }
   }
