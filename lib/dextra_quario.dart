@@ -18,9 +18,7 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
   double _scaleFactor;
   Position _translateFactor;
 
-  int numberOfFishes;
-
-  DextraQuario(Size screenSize, this.numberOfFishes) {
+  DextraQuario(Size screenSize) {
     this.size = screenSize;
     _calcScaleFactor();
 
