@@ -8,6 +8,7 @@ import 'dart:math';
 import './components/background.dart';
 import './components/foreground.dart';
 import './components/fish.dart';
+import './components/bubble_source.dart';
 
 import './overlays/fish_overlay.dart';
 
@@ -24,6 +25,16 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
 
     add(Background());
     add(Foreground());
+    add(
+        BubbleSource()
+        ..x = 90
+        ..y = 300
+    );
+    add(
+        BubbleSource()
+        ..x = 275
+        ..y = 290
+    );
   }
 
   void _calcScaleFactor() {
