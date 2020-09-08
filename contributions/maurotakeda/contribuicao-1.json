@@ -1,0 +1,10 @@
+{
+    "name": "Mauro Takeda",	
+    // Available colors: [BLUE, RED, GREEN, YELLOW, PINK]
+    "fishColor": "PINK", 
+    // Available contributions: [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA]
+    "contributionType": "ENTREVISTA_PARTICIPACAO", 
+    "contributionDescription": "Entrevista Java dia 01/09",
+    // If contributionType in [DESAFIO_TECNICO, CONTRIBUICAO_COMUNIDADE] 
+    "contributionLinkRepository": "" 
+  }
