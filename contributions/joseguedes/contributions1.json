@@ -1,10 +1,7 @@
 {
   "name": "José Guedes",	
-  // Available colors: [BLUE, RED, GREEN, YELLOW, PINK]
   "fishColor": "BLUE", 
-  // Available contributions: [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA]
   "contributionType": "CONTRIBUICAO_COMUNIDADE", 
-  "contributionDescription": "Atualização do mapa de conhecimentos (http://bit.ly/dextrateams) baseado no novo formulário de competências (o código está no Google Apps Script)",
-  // If contributionType in [DESAFIO_TECNICO, CONTRIBUICAO_COMUNIDADE] 
-  "contributionLinkRepository": "http://bit.ly/dextrateams" 
+  "contributionDescription": "Atualização do mapa de conhecimentos (http://bit.ly/dextrateams) baseado no novo formulário de competências",
+  "contributionLinkRepository": " O código está no Google Apps Script" 
 }
