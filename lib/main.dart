@@ -32,7 +32,12 @@ void main() async {
 
   runApp(MaterialApp(
     home: Scaffold(
-      body: game.widget,
+      body: MouseRegion(
+          child: game.widget,
+          onHover: (event) {
+            game.updateMouse(event.localPosition);
+          },
+      ),
     ),
   ));
 }

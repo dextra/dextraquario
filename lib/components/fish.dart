@@ -5,6 +5,7 @@ import 'package:flame/text_config.dart';
 import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/has_game_ref.dart';
 import 'package:flutter/animation.dart' hide Animation;
+import 'package:flutter/painting.dart';
 
 import 'dart:ui';
 import 'dart:math';
@@ -24,10 +25,20 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   static final TextConfig _nameLabel = TextConfig(
     fontFamily: 'Roboto',
+    fontSize: 6,
+    color: Color(0x44FFFFFF),
+    textAlign: TextAlign.center,
+  );
+
+  static final TextConfig _focusedNameLabel = TextConfig(
+    fontFamily: 'Roboto',
     fontSize: 12,
     color: Color(0xFFFFFFFF),
     textAlign: TextAlign.center,
   );
+
+  TextPainter _labelTp;
+  TextPainter _focusedLabelTp;
 
   bool _runningForFood = false;
   Random _random = Random();
@@ -35,9 +46,15 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   FishInfo fishInfo;
   Animation fishAnimation;
   double size;
+  bool hasFocus = false;
 
   Fish({this.fishInfo, this.size}) {
     fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
+
+    final label = "${fishInfo.name} (${fishInfo.fishItems.length})";
+    _labelTp = _nameLabel.toTextPainter(label);
+    // Flame has a little bug creating textPainter with the same text
+    _focusedLabelTp = _focusedNameLabel.toTextPainter(" $label ");
   }
 
   void setTarget(Position target) {
@@ -69,6 +86,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     super.update(dt);
     fishAnimation.update(dt);
 
+    hasFocus = gameRef.mousePos != null && toRect().contains(gameRef.mousePos);
+
     final _dir = _target.clone().minus(Position(x, y)).normalize();
     final _s = _dir.times((_runningForFood ? 10 : 1) * NORMAL_SPEED * dt);
 
@@ -99,8 +118,9 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   @override
   void render(Canvas canvas) {
-    final tp = _nameLabel.toTextPainter("${fishInfo.name} (${fishInfo.fishItems.length})");
-    tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - 10));
+    final tp = hasFocus ? _focusedLabelTp : _labelTp;
+    tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - tp.height));
+
     prepareCanvas(canvas);
     fishAnimation.getSprite().render(canvas, width: width, height: height);
   }
