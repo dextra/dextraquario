@@ -40,6 +40,7 @@ void main() async {
   });
 
   runApp(MaterialApp(
+    title: 'DextrAquario',
     home: Scaffold(
       body: MouseRegion(
           child: game.widget,
