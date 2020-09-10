@@ -2,7 +2,7 @@
 
 ### IMPORTANTE!!
 
-Caso sua contribuição seja para o time de people connection em correção de teste ou bate papo em entrevista, **NÃO** coloque o nome do candidato no seu PR aqui para o repositório, vamos manter as informações confidenciais. =)
+Caso sua contribuição seja para o time de people connection em correção de teste ou bate papo em entrevista, **NÃO** coloque o nome do candidato no seu PR aqui para o repositório, coloque somente o nome da pessoa do time de People que você apoiou. Vamos manter as informações confidenciais. =)
 
 Confira todas as regras em nosso [REGULAMENTO](https://drive.google.com/file/d/1km2JxZgbeSivb5_uaYCfuWdXi5sbyPV4/view?usp=sharing)
 
