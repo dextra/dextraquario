@@ -53,8 +53,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
     final label = "${fishInfo.name} (${fishInfo.fishItems.length})";
     _labelTp = _nameLabel.toTextPainter(label);
-    // Flame has a little bug creating textPainter with the same text
-    _focusedLabelTp = _focusedNameLabel.toTextPainter(" $label ");
+    _focusedLabelTp = _focusedNameLabel.toTextPainter(label);
   }
 
   void setTarget(Position target) {
