@@ -56,8 +56,18 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     _focusedLabelTp = _focusedNameLabel.toTextPainter(label);
   }
 
+  Position _trimTarget(Position target) {
+    final maxX = DextraQuario.GAME_WIDTH - width;
+    final maxY = DextraQuario.GAME_HEIGHT - height;
+
+    return Position(
+        max(0.0, min(maxX, target.x)),
+        max(0.0, min(maxY, target.y)),
+    );
+  }
+
   void setTarget(Position target) {
-    _target = target;
+    _target = _trimTarget(target);
     _runningForFood = true;
   }
 
