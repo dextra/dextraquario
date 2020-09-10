@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
 import 'dart:math';
+import 'dart:html';
 
 import './dextra_quario.dart';
 import './components/fish.dart';
@@ -20,6 +21,14 @@ void main() async {
       0,
       (value, current) => max(value, current.fishItems.length),
   );
+
+  window.addEventListener('visibilitychange', (Event event) {
+    if (window.document.visibilityState == 'visible') {
+      game.resumeEngine();
+    } else {
+      game.pauseEngine();
+    }
+  });
 
   fishes.forEach((fishInfo) {
     game.add(
