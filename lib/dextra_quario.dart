@@ -19,6 +19,8 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
   double _scaleFactor;
   Position _translateFactor;
 
+  Offset mousePos;
+
   DextraQuario(Size screenSize) {
     this.size = screenSize;
     _calcScaleFactor();
@@ -65,13 +67,21 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
     super.render(canvas);
   }
 
+  Offset _projectOffset(Offset offset) {
+    return Offset(
+        (offset.dx - _translateFactor.x) / _scaleFactor,
+        (offset.dy - _translateFactor.y) / _scaleFactor,
+    );
+  }
+
+  void updateMouse(Offset offset) {
+    mousePos = _projectOffset(offset);
+  }
+
   @override
   void onTapUp(details) {
 
-    final projectedOffset = Offset(
-        (details.localPosition.dx - _translateFactor.x) / _scaleFactor,
-        (details.localPosition.dy - _translateFactor.y) / _scaleFactor,
-    );
+    final projectedOffset = _projectOffset(details.localPosition);
 
     List<Fish> fishes() => components.where((c) => c is Fish).cast<Fish>().toList();
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
 import 'dart:math';
+import 'dart:html';
 
 import './dextra_quario.dart';
 import './components/fish.dart';
@@ -21,6 +22,14 @@ void main() async {
       (value, current) => max(value, current.fishItems.length),
   );
 
+  window.addEventListener('visibilitychange', (Event event) {
+    if (window.document.visibilityState == 'visible') {
+      game.resumeEngine();
+    } else {
+      game.pauseEngine();
+    }
+  });
+
   fishes.forEach((fishInfo) {
     game.add(
         Fish(
@@ -31,8 +40,14 @@ void main() async {
   });
 
   runApp(MaterialApp(
+    title: 'DextrAquario',
     home: Scaffold(
-      body: game.widget,
+      body: MouseRegion(
+          child: game.widget,
+          onHover: (event) {
+            game.updateMouse(event.localPosition);
+          },
+      ),
     ),
   ));
 }
