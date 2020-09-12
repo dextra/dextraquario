@@ -52,6 +52,9 @@ class FishItem {
       case ItemType.ARTIGO_BLOG_DEXTRA:
         label = 'Artigo no blog da Dextra';
         break;
+      case ItemType.CHAPA:
+        label = 'Chapa';
+        break;
     }
 
     return label;
@@ -65,4 +68,5 @@ enum ItemType {
   CAFE_COM_CODIGO,
   CONTRIBUICAO_COMUNIDADE,
   ARTIGO_BLOG_DEXTRA,
+  CHAPA
 }

@@ -22,7 +22,7 @@ Se tiver qualquer dúvida, basta abrir um issue nesse mesmo repositório
   "name": "Nome da pessoa",	
   // Available colors: [BLUE, RED, GREEN, YELLOW, PINK]
   "fishColor": "BLUE", 
-  // Available contributions: [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA]
+  // Available contributions: [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA, CHAPA]
   "contributionType": "CAFE_COM_CODIGO", 
   "contributionDescription": "Descrição do item com no máximo 140 caracteres",
   // If contributionType in [DESAFIO_TECNICO, CONTRIBUICAO_COMUNIDADE] 

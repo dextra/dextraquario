@@ -20,7 +20,7 @@ void checkItem(item) {
   assert(_isContributionDescriptionLengthValid(item.contributionDescription), 'Contribution description length must be shorter than 140 characters');
   assert(_isColorValid(item.fishColor), 'Fish color must be [AZUL, VERMELHO, VERDE, AMARELO, ROSA]');
   assert(_isContributionTypeValid(item.contributionType),
-      'Contribution type must be [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA]');
+      'Contribution type must be [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA, CHAPA]');
 }
 
 bool _fieldsFilled(item) {
