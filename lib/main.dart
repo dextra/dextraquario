@@ -1,4 +1,5 @@
 import 'package:dextraquario/load_fishes.dart';
+import 'package:dextraquario/widgets/ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
@@ -18,8 +19,8 @@ void main() async {
   final game = DextraQuario(screenSize);
 
   int mostContributions = fishes.fold(
-      0,
-      (value, current) => max(value, current.fishItems.length),
+    0,
+    (value, current) => max(value, current.fishItems.length),
   );
 
   window.addEventListener('visibilitychange', (Event event) {
@@ -32,22 +33,29 @@ void main() async {
 
   fishes.forEach((fishInfo) {
     game.add(
-        Fish(
-            fishInfo: fishInfo,
-            size: fishInfo.fishItems.length / mostContributions,
-        ),
+      Fish(
+        fishInfo: fishInfo,
+        size: fishInfo.fishItems.length / mostContributions,
+      ),
     );
   });
 
-  runApp(MaterialApp(
-    title: 'DextrAquario',
-    home: Scaffold(
-      body: MouseRegion(
-          child: game.widget,
-          onHover: (event) {
-            game.updateMouse(event.localPosition);
-          },
+  runApp(
+    MaterialApp(
+      title: 'DextrAquario',
+      home: Scaffold(
+        body: Stack(
+          children: [
+            MouseRegion(
+              child: game.widget,
+              onHover: (event) {
+                game.updateMouse(event.localPosition);
+              },
+            ),
+            Ranking(fishes: fishes),
+          ],
+        ),
       ),
     ),
-  ));
+  );
 }
