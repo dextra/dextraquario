@@ -7,8 +7,9 @@ import './ranking_link.dart';
 class Ranking extends StatelessWidget {
   final List<FishInfo> fishes;
   final VoidCallback onCollapse;
+  Function(FishInfo) showFishInfo;
 
-  Ranking({this.fishes, this.onCollapse});
+  Ranking({this.fishes, this.onCollapse, this.showFishInfo});
   @override
   Widget build(_) {
     return Container(
@@ -60,6 +61,7 @@ class Ranking extends StatelessWidget {
                 children: fishes
                     .map((fish) => RankingItem(
                           fish: fish,
+                          showFishInfo: showFishInfo,
                         ))
                     .toList(),
               ),

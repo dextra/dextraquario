@@ -5,6 +5,7 @@ import 'package:flame/position.dart';
 import 'dart:ui';
 import 'dart:math';
 
+import './fish_info.dart';
 import './components/background.dart';
 import './components/foreground.dart';
 import './components/fish.dart';
@@ -87,16 +88,21 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
     );
 
     if (fish != null) {
-      addWidgetOverlay(
-          'fishOverlay',
-          FishOverlay(
-            fishInfo: fish.fishInfo,
-            onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
-          ));
+      showFishInfo(fish.fishInfo);
     } else {
       fishes().forEach((f) {
         f.setTarget(Position(projectedOffset.dx, projectedOffset.dy));
       });
     }
+  }
+
+  void showFishInfo(FishInfo fishInfo) {
+    addWidgetOverlay(
+      'fishOverlay',
+      FishOverlay(
+        fishInfo: fishInfo,
+        onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
+      ),
+    );
   }
 }
