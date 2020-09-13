@@ -9,11 +9,9 @@ import '../assets.dart';
 import 'dart:ui';
 import 'dart:math';
 
-
 Random _random = Random();
 
 class Bubble {
-
   static const SPEED = 3.5;
 
   Position pos = Position.empty();
@@ -56,16 +54,13 @@ class Bubble {
 }
 
 class BubbleSource extends PositionComponent {
-
   List<Bubble> _bubbles = [];
   Timer _timer;
 
   void _emmit() {
-    _bubbles.add(
-        Bubble()
-        ..xDistance = 2
-        ..yDistance = 20
-    );
+    _bubbles.add(Bubble()
+      ..xDistance = 2
+      ..yDistance = 20);
   }
 
   BubbleSource() {
@@ -78,7 +73,6 @@ class BubbleSource extends PositionComponent {
     _timer.update(dt);
     _bubbles.removeWhere((b) => b.expired());
     _bubbles.forEach((b) => b.update(dt));
-
   }
 
   @override

@@ -26,15 +26,17 @@ class FishOverlay extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(fishInfo.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                    Text(fishInfo.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24)),
                     GestureDetector(
-                        child: Container(
-                            width: 40,
-                            height: 40,
-                            child: SpriteWidget(
-                                sprite: Assets.ui.getSprite('close'),
-                            ),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        child: SpriteWidget(
+                          sprite: Assets.ui.getSprite('close'),
                         ),
+                      ),
                       onTap: onCloseInfo,
                     ),
                   ],

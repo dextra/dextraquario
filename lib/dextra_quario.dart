@@ -27,16 +27,12 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
 
     add(Background());
     add(Foreground());
-    add(
-        BubbleSource()
-        ..x = 90
-        ..y = 300
-    );
-    add(
-        BubbleSource()
-        ..x = 275
-        ..y = 290
-    );
+    add(BubbleSource()
+      ..x = 90
+      ..y = 300);
+    add(BubbleSource()
+      ..x = 275
+      ..y = 290);
   }
 
   void _calcScaleFactor() {
@@ -48,8 +44,8 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
     final _finalHeight = _scaleFactor * GAME_HEIGHT;
 
     _translateFactor = Position(
-        size.width / 2 - _finalWidth / 2,
-        size.height / 2 - _finalHeight / 2,
+      size.width / 2 - _finalWidth / 2,
+      size.height / 2 - _finalHeight / 2,
     );
   }
 
@@ -69,8 +65,8 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
 
   Offset _projectOffset(Offset offset) {
     return Offset(
-        (offset.dx - _translateFactor.x) / _scaleFactor,
-        (offset.dy - _translateFactor.y) / _scaleFactor,
+      (offset.dx - _translateFactor.x) / _scaleFactor,
+      (offset.dy - _translateFactor.y) / _scaleFactor,
     );
   }
 
@@ -80,28 +76,27 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
 
   @override
   void onTapUp(details) {
-
     final projectedOffset = _projectOffset(details.localPosition);
 
-    List<Fish> fishes() => components.where((c) => c is Fish).cast<Fish>().toList();
+    List<Fish> fishes() =>
+        components.where((c) => c is Fish).cast<Fish>().toList();
 
     final fish = fishes().firstWhere(
-        (o) => o.toRect().contains(projectedOffset),
-        orElse: () => null,
+      (o) => o.toRect().contains(projectedOffset),
+      orElse: () => null,
     );
-
 
     if (fish != null) {
       addWidgetOverlay(
           'fishOverlay',
           FishOverlay(
-              fishInfo: fish.fishInfo,
-              onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
+            fishInfo: fish.fishInfo,
+            onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
           ));
     } else {
-          fishes().forEach((f) { 
-              f.setTarget(Position(projectedOffset.dx, projectedOffset.dy));
-          });
+      fishes().forEach((f) {
+        f.setTarget(Position(projectedOffset.dx, projectedOffset.dy));
+      });
     }
   }
 }
