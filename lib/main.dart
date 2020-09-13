@@ -9,6 +9,8 @@ import 'dart:html';
 import './dextra_quario.dart';
 import './components/fish.dart';
 import './assets.dart';
+import './widgets/ranking_link.dart';
+import 'fish_info.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,10 +54,47 @@ void main() async {
                 game.updateMouse(event.localPosition);
               },
             ),
-            Ranking(fishes: fishes),
+            RankingWidget(fishes: fishes),
           ],
         ),
       ),
     ),
   );
+}
+
+class RankingWidget extends StatefulWidget {
+  final List<FishInfo> fishes;
+
+  RankingWidget({this.fishes});
+
+  State createState() => _RankingWidgetState();
+}
+
+class _RankingWidgetState extends State<RankingWidget> {
+  bool _rankingVisible = false;
+
+  @override
+  Widget build(_) {
+    if (_rankingVisible)
+      return Ranking(
+          fishes: widget.fishes,
+          onCollapse: () {
+            setState(() {
+              _rankingVisible = false;
+            });
+          },
+      );
+
+    return Container(
+        padding: EdgeInsets.all(10),
+        child: RankingLink(
+            label: 'Ranking',
+            onClick: () {
+              setState(() {
+                _rankingVisible = true;
+              });
+            },
+        ),
+    );
+  }
 }

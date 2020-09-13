@@ -6,7 +6,6 @@ import '../assets.dart';
 import 'dart:ui';
 
 class Background extends PositionComponent {
-
   Sprite _sprite;
 
   Background() {
