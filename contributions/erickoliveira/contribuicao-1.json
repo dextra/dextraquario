@@ -1,0 +1,10 @@
+{
+    "name": "Erick de Miranda Oliveira",	
+    // Available colors: [BLUE, RED, GREEN, YELLOW, PINK]
+    "fishColor": "GREEN", 
+    // Available contributions: [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA, CHAPA]
+    "contributionType": "DESAFIO_TECNICO", 
+    "contributionDescription": "CS50-2020 Problems Week 0 - scra",
+    // If contributionType in [DESAFIO_TECNICO, CONTRIBUICAO_COMUNIDADE] 
+    "contributionLinkRepository": "https://github.com/me50/erickmob/tree/a0f1e4e3338f978c3f8e81ce18d752fdf4127b7d" 
+  }
