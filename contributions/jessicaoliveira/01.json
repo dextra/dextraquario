@@ -1,11 +1,8 @@
 {
-  "name": "Jéssica Oliveira",	
-  // Available colors: [BLUE, RED, GREEN, YELLOW, PINK]
+  "name": "Jéssica Oliveira",
   "fishColor": "GREEN", 
-  // Available contributions: [DESAFIO_TECNICO, ENTREVISTA_PARTICIPACAO, ENTREVISTA_AVALIACAO_TESTE, CAFE_COM_CODIGO, CONTRIBUICAO_COMUNIDADE, ARTIGO_BLOG_DEXTRA, CHAPA]
   "contributionType": "CHAPA", 
   "contributionDescription": "Fui Chapa do Gérman Buitrago, que entrou na Dextra no dia 01/09",
-  // If contributionType in [DESAFIO_TECNICO, CONTRIBUICAO_COMUNIDADE] 
   "contributionLinkRepository": "" 
 }
  
