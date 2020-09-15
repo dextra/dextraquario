@@ -14,4 +14,5 @@ Confira todas as regras em nosso [REGULAMENTO](https://drive.google.com/file/d/1
 
 Obrigado.
 
-[ ] marque aqui com um X se você leu este aviso!
+[ ] marque aqui com um X se você leu este comunicado!
+
