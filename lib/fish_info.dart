@@ -10,10 +10,17 @@ class FishInfo {
       : name = json['name'],
         fishColor = json['fishColor'],
         ranking = json['ranking'],
-        fishItems = json['items'].map((fishItem) => FishItem.fromJson(fishItem)).cast<FishItem>().toList();
+        fishItems = json['items']
+            .map((fishItem) => FishItem.fromJson(fishItem))
+            .cast<FishItem>()
+            .toList();
 
-  Map<String, dynamic> toJson() =>
-      {'name': name, 'fishColor': fishColor, 'ranking': ranking, 'items': fishItems.map((item) => item.toJson()).toList()};
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'fishColor': fishColor,
+        'ranking': ranking,
+        'items': fishItems.map((item) => item.toJson()).toList()
+      };
 }
 
 class FishItem {
@@ -24,11 +31,16 @@ class FishItem {
   FishItem({this.name, this.description, this.link});
 
   FishItem.fromJson(Map<String, dynamic> json)
-      : name = ItemType.values.firstWhere((e) => e.toString() == 'ItemType.${json['name']}'),
+      : name = ItemType.values
+            .firstWhere((e) => e.toString() == 'ItemType.${json['name']}'),
         description = json['description'],
         link = json['link'];
 
-  Map<String, dynamic> toJson() => {'name': name.toString().replaceAll('ItemType.', ''), 'description': description, 'link': link};
+  Map<String, dynamic> toJson() => {
+        'name': name.toString().replaceAll('ItemType.', ''),
+        'description': description,
+        'link': link
+      };
 
   String getItemDescription() {
     String label;
@@ -52,6 +64,9 @@ class FishItem {
       case ItemType.ARTIGO_BLOG_DEXTRA:
         label = 'Artigo no blog da Dextra';
         break;
+      case ItemType.CHAPA:
+        label = 'Chapa';
+        break;
     }
 
     return label;
@@ -65,4 +80,5 @@ enum ItemType {
   CAFE_COM_CODIGO,
   CONTRIBUICAO_COMUNIDADE,
   ARTIGO_BLOG_DEXTRA,
+  CHAPA
 }

@@ -7,7 +7,6 @@ import '../assets.dart';
 import 'dart:ui';
 
 class Foreground extends PositionComponent {
-
   Sprite _sprite;
   final _postion = Position(0, 294);
 
