@@ -22,7 +22,10 @@ class CustomLink extends StatelessWidget {
       },
       child: Text(
         url,
-        style: TextStyle(fontSize: 20, color: Color(0xFF639bff), decoration: TextDecoration.underline),
+        style: TextStyle(
+            fontSize: 20,
+            color: Color(0xFF639bff),
+            decoration: TextDecoration.underline),
       ),
     );
   }

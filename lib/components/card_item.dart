@@ -19,9 +19,9 @@ class CardItem extends StatelessWidget {
           width: 250,
           height: 250,
           child: SpriteWidget(
-              sprite: Assets.ui.getSprite(
-                  fishItem.name.toString().replaceAll('ItemType.', ''),
-              ),
+            sprite: Assets.ui.getSprite(
+              fishItem.name.toString().replaceAll('ItemType.', ''),
+            ),
           ),
         ),
         SizedBox(height: 20),

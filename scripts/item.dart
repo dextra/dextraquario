@@ -5,5 +5,10 @@ class Item {
   String contributionDescription;
   String contributionLinkRepository;
 
-  Item({this.name, this.fishColor, this.contributionType, this.contributionDescription, this.contributionLinkRepository});
+  Item(
+      {this.name,
+      this.fishColor,
+      this.contributionType,
+      this.contributionDescription,
+      this.contributionLinkRepository});
 }

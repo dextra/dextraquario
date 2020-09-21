@@ -10,12 +10,16 @@ void main() {
 
     final fishItems = rawItems.map((rawFishItem) {
       return FishItem(
-          name: ItemType.values.firstWhere((e) => e.toString() == 'ItemType.${rawFishItem.contributionType}'),
+          name: ItemType.values.firstWhere((e) =>
+              e.toString() == 'ItemType.${rawFishItem.contributionType}'),
           description: rawFishItem.contributionDescription,
           link: rawFishItem.contributionLinkRepository);
     }).toList();
 
-    return FishInfo(name: rawItems.last.name, fishColor: rawItems.last.fishColor.toLowerCase(), fishItems: fishItems);
+    return FishInfo(
+        name: rawItems.last.name,
+        fishColor: rawItems.last.fishColor.toLowerCase(),
+        fishItems: fishItems);
   }).toList();
 
   fishes.sort((a, b) => b.fishItems.length - a.fishItems.length);

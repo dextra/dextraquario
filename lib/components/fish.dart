@@ -61,8 +61,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     final maxY = DextraQuario.GAME_HEIGHT - height;
 
     return Position(
-        max(0.0, min(maxX, target.x)),
-        max(0.0, min(maxY, target.y)),
+      max(0.0, min(maxX, target.x)),
+      max(0.0, min(maxY, target.y)),
     );
   }
 
@@ -105,17 +105,19 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     x += _s.x;
     y += _s.y;
 
-    if ((_s.x < 0 && _match(x, _target.x)) || (_s.x > 0 && _match(x + width, _target.x))) {
+    if ((_s.x < 0 && _match(x, _target.x)) ||
+        (_s.x > 0 && _match(x + width, _target.x))) {
       if (_runningForFood) {
-          _runningForFood = false;
+        _runningForFood = false;
       }
 
       _randomTarget();
     }
 
-    if ((_s.y < 0 && _match(y, _target.y)) || (_s.y > 0 && _match(y + height, _target.y))) {
+    if ((_s.y < 0 && _match(y, _target.y)) ||
+        (_s.y > 0 && _match(y + height, _target.y))) {
       if (_runningForFood) {
-          _runningForFood = false;
+        _runningForFood = false;
       }
       _randomTarget();
     }
