@@ -2,6 +2,6 @@
     "name": "Dhellano de Castro Oliveira",
     "fishColor": "RED",
     "contributionType": "DESAFIO_TECNICO",
-    "contributionDescription": "Java Comparator - https://www.hackerrank.com/challenges/java-comparator/problem",
-    "contributionLinkRepository": "https://github.com/DheCastro/hackerrank/blob/master/JavaComparator/Solution.java"
+    "contributionDescription": "Bot do DevCamp para Telegram",
+    "contributionLinkRepository": "https://github.com/DheCastro/bot-devcamp"
 }
