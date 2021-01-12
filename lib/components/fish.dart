@@ -1,8 +1,8 @@
 import 'package:dextraquario/fish_info.dart';
-import 'package:flame/position.dart';
-import 'package:flame/animation.dart';
+import 'package:flame/components/position_component.dart';
+import 'package:flame/extensions/vector2.dart';
+import 'package:flame/sprite_animation.dart';
 import 'package:flame/text_config.dart';
-import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/has_game_ref.dart';
 import 'package:flutter/animation.dart' hide Animation;
 import 'package:flutter/painting.dart';
@@ -42,13 +42,13 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   bool _runningForFood = false;
   Random _random = Random();
-  Position _target;
+  Vector2 _target;
   FishInfo fishInfo;
-  Animation fishAnimation;
-  double size;
+  SpriteAnimation fishAnimation;
+  double fishSize;
   bool hasFocus = false;
 
-  Fish({this.fishInfo, this.size}) {
+  Fish({this.fishInfo, this.fishSize}) {
     fishAnimation = Assets.fishes.getAnimation(fishInfo.fishColor);
 
     final label = "${fishInfo.name} (${fishInfo.fishItems.length})";
@@ -56,24 +56,25 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     _focusedLabelTp = _focusedNameLabel.toTextPainter(label);
   }
 
-  Position _trimTarget(Position target) {
+  Vector2 _trimTarget(Vector2 target) {
     final maxX = DextraQuario.GAME_WIDTH - width;
     final maxY = DextraQuario.GAME_HEIGHT - height;
 
-    return Position(
+    return Vector2(
       max(0.0, min(maxX, target.x)),
       max(0.0, min(maxY, target.y)),
     );
   }
 
-  void setTarget(Position target) {
+  void setTarget(Vector2 target) {
     _target = _trimTarget(target);
     _runningForFood = true;
   }
 
   @override
   void onMount() {
-    final _scale = _tween.transform(size);
+    super.onMount();
+    final _scale = _tween.transform(fishSize);
     width = (FISH_WIDTH * _scale).roundToDouble();
     height = (FISH_HEIGHT * _scale).roundToDouble();
 
@@ -84,7 +85,7 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
   }
 
   void _randomTarget() {
-    _target = Position(
+    _target = Vector2(
       _random.nextDouble() * (DextraQuario.GAME_WIDTH - width),
       _random.nextDouble() * (DextraQuario.GAME_HEIGHT - height),
     );
@@ -97,8 +98,8 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
     hasFocus = gameRef.mousePos != null && toRect().contains(gameRef.mousePos);
 
-    final _dir = _target.clone().minus(Position(x, y)).normalize();
-    final _s = _dir.times((_runningForFood ? 10 : 1) * NORMAL_SPEED * dt);
+    final _dir = (_target.clone() - Vector2(x, y)).normalized();
+    final _s = _dir * ((_runningForFood ? 10 : 1) * NORMAL_SPEED * dt);
 
     renderFlipX = _s.x > 0;
 
@@ -132,10 +133,10 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
     final tp = hasFocus ? _focusedLabelTp : _labelTp;
     tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - tp.height));
 
-    prepareCanvas(canvas);
-    fishAnimation.getSprite().render(canvas, width: width, height: height);
+    super.render(canvas);
+    fishAnimation.getSprite().render(canvas, size: size);
   }
 
   @override
-  int priority() => 2;
+  final int priority = 2;
 }

@@ -1,8 +1,6 @@
-import 'package:flame/components/component.dart';
-import 'package:flame/sprite.dart';
-import 'package:flame/palette.dart';
-import 'package:flame/position.dart';
-import 'package:flame/time.dart';
+import 'package:flame/components/position_component.dart';
+import 'package:flame/extensions/vector2.dart';
+import 'package:flame/timer.dart';
 
 import '../assets.dart';
 
@@ -14,7 +12,7 @@ Random _random = Random();
 class Bubble {
   static const SPEED = 3.5;
 
-  Position pos = Position.empty();
+  Vector2 pos = Vector2.zero();
 
   double yDistance = 30;
   double xDistance = 0;
@@ -34,7 +32,11 @@ class Bubble {
   }
 
   void render(Canvas canvas) {
-    Assets.bubble.renderRect(canvas, Rect.fromLTWH(pos.x, pos.y, size, size));
+    Assets.bubble.render(
+      canvas,
+      position: pos,
+      size: Vector2.all(size),
+    );
   }
 
   void update(double dt) {
@@ -77,10 +79,10 @@ class BubbleSource extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    prepareCanvas(canvas);
+    super.render(canvas);
     _bubbles.forEach((b) => b.render(canvas));
   }
 
   @override
-  int priority() => 4;
+  final int priority = 4;
 }

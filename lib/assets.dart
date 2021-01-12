@@ -9,11 +9,11 @@ class Assets {
   static Sprite bubble;
 
   static Future<void> load() async {
-    fishes = await FireAtlas.fromAsset('atlases/fishes.fa');
-    background = await FireAtlas.fromAsset('atlases/background.fa');
-    ui = await FireAtlas.fromAsset('atlases/ui.fa');
+    fishes = await FireAtlas.loadAsset('atlases/fishes.fa');
+    background = await FireAtlas.loadAsset('atlases/background.fa');
+    ui = await FireAtlas.loadAsset('atlases/ui.fa');
 
     final _bubbleImage = await Flame.images.load('bubble.png');
-    bubble = Sprite.fromImage(_bubbleImage);
+    bubble = Sprite(_bubbleImage);
   }
 }

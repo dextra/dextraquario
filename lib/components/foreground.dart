@@ -1,5 +1,5 @@
-import 'package:flame/components/component.dart';
-import 'package:flame/position.dart';
+import 'package:flame/components/position_component.dart';
+import 'package:flame/extensions/vector2.dart';
 import 'package:flame/sprite.dart';
 
 import '../assets.dart';
@@ -8,7 +8,7 @@ import 'dart:ui';
 
 class Foreground extends PositionComponent {
   Sprite _sprite;
-  final _postion = Position(0, 294);
+  final _postion = Vector2(0, 294);
 
   Foreground() {
     _sprite = Assets.background.getSprite('front');
@@ -16,9 +16,10 @@ class Foreground extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    _sprite.renderPosition(canvas, _postion);
+    super.render(canvas);
+    _sprite.render(canvas, position: _postion);
   }
 
   @override
-  int priority() => 3;
+  final int priority = 3;
 }

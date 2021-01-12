@@ -1,4 +1,4 @@
-import 'package:flame/components/component.dart';
+import 'package:flame/components/position_component.dart';
 import 'package:flame/sprite.dart';
 
 import '../assets.dart';
@@ -14,9 +14,10 @@ class Background extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
+    super.render(canvas);
     _sprite.render(canvas);
   }
 
   @override
-  int priority() => 1;
+  final int priority = 1;
 }
