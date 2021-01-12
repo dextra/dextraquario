@@ -28,13 +28,15 @@ class DextraQuario extends BaseGame with TapDetector {
 
     add(Background());
     add(Foreground());
-    add(BubbleSource()
-      ..x = 90
-      ..y = 300,
+    add(
+      BubbleSource()
+        ..x = 90
+        ..y = 300,
     );
-    add(BubbleSource()
-      ..x = 275
-      ..y = 290,
+    add(
+      BubbleSource()
+        ..x = 275
+        ..y = 290,
     );
   }
 
@@ -99,6 +101,7 @@ class DextraQuario extends BaseGame with TapDetector {
   }
 
   void showFishInfo(FishInfo fishInfo) {
+    currentFishInfo = fishInfo;
     overlays.add('fishOverlay');
   }
 }

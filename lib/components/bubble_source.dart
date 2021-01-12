@@ -33,9 +33,9 @@ class Bubble {
 
   void render(Canvas canvas) {
     Assets.bubble.render(
-        canvas,
-        position: pos,
-        size: Vector2.all(size),
+      canvas,
+      position: pos,
+      size: Vector2.all(size),
     );
   }
 

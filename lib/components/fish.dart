@@ -130,10 +130,10 @@ class Fish extends PositionComponent with HasGameRef<DextraQuario> {
 
   @override
   void render(Canvas canvas) {
-    super.render(canvas);
     final tp = hasFocus ? _focusedLabelTp : _labelTp;
     tp.paint(canvas, Offset(x + width / 2 - tp.width / 2, y - tp.height));
 
+    super.render(canvas);
     fishAnimation.getSprite().render(canvas, size: size);
   }
 

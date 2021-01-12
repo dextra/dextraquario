@@ -52,18 +52,17 @@ void main() async {
           children: [
             MouseRegion(
               child: GameWidget<DextraQuario>(
-                  game: game,
-                  overlayBuilderMap: {
-                    'fishOverlay': (ctx, game) {
-                      return FishOverlay(
-                          fishInfo: game.currentFishInfo,
-                          onCloseInfo: () {
-                            game.overlays.remove('fishOverlay');
-                            game.currentFishInfo = null;
-                          }
-                      );
-                    }
-                  },
+                game: game,
+                overlayBuilderMap: {
+                  'fishOverlay': (ctx, game) {
+                    return FishOverlay(
+                        fishInfo: game.currentFishInfo,
+                        onCloseInfo: () {
+                          game.overlays.remove('fishOverlay');
+                          game.currentFishInfo = null;
+                        });
+                  }
+                },
               ),
               onHover: (event) {
                 game.updateMouse(event.localPosition);
