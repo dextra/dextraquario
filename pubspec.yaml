@@ -11,8 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: 0.25.0
-  flame_fire_atlas: 0.0.4
+  flame: 1.0.0-rc5
+  flame_fire_atlas: 1.0.0-rc1
   carousel_slider: ^2.2.1
   url_launcher: 5.5.0
 

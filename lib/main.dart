@@ -1,5 +1,6 @@
 import 'package:dextraquario/load_fishes.dart';
 import 'package:dextraquario/widgets/ranking.dart';
+import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
@@ -12,13 +13,14 @@ import './assets.dart';
 import './widgets/ranking_link.dart';
 import './fish_info.dart';
 
+import './overlays/fish_overlay.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final screenSize = await Flame.util.initialDimensions();
   await Assets.load();
 
   final fishes = await LoadFishes.loadFishes();
-  final game = DextraQuario(screenSize);
+  final game = DextraQuario();
 
   int mostContributions = fishes.fold(
     0,
@@ -37,7 +39,7 @@ void main() async {
     game.add(
       Fish(
         fishInfo: fishInfo,
-        size: fishInfo.fishItems.length / mostContributions,
+        fishSize: fishInfo.fishItems.length / mostContributions,
       ),
     );
   });
@@ -49,7 +51,20 @@ void main() async {
         body: Stack(
           children: [
             MouseRegion(
-              child: game.widget,
+              child: GameWidget<DextraQuario>(
+                  game: game,
+                  overlayBuilderMap: {
+                    'fishOverlay': (ctx, game) {
+                      return FishOverlay(
+                          fishInfo: game.currentFishInfo,
+                          onCloseInfo: () {
+                            game.overlays.remove('fishOverlay');
+                            game.currentFishInfo = null;
+                          }
+                      );
+                    }
+                  },
+              ),
               onHover: (event) {
                 game.updateMouse(event.localPosition);
               },

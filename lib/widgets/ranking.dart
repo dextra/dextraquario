@@ -7,7 +7,7 @@ import './ranking_link.dart';
 class Ranking extends StatelessWidget {
   final List<FishInfo> fishes;
   final VoidCallback onCollapse;
-  Function(FishInfo) showFishInfo;
+  final Function(FishInfo) showFishInfo;
 
   Ranking({this.fishes, this.onCollapse, this.showFishInfo});
   @override

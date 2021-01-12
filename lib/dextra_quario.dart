@@ -1,6 +1,6 @@
+import 'package:flame/extensions/vector2.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/game.dart';
-import 'package:flame/position.dart';
 
 import 'dart:ui';
 import 'dart:math';
@@ -11,48 +11,50 @@ import './components/foreground.dart';
 import './components/fish.dart';
 import './components/bubble_source.dart';
 
-import './overlays/fish_overlay.dart';
-
-class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
+class DextraQuario extends BaseGame with TapDetector {
   static const GAME_WIDTH = 320;
   static const GAME_HEIGHT = 320;
 
   double _scaleFactor;
-  Position _translateFactor;
+  Vector2 _translateFactor;
 
   Offset mousePos;
 
-  DextraQuario(Size screenSize) {
-    this.size = screenSize;
+  FishInfo currentFishInfo;
+
+  @override
+  Future<void> onLoad() async {
     _calcScaleFactor();
 
     add(Background());
     add(Foreground());
     add(BubbleSource()
       ..x = 90
-      ..y = 300);
+      ..y = 300,
+    );
     add(BubbleSource()
       ..x = 275
-      ..y = 290);
+      ..y = 290,
+    );
   }
 
   void _calcScaleFactor() {
     // We can use either width or height since the resolution is a square one
-    final _scaleRaw = (min(size.width, size.height) / GAME_WIDTH);
+    final _scaleRaw = (min(size.x, size.y) / GAME_WIDTH);
     _scaleFactor = _scaleRaw - _scaleRaw % 0.02;
 
     final _finalWidth = _scaleFactor * GAME_WIDTH;
     final _finalHeight = _scaleFactor * GAME_HEIGHT;
 
-    _translateFactor = Position(
-      size.width / 2 - _finalWidth / 2,
-      size.height / 2 - _finalHeight / 2,
+    _translateFactor = Vector2(
+      size.x / 2 - _finalWidth / 2,
+      size.y / 2 - _finalHeight / 2,
     );
   }
 
   @override
-  void resize(Size size) {
-    super.resize(size);
+  void onResize(Vector2 size) {
+    super.onResize(size);
 
     _calcScaleFactor();
   }
@@ -91,18 +93,12 @@ class DextraQuario extends BaseGame with HasWidgetsOverlay, TapDetector {
       showFishInfo(fish.fishInfo);
     } else {
       fishes().forEach((f) {
-        f.setTarget(Position(projectedOffset.dx, projectedOffset.dy));
+        f.setTarget(Vector2(projectedOffset.dx, projectedOffset.dy));
       });
     }
   }
 
   void showFishInfo(FishInfo fishInfo) {
-    addWidgetOverlay(
-      'fishOverlay',
-      FishOverlay(
-        fishInfo: fishInfo,
-        onCloseInfo: () => removeWidgetOverlay('fishOverlay'),
-      ),
-    );
+    overlays.add('fishOverlay');
   }
 }
