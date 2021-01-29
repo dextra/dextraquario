@@ -7,13 +7,13 @@ import 'package:flame/flame.dart';
 import 'dart:math';
 import 'dart:html';
 
-import './dextra_quario.dart';
-import './components/fish.dart';
-import './assets.dart';
-import './widgets/ranking_link.dart';
-import './fish_info.dart';
+import 'dextra_quario.dart';
+import 'components/fish.dart';
+import 'assets.dart';
+import 'widgets/ranking_link.dart';
+import 'fish_info.dart';
 
-import './overlays/fish_overlay.dart';
+import 'overlays/fish_overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
