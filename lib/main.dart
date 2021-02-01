@@ -1,8 +1,8 @@
 import 'package:dextraquario/load_fishes.dart';
+import 'package:dextraquario/overlays/admin_overlay.dart';
 import 'package:dextraquario/widgets/ranking.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flame/flame.dart';
 
 import 'dart:math';
 import 'dart:html';
@@ -14,6 +14,7 @@ import './widgets/ranking_link.dart';
 import './fish_info.dart';
 
 import './overlays/fish_overlay.dart';
+import 'overlays/gear_overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ void main() async {
   runApp(
     MaterialApp(
       title: 'DextrAquario',
+      theme: ThemeData(fontFamily: 'Press Start 2P'),
       home: Scaffold(
         body: Stack(
           children: [
@@ -61,8 +63,23 @@ void main() async {
                           game.overlays.remove('fishOverlay');
                           game.currentFishInfo = null;
                         });
+                  },
+                  'gearOverlay': (ctx, game) {
+                    return GearOverlay(
+                      onOpen: () {
+                        if (!game.overlays.isActive('adminOverlay')) {
+                          game.overlays.add('adminOverlay');
+                        } else {
+                          game.overlays.remove('adminOverlay');
+                        }
+                      },
+                    );
+                  },
+                  'adminOverlay': (ctx, game) {
+                    return AdminOverlay();
                   }
                 },
+                initialActiveOverlays: ['gearOverlay'],
               ),
               onHover: (event) {
                 game.updateMouse(event.localPosition);
