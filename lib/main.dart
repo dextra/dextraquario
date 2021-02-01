@@ -1,8 +1,6 @@
 import 'package:dextraquario/load_fishes.dart';
-import 'package:dextraquario/widgets/ranking.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flame/flame.dart';
 
 import 'dart:math';
 import 'dart:html';
@@ -10,10 +8,11 @@ import 'dart:html';
 import './dextra_quario.dart';
 import './components/fish.dart';
 import './assets.dart';
-import './widgets/ranking_link.dart';
-import './fish_info.dart';
 
 import './overlays/fish_overlay.dart';
+import './overlays/login_screen_overlay.dart';
+import './overlays/home_screen_overlay.dart';
+import './overlays/add_contribution_overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +46,7 @@ void main() async {
   runApp(
     MaterialApp(
       title: 'DextrAquario',
+      theme: ThemeData(fontFamily: 'Press Start 2P'),
       home: Scaffold(
         body: Stack(
           children: [
@@ -61,63 +61,29 @@ void main() async {
                           game.overlays.remove('fishOverlay');
                           game.currentFishInfo = null;
                         });
+                  },
+                  'loginScreenOverlay': (ctx, game) {
+                    return LoginScreenOverlay(onClick: () {
+                      game.overlays.remove('loginScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
+                    });
+                  },
+                  'homeScreenOverlay': (ctx, game) {
+                    return HomeScreenOverlay();
+                  },
+                  'addContributionScreenOverlay': (ctx, game) {
+                    return AddContributionScreenOverlay();
                   }
                 },
+                initialActiveOverlays: ['loginScreenOverlay'],
               ),
               onHover: (event) {
                 game.updateMouse(event.localPosition);
               },
             ),
-            RankingWidget(fishes: fishes, game: game),
           ],
         ),
       ),
     ),
   );
-}
-
-class RankingWidget extends StatefulWidget {
-  final List<FishInfo> fishes;
-  final DextraQuario game;
-
-  RankingWidget({this.fishes, this.game});
-
-  State createState() => _RankingWidgetState();
-}
-
-class _RankingWidgetState extends State<RankingWidget> {
-  bool _rankingVisible = false;
-
-  void _hide() {
-    setState(() {
-      _rankingVisible = false;
-    });
-  }
-
-  @override
-  Widget build(_) {
-    if (_rankingVisible)
-      return Ranking(
-        fishes: widget.fishes,
-        showFishInfo: (fishInfo) {
-          widget.game.showFishInfo(fishInfo);
-          _hide();
-        },
-        onCollapse: () {
-          _hide();
-        },
-      );
-
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: RankingLink(
-        label: 'Ranking',
-        onClick: () {
-          setState(() {
-            _rankingVisible = true;
-          });
-        },
-      ),
-    );
-  }
 }
