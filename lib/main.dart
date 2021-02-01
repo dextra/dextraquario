@@ -63,16 +63,16 @@ void main() async {
                         });
                   },
                   'loginScreenOverlay': (ctx, game) {
-                    return loginScreenOverlay(onClick: () {
+                    return LoginScreenOverlay(onClick: () {
                       game.overlays.remove('loginScreenOverlay');
                       game.overlays.add('homeScreenOverlay');
                     });
                   },
                   'homeScreenOverlay': (ctx, game) {
-                    return homeScreenOverlay(onClick: () {});
+                    return HomeScreenOverlay();
                   },
                   'addContributionScreenOverlay': (ctx, game) {
-                    return addContributionScreenOverlay();
+                    return AddContributionScreenOverlay();
                   }
                 },
                 initialActiveOverlays: ['loginScreenOverlay'],
