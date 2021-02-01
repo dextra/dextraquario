@@ -1,11 +1,8 @@
-import 'dart:typed_data';
 import 'dart:ui' as dui;
 
-import 'package:flame/nine_tile_box.dart';
 import 'package:flame_fire_atlas/flame_fire_atlas.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
-import 'package:flutter/services.dart';
 
 class Assets {
   static FireAtlas fishes;
@@ -22,15 +19,6 @@ class Assets {
     final _bubbleImage = await Flame.images.load('bubble.png');
     bubble = Sprite(_bubbleImage);
 
-    buttonImage = await _getImage('images/button.png');
-  }
-
-  static Future<dui.Image> _getImage(String imageAssetPath) async {
-    ByteData byteData = await rootBundle.load(imageAssetPath);
-    Uint8List uint8list = new Uint8List.view(byteData.buffer);
-    dui.Codec codec = await dui.instantiateImageCodec(uint8list);
-    dui.FrameInfo frameInfo = await codec.getNextFrame();
-
-    return frameInfo.image;
+    buttonImage = await Flame.images.load('button.png');
   }
 }
