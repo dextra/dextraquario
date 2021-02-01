@@ -43,33 +43,21 @@ class AuthProvider with ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      bool result = false;
-      String message;
       await auth.signInWithCredential(credential).then((userCredentials) async {
         _user = userCredentials.user;
-        //se for da Dextra
-        if (_user.email.endsWith("@dextra-sw.com")) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString("id", _user.uid);
-          if (!await _userServices.doesUserExist(_user.uid)) {
-            _userServices.createUser(
-                id: _user.uid, name: _user.displayName, photo: _user.photoURL);
-            await initializeUserModel();
-          } else {
-            await initializeUserModel();
-          }
-          result = true;
-          message = 'success';
-        }
-        // senao
-        else {
-          print("Usuario nao pertence ao dominio da Dextra");
-          notifyListeners();
-          result = false;
-          message = 'error';
+        var userInfo = userCredentials.additionalUserInfo;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("id", _user.uid);
+        if (!await _userServices.doesUserExist(_user.uid) &&
+            _user.email.endsWith("@dextra-sw.com")) {
+          _userServices.createUser(
+              id: _user.uid, name: _user.displayName, photo: _user.photoURL);
+          await initializeUserModel();
+        } else {
+          await initializeUserModel();
         }
       });
-      return {'success': result, 'message': message};
+      return {'success': true, 'message': 'success'};
     } catch (e) {
       notifyListeners();
       return {'success': false, 'message': e.toString()};
@@ -100,12 +88,15 @@ class AuthProvider with ChangeNotifier {
       _status = Status.Unauthenticated;
       notifyListeners();
     } else {
-      _user = firebaseUser;
-      initializeUserModel();
-      Future.delayed(const Duration(seconds: 2), () {
-        _status = Status.Authenticated;
-        notifyListeners();
-      });
+      if (firebaseUser.email.endsWith("@dextra-sw.com")) {
+        initializeUserModel();
+        Future.delayed(const Duration(seconds: 2), () {
+          _status = Status.Authenticated;
+          notifyListeners();
+        });
+      } else {
+        _status = Status.Unauthenticated;
+      }
     }
   }
 }

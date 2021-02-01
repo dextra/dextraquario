@@ -31,14 +31,17 @@ class AppScreensController extends StatelessWidget {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     switch (authProvider.status) {
       case Status.Uninitialized:
+        print('uninitialized');
         return Loading();
       case Status.Unauthenticated:
       case Status.Authenticating:
+        print('authenticating');
         return AuthenticationScreen();
       case Status.Authenticated:
         print('O usuario conseguiu entrar na plataforma');
         return Container();
       default:
+        print('default');
         return AuthenticationScreen();
     }
   }
