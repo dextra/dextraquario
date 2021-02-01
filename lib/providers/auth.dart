@@ -57,7 +57,12 @@ class AuthProvider with ChangeNotifier {
           await initializeUserModel();
         }
       });
-      return {'success': true, 'message': 'success'};
+
+      if (_user.email.endsWith("@dextra-sw.com")) {
+        return {'success': true, 'message': 'success'};
+      } else {
+        return {'success': false, 'message': 'not dextra email'};
+      }
     } catch (e) {
       notifyListeners();
       return {'success': false, 'message': e.toString()};

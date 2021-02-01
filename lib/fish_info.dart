@@ -1,3 +1,6 @@
+import 'package:dextraquario/providers/app.dart';
+import 'package:dextraquario/providers/auth.dart';
+
 class FishInfo {
   String name;
   String fishColor;

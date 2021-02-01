@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 
 import 'helper/constants.dart';
 
+import 'package:dextraquario/services/user_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialization;
@@ -29,6 +31,7 @@ class AppScreensController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserServices _userServices = UserServices();
     switch (authProvider.status) {
       case Status.Uninitialized:
         print('uninitialized');
