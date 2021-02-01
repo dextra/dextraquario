@@ -29,3 +29,8 @@ flutter:
     - assets/
     - assets/images/
     - assets/atlases/
+  
+  fonts:
+    - family: Press Start 2P
+      fonts:
+        - asset: assets/fonts/PressStart2P-Regular.ttf
