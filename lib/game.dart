@@ -70,7 +70,8 @@ class GameScreen extends StatelessWidget {
                   });
                 },
                 'homeScreenOverlay': (ctx, game) {
-                  return homeScreenOverlay(onClick: () {});
+                  //return homeScreenOverlay(onClick: () {});
+                  return homeScreenOverlay();
                 },
                 'addContributionScreenOverlay': (ctx, game) {
                   return null;
