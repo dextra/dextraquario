@@ -10,10 +10,12 @@ class AuthenticationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     final AppProvider appProvider = Provider.of<AppProvider>(context);
+
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [Colors.blueGrey, Colors.indigo])),
+        gradient: LinearGradient(colors: [Colors.blueGrey, Colors.indigo]),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
