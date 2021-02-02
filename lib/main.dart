@@ -87,6 +87,7 @@ void main() async {
                     return LoginScreenOverlay(onClick: () {
                       game.overlays.remove('loginScreenOverlay');
                       game.overlays.add('homeScreenOverlay');
+                      game.overlays.add('gearOverlay');
                     });
                   },
                   'homeScreenOverlay': (ctx, game) {
@@ -96,7 +97,7 @@ void main() async {
                     return AddContributionScreenOverlay();
                   }
                 },
-                initialActiveOverlays: ['loginScreenOverlay', 'gearOverlay'],
+                initialActiveOverlays: ['loginScreenOverlay'],
               ),
               onHover: (event) {
                 game.updateMouse(event.localPosition);
