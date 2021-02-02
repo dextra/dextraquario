@@ -52,7 +52,10 @@ class AuthProvider with ChangeNotifier {
         if (!await _userServices.doesUserExist(_user.uid) &&
             _user.email.endsWith("@dextra-sw.com")) {
           _userServices.createUser(
-              id: _user.uid, name: _user.displayName, photo: _user.photoURL);
+            id: _user.uid,
+            name: _user.displayName,
+            photo: _user.photoURL,
+          );
           await initializeUserModel();
         } else {
           await initializeUserModel();
@@ -83,10 +86,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future signOut() async {
-    auth.signOut();
+    await auth.signOut();
     _status = Status.Unauthenticated;
     notifyListeners();
-    return Future.delayed(Duration.zero);
   }
 
   _onStateChanged(User firebaseUser) async {
@@ -96,10 +98,8 @@ class AuthProvider with ChangeNotifier {
     } else {
       if (firebaseUser.email.endsWith("@dextra-sw.com")) {
         initializeUserModel();
-        Future.delayed(const Duration(seconds: 2), () {
-          _status = Status.Authenticated;
-          notifyListeners();
-        });
+        _status = Status.Authenticated;
+        notifyListeners();
       } else {
         _status = Status.Unauthenticated;
       }

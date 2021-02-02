@@ -37,16 +37,4 @@ class ContributionModel {
     _description = snapshot.data()[DESCRIPTION];
     _approval = snapshot.data()[APPROVAL];
   }
-
-  void printContribution() {
-    print('''
-contribution_id: $contribution_id
-user_id: $user_id
-date: $date
-category: $category
-contribution_link: $contribution_link
-description: $description
-approval: $approval
-    ''');
-  }
 }

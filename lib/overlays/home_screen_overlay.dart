@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class homeScreenOverlay extends StatelessWidget {
-  homeScreenOverlay();
+class HomeScreenOverlay extends StatelessWidget {
+  HomeScreenOverlay();
 
   @override
   Widget build(context) {

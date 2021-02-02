@@ -29,14 +29,4 @@ class UserModel {
     _score = snapshot.data()[SCORE];
     _admin = snapshot.data()[ADMIN];
   }
-/*
-  void printUser() {
-    print('''
-id: $id
-name: $name
-photo: $photo
-score: $score
-admin: $admin
-    ''');
-  }*/
 }

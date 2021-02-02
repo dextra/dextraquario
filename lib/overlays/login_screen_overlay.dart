@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:dextraquario/providers/auth.dart';
 import '../assets.dart';
 
-class loginScreenOverlay extends StatelessWidget {
+class LoginScreenOverlay extends StatelessWidget {
   final Function onClick;
 
-  loginScreenOverlay({this.onClick});
+  LoginScreenOverlay({this.onClick});
 
   @override
   Widget build(context) {

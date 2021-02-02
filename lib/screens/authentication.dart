@@ -4,7 +4,6 @@ import 'package:dextraquario/providers/auth.dart';
 import 'package:dextraquario/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   @override
@@ -37,7 +36,6 @@ class AuthenticationScreen extends StatelessWidget {
               Map result = await authProvider.signInWithGoogle();
               bool success = result['success'];
               String message = result['message'];
-              print(message);
 
               if (!success) {
                 ScaffoldMessenger.of(context)
@@ -45,7 +43,6 @@ class AuthenticationScreen extends StatelessWidget {
                 appProvider.changeLoading();
               } else {
                 appProvider.changeLoading();
-                print("Success aconteceu");
               }
             },
             child: Container(

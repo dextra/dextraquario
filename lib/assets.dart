@@ -3,7 +3,6 @@ import 'dart:ui' as dui;
 import 'package:flame_fire_atlas/flame_fire_atlas.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
-import 'package:flutter/services.dart';
 
 class Assets {
   static FireAtlas fishes;
