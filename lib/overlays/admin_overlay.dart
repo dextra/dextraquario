@@ -159,6 +159,7 @@ class AdminOverlay extends StatelessWidget {
                             isAlwaysShown: true,
                             controller: _scrollController,
                             child: ListView.builder(
+                                controller: _scrollController,
                                 itemCount: _pendingItems.length,
                                 itemBuilder: (ctx, index) =>
                                     _contributionItem(ctx, index)),
