@@ -101,75 +101,91 @@ class AdminOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(right: 44),
-              child: SpriteButton(
-                  onPressed: () => onClose?.call(),
-                  label: null,
-                  width: 48,
-                  height: 48,
-                  sprite: Assets.closeButton48,
-                  pressedSprite: Assets.closeButton48),
-            ),
-          ],
-        ),
-        Row(
+        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Padding(
+            padding: EdgeInsets.only(top: 44, right: 44),
+            child: SpriteButton(
+                onPressed: () => onClose?.call(),
+                label: null,
+                width: 48,
+                height: 48,
+                sprite: Assets.closeButton48,
+                pressedSprite: Assets.closeButton48),
+          ),
+        ]),
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            NineTileBox(
-              image: Assets.panelImage,
-              tileSize: 12,
-              destTileSize: 36,
-              width: 972,
-              height: 720,
-              padding: EdgeInsets.symmetric(vertical: 36),
-              child: Container(
-                padding: EdgeInsets.only(bottom: 36),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Contribuições pendentes',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                        Expanded(
-                            child: Container(
-                          width: 928,
-                          height: 624,
-                          margin: EdgeInsets.only(top: 32),
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(color: Color(0xFFC06C4C)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(2, 4),
+                      )
+                    ],
+                  ),
+                  child: NineTileBox(
+                    image: Assets.panelImage,
+                    tileSize: 12,
+                    destTileSize: 36,
+                    width: 972,
+                    height: 720,
+                    padding: EdgeInsets.symmetric(vertical: 36),
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: 36),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Contribuições pendentes',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    height: 1,
+                                    color: Colors.white),
+                              ),
+                              Expanded(
+                                  child: Container(
+                                width: 928,
+                                height: 624,
+                                margin: EdgeInsets.only(top: 32),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(color: Color(0xFFC06C4C)),
+                                  ],
+                                  border: _insetBorder(),
+                                ),
+                                child: Scrollbar(
+                                  isAlwaysShown: true,
+                                  controller: _scrollController,
+                                  child: ListView.builder(
+                                      controller: _scrollController,
+                                      itemCount: _pendingItems.length,
+                                      itemBuilder: (ctx, index) =>
+                                          _contributionItem(ctx, index)),
+                                ),
+                              )),
                             ],
-                            border: _insetBorder(),
-                          ),
-                          child: Scrollbar(
-                            isAlwaysShown: true,
-                            controller: _scrollController,
-                            child: ListView.builder(
-                                controller: _scrollController,
-                                itemCount: _pendingItems.length,
-                                itemBuilder: (ctx, index) =>
-                                    _contributionItem(ctx, index)),
-                          ),
-                        )),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),

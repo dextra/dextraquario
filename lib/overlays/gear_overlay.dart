@@ -10,7 +10,7 @@ class GearOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 30, right: 44),
+      padding: EdgeInsets.only(top: 44, right: 44),
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         GestureDetector(
           child: Container(
