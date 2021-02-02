@@ -1,14 +1,18 @@
 import 'package:dextraquario/assets.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
+import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
 
 class AdminOverlay extends StatelessWidget {
+  final Function onClose;
   final List<Contribution> _pendingItems = _mockItems();
   final ScrollController _scrollController = ScrollController();
 
-  Widget _mockBuilder(BuildContext context, int index) {
+  AdminOverlay({this.onClose});
+
+  Widget _contributionItem(BuildContext context, int index) {
     //final format = new DateFormat('dd/MM/yyyy'); // needs intl package addition
 
     return Column(
@@ -45,7 +49,7 @@ class AdminOverlay extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                Padding(
                     padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
                     child: Row(children: [
                       Expanded(
@@ -57,7 +61,31 @@ class AdminOverlay extends StatelessWidget {
                             color: Colors.white,
                             textBaseline: TextBaseline.alphabetic),
                       ))
-                    ]))
+                    ])),
+                Padding(
+                    padding: EdgeInsets.only(right: 48, bottom: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.only(right: 16),
+                            child: SpriteButton(
+                                width: 32,
+                                height: 32,
+                                onPressed: null,
+                                label: null,
+                                sprite: Assets.closeButton32,
+                                pressedSprite: Assets.closeButton32)),
+                        SpriteButton(
+                            width: 32,
+                            height: 32,
+                            onPressed: null,
+                            label: null,
+                            sprite: Assets.closeButton32,
+                            pressedSprite: Assets.closeButton32)
+                      ],
+                    ))
               ],
             )
           ],
@@ -77,6 +105,21 @@ class AdminOverlay extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: 44),
+              child: SpriteButton(
+                  onPressed: () => onClose?.call(),
+                  label: null,
+                  width: 48,
+                  height: 48,
+                  sprite: Assets.closeButton48,
+                  pressedSprite: Assets.closeButton48),
+            ),
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -118,7 +161,7 @@ class AdminOverlay extends StatelessWidget {
                             child: ListView.builder(
                                 itemCount: _pendingItems.length,
                                 itemBuilder: (ctx, index) =>
-                                    _mockBuilder(ctx, index)),
+                                    _contributionItem(ctx, index)),
                           ),
                         )),
                       ],
@@ -126,7 +169,7 @@ class AdminOverlay extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ],
@@ -199,6 +242,70 @@ List _mockItems() {
       type: ItemType.CAFE_COM_CODIGO,
       description: 'This is a mockup description.',
       link: 'https://github.com/dextra/dextraquario/pull/yournumberhere',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
+      date: DateTime(2021, DateTime.january, 1),
+    ),
+    Contribution(
+      author: 'Vinicius Levorato',
+      type: ItemType.CONTRIBUICAO_COMUNIDADE,
+      description:
+          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+      link: 'https://github.com/dextra/dextraquario/pull/35',
       date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
