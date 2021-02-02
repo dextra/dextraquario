@@ -16,7 +16,7 @@ class GearOverlay extends StatelessWidget {
           height: 48,
           child: SpriteWidget(sprite: Assets.gear),
         ),
-        onTap: onOpen,
+        onTap: () => onOpen?.call(),
       )
     ]);
   }
