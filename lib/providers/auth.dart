@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:dextraquario/helper/constants.dart';
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/user_service.dart';
+import 'package:dextraquario/helper/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,9 +46,10 @@ class AuthProvider with ChangeNotifier {
       await auth.signInWithCredential(credential).then((userCredentials) async {
         _user = userCredentials.user;
         var userInfo = userCredentials.additionalUserInfo;
-
         SharedPreferences prefs = await SharedPreferences.getInstance();
+
         await prefs.setString("id", _user.uid);
+
         if (!await _userServices.doesUserExist(_user.uid) &&
             _user.email.endsWith("@dextra-sw.com")) {
           _userServices.createUser(
@@ -56,10 +57,9 @@ class AuthProvider with ChangeNotifier {
             name: _user.displayName,
             photo: _user.photoURL,
           );
-          await initializeUserModel();
-        } else {
-          await initializeUserModel();
         }
+
+        await initializeUserModel();
       });
 
       if (_user.email.endsWith("@dextra-sw.com")) {

@@ -57,7 +57,6 @@ void main() async {
         ChangeNotifierProvider.value(value: AuthProvider.init()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
         title: 'Dextraquario',
         theme: ThemeData(
           primarySwatch: Colors.blue,
