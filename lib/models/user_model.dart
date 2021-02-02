@@ -4,7 +4,7 @@ class UserModel {
   // constantes com os nomes dos documentos no banco de dados
   static const ID = "id";
   static const NAME = "name";
-  static const PHOTO = "email";
+  static const PHOTO = "photo";
   static const SCORE = "score";
   static const ADMIN = "admin";
 
@@ -29,4 +29,14 @@ class UserModel {
     _score = snapshot.data()[SCORE];
     _admin = snapshot.data()[ADMIN];
   }
+/*
+  void printUser() {
+    print('''
+id: $id
+name: $name
+photo: $photo
+score: $score
+admin: $admin
+    ''');
+  }*/
 }
