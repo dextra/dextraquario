@@ -99,7 +99,6 @@ class LoginScreenOverlay extends StatelessWidget {
                       ])),
                 ),
                 onTap: () {
-                  print('clicked');
                   onClick();
                 },
               )
