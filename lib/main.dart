@@ -48,7 +48,8 @@ void main() async {
   runApp(
     MaterialApp(
       title: 'DextrAquario',
-      theme: ThemeData(fontFamily: 'Press Start 2P'),
+      theme: ThemeData(
+          fontFamily: 'Press Start 2P', dividerColor: Colors.transparent),
       home: Scaffold(
         body: Stack(
           children: [
