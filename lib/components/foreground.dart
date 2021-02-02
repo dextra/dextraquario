@@ -8,10 +8,10 @@ import 'dart:ui';
 
 class Foreground extends PositionComponent {
   Sprite _sprite;
-  final _postion = Vector2(0, 294);
+  final _postion = Vector2(0, 682);
 
   Foreground() {
-    _sprite = Assets.background.getSprite('front');
+    _sprite = Assets.background.getSprite('foreground');
   }
 
   @override
