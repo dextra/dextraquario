@@ -46,6 +46,7 @@ class AuthProvider with ChangeNotifier {
       await auth.signInWithCredential(credential).then((userCredentials) async {
         _user = userCredentials.user;
         var userInfo = userCredentials.additionalUserInfo;
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString("id", _user.uid);
         if (!await _userServices.doesUserExist(_user.uid) &&

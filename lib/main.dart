@@ -3,7 +3,9 @@ import 'dart:js';
 import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
 import 'package:dextraquario/screens/authentication.dart';
+import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/widgets/loading.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +38,8 @@ import './assets.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Assets.load();
+  await initialization;
+  await Firebase.initializeApp();
 
   final fishes = await LoadFishes.loadFishes();
   final game = DextraQuario();
@@ -62,7 +66,7 @@ void main() async {
   });
 
   WidgetsFlutterBinding.ensureInitialized();
-  await initialization;
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AppProvider()),
@@ -88,7 +92,7 @@ class AppScreensController extends StatelessWidget {
     UserServices userServices = UserServices();
     switch (authProvider.status) {
       case Status.Uninitialized:
-        print('uninitialized');
+        // print('uninitialized');
         return Loading();
       case Status.Unauthenticated:
       case Status.Authenticating:

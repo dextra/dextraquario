@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserServices {
   String collection = "users";
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   void createUser(
       {String id, String name, String photo, bool admin, int score}) {
