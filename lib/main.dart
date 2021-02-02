@@ -76,11 +76,6 @@ class AppScreensController extends StatelessWidget {
     switch (authProvider.status) {
       case Status.Uninitialized:
         return Loading();
-      case Status.Unauthenticated:
-      case Status.Authenticating:
-        return GameScreen(game: game);
-      case Status.Authenticated:
-        return GameScreen(game: game);
       default:
         return GameScreen(game: game);
     }
