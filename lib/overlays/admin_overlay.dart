@@ -34,15 +34,15 @@ class AdminOverlay extends StatelessWidget {
                 .replaceAll(RegExp('[0-9]+:[0-9]+:[0-9]+.[0-9]+'),
                     '') // this should be removed if using intl package
                 .trimRight(),
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 14, height: 1.2),
           ),
           title: Text(
             _pendingItems[index].getItemDescription(),
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 14, height: 1.2),
           ),
           subtitle: Text(
             _pendingItems[index].author,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 14, height: 1.5),
           ),
           children: [
             Column(
@@ -58,8 +58,7 @@ class AdminOverlay extends StatelessWidget {
                             "\n\n" +
                             _pendingItems[index].link,
                         style: TextStyle(
-                            color: Colors.white,
-                            textBaseline: TextBaseline.alphabetic),
+                            color: Colors.white, fontSize: 14, height: 1.5),
                       ))
                     ])),
                 Padding(
@@ -126,9 +125,9 @@ class AdminOverlay extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 7,
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 3,
                         offset: Offset(2, 4),
                       )
                     ],
@@ -139,49 +138,77 @@ class AdminOverlay extends StatelessWidget {
                     destTileSize: 36,
                     width: 972,
                     height: 720,
-                    padding: EdgeInsets.symmetric(vertical: 36),
-                    child: Container(
-                      padding: EdgeInsets.only(bottom: 36),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Contribuições pendentes',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    height: 1,
-                                    color: Colors.white),
+                    padding: EdgeInsets.only(top: 32, left: 18, right: 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Contribuições pendentes',
+                              style: TextStyle(
+                                  fontSize: 18, height: 1, color: Colors.white),
+                            ),
+                            Container(
+                              width: 928,
+                              height: 624,
+                              margin: EdgeInsets.only(top: 32),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(color: Color(0xFFC06C4C)),
+                                ],
+                                border: _insetBorder(),
                               ),
-                              Expanded(
-                                  child: Container(
-                                width: 928,
-                                height: 624,
-                                margin: EdgeInsets.only(top: 32),
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(color: Color(0xFFC06C4C)),
-                                  ],
-                                  border: _insetBorder(),
-                                ),
-                                child: Scrollbar(
-                                  isAlwaysShown: true,
-                                  controller: _scrollController,
-                                  child: ListView.builder(
-                                      controller: _scrollController,
-                                      itemCount: _pendingItems.length,
-                                      itemBuilder: (ctx, index) =>
-                                          _contributionItem(ctx, index)),
-                                ),
-                              )),
-                            ],
-                          )
-                        ],
-                      ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 42,
+                                    color: Color(0xFF9E5235),
+                                    child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 32, right: 54),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Contribuição',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                height: 1.2,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Data',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                height: 1.2,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  Expanded(
+                                      child: Scrollbar(
+                                    isAlwaysShown: true,
+                                    controller: _scrollController,
+                                    child: ListView.builder(
+                                        controller: _scrollController,
+                                        itemCount: _pendingItems.length,
+                                        itemBuilder: (ctx, index) =>
+                                            _contributionItem(ctx, index)),
+                                  ))
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 )
