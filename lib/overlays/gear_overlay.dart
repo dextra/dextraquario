@@ -9,15 +9,18 @@ class GearOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      GestureDetector(
-        child: Container(
-          width: 48,
-          height: 48,
-          child: SpriteWidget(sprite: Assets.gear),
-        ),
-        onTap: () => onOpen?.call(),
-      )
-    ]);
+    return Padding(
+      padding: EdgeInsets.only(top: 30, right: 44),
+      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        GestureDetector(
+          child: Container(
+            width: 48,
+            height: 48,
+            child: SpriteWidget(sprite: Assets.gear),
+          ),
+          onTap: () => onOpen?.call(),
+        )
+      ]),
+    );
   }
 }
