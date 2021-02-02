@@ -30,13 +30,13 @@ class DextraQuario extends BaseGame with TapDetector {
     add(Foreground());
     add(
       BubbleSource()
-        ..x = 90
-        ..y = 300,
+        ..x = 414
+        ..y = 819,
     );
     add(
       BubbleSource()
-        ..x = 275
-        ..y = 290,
+        ..x = 1242
+        ..y = 769,
     );
   }
 
