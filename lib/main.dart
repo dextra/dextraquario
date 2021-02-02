@@ -70,14 +70,18 @@ void main() async {
                       onOpen: () {
                         if (!game.overlays.isActive('adminOverlay')) {
                           game.overlays.add('adminOverlay');
-                        } else {
-                          game.overlays.remove('adminOverlay');
+                          game.overlays.remove('gearOverlay');
                         }
                       },
                     );
                   },
                   'adminOverlay': (ctx, game) {
-                    return AdminOverlay();
+                    return AdminOverlay(
+                      onClose: () {
+                        game.overlays.remove('adminOverlay');
+                        game.overlays.add('gearOverlay');
+                      },
+                    );
                   }
                 },
                 initialActiveOverlays: ['gearOverlay'],
