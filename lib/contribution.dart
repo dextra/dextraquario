@@ -9,7 +9,7 @@ class Contribution {
   String date;
   String description;
   String link;
-  final df = new DateFormat('dd/MM/yyyy'); // needs intl package addition
+  final df = new DateFormat('dd/MM/yyyy');
 
   Contribution(DateTime dateTime,
       {this.author, this.type, this.description, this.link}) {
