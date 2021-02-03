@@ -51,7 +51,8 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MultiProvider(
+  runApp(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AppProvider()),
         ChangeNotifierProvider.value(value: AuthProvider.init()),
@@ -65,7 +66,9 @@ void main() async {
           highlightColor: Color(0xFFA15531),
         ),
         home: AppScreensController(game: game),
-      )));               
+      ),
+    ),
+  );
 }
 
 class AppScreensController extends StatelessWidget {
