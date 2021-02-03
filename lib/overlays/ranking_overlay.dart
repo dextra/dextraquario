@@ -4,6 +4,7 @@ import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';
+import '../common.dart';
 
 class RankingOverlay extends StatelessWidget {
   final Function onClose;
@@ -12,7 +13,56 @@ class RankingOverlay extends StatelessWidget {
 
   RankingOverlay({this.onClose});
 
-  Widget _userItem(BuildContext buildContext, int index) {}
+  Widget _buildItem(BuildContext buildContext, int index) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _userItem(_users[index], index),
+        Divider(
+          color: Colors.black26,
+          indent: 20,
+          endIndent: 20,
+        ),
+      ],
+    );
+  }
+
+  Widget _userItem(UserMockup user, int index) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 68,
+        right: 54,
+      ),
+      child: ListTile(
+        leading: Text(
+          (index + 1).toString(),
+          style: CommonText.itemTitle,
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // Photo container
+            Padding(
+              padding: EdgeInsets.only(left: 16, right: 20),
+              child: Container(
+                height: 32,
+                width: 32,
+                color: Colors.grey,
+              ),
+            ),
+            Text(
+              user.name,
+              style: CommonText.itemTitle,
+            ),
+          ],
+        ),
+        trailing: Text(
+          user.score.toString(),
+          style: CommonText.itemTitle,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +125,7 @@ class RankingOverlay extends StatelessWidget {
                                         Color(CommonColors.boxInsetBackground),
                                   ),
                                 ],
-                                border: _insetBorder(),
+                                border: Common.insetBorder,
                               ),
                               child: Column(
                                 children: [
@@ -93,9 +143,13 @@ class RankingOverlay extends StatelessWidget {
                                             'Class.',
                                             style: CommonText.itemSubtitle,
                                           ),
-                                          Text(
-                                            'Nome',
-                                            style: CommonText.itemSubtitle,
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 527),
+                                            child: Text(
+                                              'Nome',
+                                              style: CommonText.itemSubtitle,
+                                            ),
                                           ),
                                           Text(
                                             'Pontuação',
@@ -105,6 +159,11 @@ class RankingOverlay extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                  Container(
+                                    color: Colors.black.withOpacity(0.25),
+                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                    child: _userItem(_users[14], 14),
+                                  ),
                                   Expanded(
                                     child: Scrollbar(
                                       isAlwaysShown: true,
@@ -113,7 +172,7 @@ class RankingOverlay extends StatelessWidget {
                                         controller: _scrollController,
                                         itemCount: _users.length,
                                         itemBuilder: (ctx, index) =>
-                                            _userItem(ctx, index),
+                                            _buildItem(ctx, index),
                                       ),
                                     ),
                                   ),
@@ -149,10 +208,10 @@ List _mockUsers() {
     UserMockup(name: 'Leonardo Paranhos', score: 6),
     UserMockup(name: 'Leandro Lima', score: 5),
     UserMockup(name: 'Leandro Lima', score: 5),
-    UserMockup(name: 'Leandro Lima', score: 5),
-    UserMockup(name: 'Leandro Lima', score: 5),
-    UserMockup(name: 'Leandro Lima', score: 5),
-    UserMockup(name: 'Mauro Takeda', score: 5),
+    UserMockup(name: 'Leandro Lima', score: 4),
+    UserMockup(name: 'Leandro Lima', score: 4),
+    UserMockup(name: 'Vinícius Levorato', score: 2),
+    UserMockup(name: 'Mauro Takeda', score: 1),
   ];
 }
 
