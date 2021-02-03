@@ -51,7 +51,8 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MultiProvider(
+  runApp(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: AppProvider()),
         ChangeNotifierProvider.value(value: AuthProvider.init()),
@@ -60,9 +61,14 @@ void main() async {
         title: 'Dextraquario',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Press Start 2P',
+          dividerColor: Colors.transparent,
+          highlightColor: Color(0xFFA15531),
         ),
         home: AppScreensController(game: game),
-      )));
+      ),
+    ),
+  );
 }
 
 class AppScreensController extends StatelessWidget {
