@@ -57,7 +57,7 @@ class RankingOverlay extends StatelessWidget {
           ],
         ),
         trailing: Text(
-          user.score.toString(),
+          '${user.score.toString()}',
           style: CommonText.itemTitle,
         ),
       ),
