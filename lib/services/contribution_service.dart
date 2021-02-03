@@ -13,19 +13,14 @@ class ContributionServices {
   /*
   CONSTANTES DO APPROVAL
   "ANALYZING" -- em analise
-  "ACCEPTED" -- aceito
+  "APPROVED" -- aceito
   "DENIED" -- negado
   */
 
-  void createContribution(
-      [String id,
-      String user_id,
-      DateTime date,
-      String description,
-      String contribution_link,
-      String category,
-      ApprovalStatus approval]) {
-    firebaseFirestore.collection(collection).doc(id).set({
+  void createContribution(String user_id, DateTime date, String description,
+      String contribution_link, String category,
+      [ApprovalStatus approval = ApprovalStatus.ANALYZING]) {
+    firebaseFirestore.collection(collection).add({
       "user_id": user_id,
       "date": date,
       "description": description,
@@ -41,15 +36,35 @@ class ContributionServices {
         return ContributionModel.fromSnapshot(doc);
       });
 
+  // Does the contribution exists
   Future<bool> doesContributionExist(String id) async => firebase
       .collection(collection)
       .doc(id)
       .get()
       .then((value) => value.exists);
 
+  // Get all contributions
   Future<List<ContributionModel>> getAll() async {
     List<ContributionModel> contributions = [];
     final data = await firebaseFirestore.collection(collection).get();
+
+    await Future.forEach(data.docs, (item) {
+      contributions.add(ContributionModel.fromSnapshot(item));
+    });
+
+    return contributions;
+  }
+
+  //Get all contributions depending on the approval
+  Future<List<ContributionModel>> getContributionsByApprovalStatus(
+      ApprovalStatus approvalStatus) async {
+    String approvalString = approvalStatus.toString().split('.').last;
+    List<ContributionModel> contributions = [];
+
+    final data = await firebaseFirestore
+        .collection(collection)
+        .where("approval", isEqualTo: approvalString)
+        .get();
 
     await Future.forEach(data.docs, (item) {
       contributions.add(ContributionModel.fromSnapshot(item));
