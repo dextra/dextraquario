@@ -6,6 +6,8 @@ import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../contribution.dart';
+
 class AdminOverlay extends StatelessWidget {
   final Function onClose;
   final List<Contribution> _pendingItems = _mockItems();
@@ -14,8 +16,6 @@ class AdminOverlay extends StatelessWidget {
   AdminOverlay({this.onClose});
 
   Widget _contributionItem(BuildContext context, int index) {
-    //final format = new DateFormat('dd/MM/yyyy'); // needs intl package addition
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -29,12 +29,7 @@ class AdminOverlay extends StatelessWidget {
             )),
           ),
           trailing: Text(
-            _pendingItems[index]
-                .date
-                .toString()
-                .replaceAll(RegExp('[0-9]+:[0-9]+:[0-9]+.[0-9]+'),
-                    '') // this should be removed if using intl package
-                .trimRight(),
+            _pendingItems[index].date.toString(),
             style: CommonText.itemTitle,
           ),
           title: Text(
@@ -51,41 +46,43 @@ class AdminOverlay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                    padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
-                    child: Row(children: [
-                      Expanded(
-                        child: Text(
-                          _pendingItems[index].description +
-                              "\n\n" +
-                              _pendingItems[index].link,
-                          style: CommonText.itemSubtitle,
-                        ),
+                  padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
+                  child: Row(children: [
+                    Expanded(
+                      child: Text(
+                        _pendingItems[index].description +
+                            "\n\n" +
+                            _pendingItems[index].link,
+                        style: CommonText.itemSubtitle,
                       ),
-                    ])),
+                    ),
+                  ]),
+                ),
                 Padding(
-                    padding: EdgeInsets.only(right: 48, bottom: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(right: 16),
-                            child: SpriteButton(
-                                width: 32,
-                                height: 32,
-                                onPressed: null,
-                                label: null,
-                                sprite: Assets.closeButton32,
-                                pressedSprite: Assets.closeButton32)),
-                        SpriteButton(
-                            width: 32,
-                            height: 32,
-                            onPressed: null,
-                            label: null,
-                            sprite: Assets.closeButton32,
-                            pressedSprite: Assets.closeButton32)
-                      ],
-                    ))
+                  padding: EdgeInsets.only(right: 48, bottom: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(right: 16),
+                          child: SpriteButton(
+                              width: 32,
+                              height: 32,
+                              onPressed: null,
+                              label: null,
+                              sprite: Assets.closeButton32,
+                              pressedSprite: Assets.closeButton32)),
+                      SpriteButton(
+                          width: 32,
+                          height: 32,
+                          onPressed: null,
+                          label: null,
+                          sprite: Assets.closeButton32,
+                          pressedSprite: Assets.closeButton32),
+                    ],
+                  ),
+                ),
               ],
             )
           ],
@@ -94,7 +91,7 @@ class AdminOverlay extends StatelessWidget {
           color: Colors.black26,
           indent: 20,
           endIndent: 20,
-        )
+        ),
       ],
     );
   }
@@ -157,8 +154,9 @@ class AdminOverlay extends StatelessWidget {
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color(
-                                          CommonColors.boxInsetBackground)),
+                                    color:
+                                        Color(CommonColors.boxInsetBackground),
+                                  ),
                                 ],
                                 border: _insetBorder(),
                               ),
@@ -191,10 +189,11 @@ class AdminOverlay extends StatelessWidget {
                                       isAlwaysShown: true,
                                       controller: _scrollController,
                                       child: ListView.builder(
-                                          controller: _scrollController,
-                                          itemCount: _pendingItems.length,
-                                          itemBuilder: (ctx, index) =>
-                                              _contributionItem(ctx, index)),
+                                        controller: _scrollController,
+                                        itemCount: _pendingItems.length,
+                                        itemBuilder: (ctx, index) =>
+                                            _contributionItem(ctx, index),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -215,48 +214,6 @@ class AdminOverlay extends StatelessWidget {
   }
 }
 
-/* Contribution class adapted from FishInfo/FishItem */
-class Contribution {
-  String author;
-  ItemType type;
-  DateTime date;
-  String description;
-  String link;
-
-  Contribution(
-      {this.author, this.type, this.description, this.link, this.date});
-
-  String getItemDescription() {
-    String label;
-
-    switch (type) {
-      case ItemType.DESAFIO_TECNICO:
-        label = 'Desafio Técnico';
-        break;
-      case ItemType.ENTREVISTA_PARTICIPACAO:
-        label = 'Apoio técnico em Entrevista';
-        break;
-      case ItemType.ENTREVISTA_AVALIACAO_TESTE:
-        label = 'Avaliação de código de candidato';
-        break;
-      case ItemType.CAFE_COM_CODIGO:
-        label = 'Café com código';
-        break;
-      case ItemType.CONTRIBUICAO_COMUNIDADE:
-        label = 'Contribuição para comunidade';
-        break;
-      case ItemType.ARTIGO_BLOG_DEXTRA:
-        label = 'Artigo no blog da Dextra';
-        break;
-      case ItemType.CHAPA:
-        label = 'Chapa';
-        break;
-    }
-
-    return label;
-  }
-}
-
 Border _insetBorder() {
   return Border(
       right: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
@@ -268,91 +225,83 @@ Border _insetBorder() {
 List _mockItems() {
   return <Contribution>[
     Contribution(
+      DateTime(2020, DateTime.september, 10),
       author: 'Erick Zanardo',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Melhoria no Dextraquario para lidar com o gerenciamento de visibilidade da janela do browser',
       link: 'https://github.com/dextra/dextraquario/pull/54',
-      date: DateTime(2020, DateTime.september, 10),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Tyemy Kuga',
       type: ItemType.CAFE_COM_CODIGO,
       description: 'This is a mockup description.',
       link: 'https://github.com/dextra/dextraquario/pull/yournumberhere',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
     Contribution(
+      DateTime(2021, DateTime.january, 1),
       author: 'Vinicius Levorato',
       type: ItemType.CONTRIBUICAO_COMUNIDADE,
       description:
           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
       link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
-    ),
-    Contribution(
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-      date: DateTime(2021, DateTime.january, 1),
     ),
   ];
 }
