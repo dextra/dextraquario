@@ -7,11 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum ApprovalStatus { APPROVED, DENIED, ANALYZING }
 
 extension ApprovalStatusExtension on ApprovalStatus {
-  String get status => _describeEnum(this).split('.').last;
-
-  String _describeEnum(Object approvalStatusEntry) {
-    return approvalStatusEntry.toString();
-  }
+  String get status => this.toString().split('.').last;
 }
 
 class ContributionServices {
