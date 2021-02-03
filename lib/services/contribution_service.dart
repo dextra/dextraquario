@@ -47,12 +47,14 @@ class ContributionServices {
         return ContributionModel.fromSnapshot(doc);
       });
 
+  // Does the contribution exists
   Future<bool> doesContributionExist(String id) async => firebase
       .collection(collection)
       .doc(id)
       .get()
       .then((value) => value.exists);
 
+  // Get all contributions
   Future<List<ContributionModel>> getAll() async {
     List<ContributionModel> contributions = [];
     final data = await firebaseFirestore.collection(collection).get();
@@ -64,7 +66,9 @@ class ContributionServices {
     return contributions;
   }
 
-  Future updateContributionApproval(String contribution_id, bool approved) async {
+  // Update the contribution approval status
+  Future updateContributionApproval(
+      String contribution_id, bool approved) async {
     String approvalStatus;
 
     if (approved) {
@@ -73,8 +77,7 @@ class ContributionServices {
       approvalStatus = ApprovalStatus.DENIED.toString().split('.').last;
     }
 
-    //update
-    firebaseFirestore.collection(collection).doc(contribution_id).set({
+    firebaseFirestore.collection(collection).doc(contribution_id).update({
       'approval': approvalStatus,
     });
   }
