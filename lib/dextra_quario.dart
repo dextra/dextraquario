@@ -12,8 +12,8 @@ import './components/fish.dart';
 import './components/bubble_source.dart';
 
 class DextraQuario extends BaseGame with TapDetector {
-  static const GAME_WIDTH = 320;
-  static const GAME_HEIGHT = 320;
+  static const GAME_WIDTH = 1440;
+  static const GAME_HEIGHT = 900;
 
   double _scaleFactor;
   Vector2 _translateFactor;
@@ -30,19 +30,19 @@ class DextraQuario extends BaseGame with TapDetector {
     add(Foreground());
     add(
       BubbleSource()
-        ..x = 90
-        ..y = 300,
+        ..x = 414
+        ..y = 819,
     );
     add(
       BubbleSource()
-        ..x = 275
-        ..y = 290,
+        ..x = 1242
+        ..y = 769,
     );
   }
 
   void _calcScaleFactor() {
     // We can use either width or height since the resolution is a square one
-    final _scaleRaw = (min(size.x, size.y) / GAME_WIDTH);
+    final _scaleRaw = (min(size.x, size.y) / (min(GAME_WIDTH, GAME_HEIGHT)));
     _scaleFactor = _scaleRaw - _scaleRaw % 0.02;
 
     final _finalWidth = _scaleFactor * GAME_WIDTH;

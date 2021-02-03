@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dextraquario/providers/app.dart';
+import 'package:provider/provider.dart';
+import 'package:dextraquario/providers/auth.dart';
 import '../assets.dart';
 
 class LoginScreenOverlay extends StatelessWidget {
@@ -12,6 +14,9 @@ class LoginScreenOverlay extends StatelessWidget {
 
   @override
   Widget build(context) {
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    final AppProvider appProvider = Provider.of<AppProvider>(context);
+    appProvider.changeLoading();
     return BackdropFilter(
       filter: ImageFilter.blur(
         sigmaX: 7,
@@ -29,11 +34,9 @@ class LoginScreenOverlay extends StatelessWidget {
                 padding: EdgeInsets.only(top: 2.0, left: 2.0),
               ),
               ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                  child: Image.asset('images/fish_green.png'),
-                ),
-              ),
+                  child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                      child: Image.asset('images/fish_green.png')))
             ],
           ),
           Container(

@@ -1,26 +1,31 @@
-import 'package:dextraquario/load_fishes.dart';
-import 'package:flame/game/game_widget.dart';
+import 'package:dextraquario/providers/app.dart';
+import 'package:dextraquario/providers/auth.dart';
+import 'package:dextraquario/widgets/loading.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:dextraquario/load_fishes.dart';
 
 import 'dart:math';
 import 'dart:html';
+
+import 'dextra_quario.dart';
+import 'components/fish.dart';
+import 'assets.dart';
+import 'game.dart';
 
 import './dextra_quario.dart';
 import './components/fish.dart';
 import './assets.dart';
 
-import './overlays/fish_overlay.dart';
-import './overlays/login_screen_overlay.dart';
-import './overlays/home_screen_overlay.dart';
-import './overlays/add_contribution_overlay.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Assets.load();
+  await Firebase.initializeApp();
 
   final fishes = await LoadFishes.loadFishes();
   final game = DextraQuario();
-
   int mostContributions = fishes.fold(
     0,
     (value, current) => max(value, current.fishItems.length),
@@ -43,47 +48,41 @@ void main() async {
     );
   });
 
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
-    MaterialApp(
-      title: 'DextrAquario',
-      theme: ThemeData(fontFamily: 'Press Start 2P'),
-      home: Scaffold(
-        body: Stack(
-          children: [
-            MouseRegion(
-              child: GameWidget<DextraQuario>(
-                game: game,
-                overlayBuilderMap: {
-                  'fishOverlay': (ctx, game) {
-                    return FishOverlay(
-                        fishInfo: game.currentFishInfo,
-                        onCloseInfo: () {
-                          game.overlays.remove('fishOverlay');
-                          game.currentFishInfo = null;
-                        });
-                  },
-                  'loginScreenOverlay': (ctx, game) {
-                    return LoginScreenOverlay(onClick: () {
-                      game.overlays.remove('loginScreenOverlay');
-                      game.overlays.add('homeScreenOverlay');
-                    });
-                  },
-                  'homeScreenOverlay': (ctx, game) {
-                    return HomeScreenOverlay();
-                  },
-                  'addContributionScreenOverlay': (ctx, game) {
-                    return AddContributionScreenOverlay();
-                  }
-                },
-                initialActiveOverlays: ['loginScreenOverlay'],
-              ),
-              onHover: (event) {
-                game.updateMouse(event.localPosition);
-              },
-            ),
-          ],
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: AppProvider()),
+        ChangeNotifierProvider.value(value: AuthProvider.init()),
+      ],
+      child: MaterialApp(
+        title: 'Dextraquario',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          fontFamily: 'Press Start 2P',
+          dividerColor: Colors.transparent,
+          highlightColor: Color(0xFFA15531),
         ),
+        home: AppScreensController(game: game),
       ),
     ),
   );
+}
+
+class AppScreensController extends StatelessWidget {
+  final DextraQuario game;
+  AppScreensController({this.game});
+
+  @override
+  Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    switch (authProvider.status) {
+      case Status.Uninitialized:
+        return Loading();
+      default:
+        return GameScreen(game: game);
+    }
+  }
 }
