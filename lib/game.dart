@@ -1,3 +1,4 @@
+import 'package:dextraquario/overlays/ranking_overlay.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -76,6 +77,13 @@ class GameScreen extends StatelessWidget {
                     onClose: () {
                       game.overlays.remove('adminOverlay');
                       game.overlays.add('gearOverlay');
+                    },
+                  );
+                },
+                'rankingOverlay': (ctx, game) {
+                  return RankingOverlay(
+                    onClose: () {
+                      game.overlays.remove('rankingOverlay');
                     },
                   );
                 },

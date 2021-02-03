@@ -5,6 +5,7 @@ class UserServices {
   String collection = "users";
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
+  // Create user
   void createUser(
       {String id, String name, String photo, bool admin = false, int score}) {
     firebaseFirestore
@@ -13,17 +14,20 @@ class UserServices {
         .set({"name": name, "photo": photo, "admin": admin, "score": score});
   }
 
+  // Get user by ID
   Future<UserModel> getUserById(String id) =>
       firebaseFirestore.collection(collection).doc(id).get().then((doc) {
         return UserModel.fromSnapshot(doc);
       });
 
+  // Does the user exists
   Future<bool> doesUserExist(String id) async => firebaseFirestore
       .collection(collection)
       .doc(id)
       .get()
       .then((value) => value.exists);
 
+  // Get all users
   Future<List<UserModel>> getAll() async =>
       firebaseFirestore.collection(collection).get().then((result) {
         List<UserModel> users = [];
