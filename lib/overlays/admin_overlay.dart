@@ -1,4 +1,5 @@
 import 'package:dextraquario/assets.dart';
+import 'package:dextraquario/common.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
@@ -34,15 +35,15 @@ class AdminOverlay extends StatelessWidget {
                 .replaceAll(RegExp('[0-9]+:[0-9]+:[0-9]+.[0-9]+'),
                     '') // this should be removed if using intl package
                 .trimRight(),
-            style: TextStyle(color: Colors.white, fontSize: 14, height: 1.2),
+            style: CommonText.itemTitle,
           ),
           title: Text(
             _pendingItems[index].getItemDescription(),
-            style: TextStyle(color: Colors.white, fontSize: 14, height: 1.2),
+            style: CommonText.itemTitle,
           ),
           subtitle: Text(
             _pendingItems[index].author,
-            style: TextStyle(color: Colors.white, fontSize: 14, height: 1.5),
+            style: CommonText.itemSubtitle,
           ),
           children: [
             Column(
@@ -53,13 +54,13 @@ class AdminOverlay extends StatelessWidget {
                     padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
                     child: Row(children: [
                       Expanded(
-                          child: Text(
-                        _pendingItems[index].description +
-                            "\n\n" +
-                            _pendingItems[index].link,
-                        style: TextStyle(
-                            color: Colors.white, fontSize: 14, height: 1.5),
-                      ))
+                        child: Text(
+                          _pendingItems[index].description +
+                              "\n\n" +
+                              _pendingItems[index].link,
+                          style: CommonText.itemSubtitle,
+                        ),
+                      ),
                     ])),
                 Padding(
                     padding: EdgeInsets.only(right: 48, bottom: 12),
@@ -129,7 +130,7 @@ class AdminOverlay extends StatelessWidget {
                         spreadRadius: 1,
                         blurRadius: 3,
                         offset: Offset(2, 4),
-                      )
+                      ),
                     ],
                   ),
                   child: NineTileBox(
@@ -147,18 +148,17 @@ class AdminOverlay extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'Contribuições pendentes',
-                              style: TextStyle(
-                                  fontSize: 18, height: 1, color: Colors.white),
-                            ),
+                            Text('Contribuições pendentes',
+                                style: CommonText.panelTitle),
                             Container(
                               width: 928,
                               height: 624,
                               margin: EdgeInsets.only(top: 32),
                               decoration: BoxDecoration(
                                 boxShadow: [
-                                  BoxShadow(color: Color(0xFFC06C4C)),
+                                  BoxShadow(
+                                      color: Color(
+                                          CommonColors.boxInsetBackground)),
                                 ],
                                 border: _insetBorder(),
                               ),
@@ -166,52 +166,46 @@ class AdminOverlay extends StatelessWidget {
                                 children: [
                                   Container(
                                     height: 42,
-                                    color: Color(0xFF9E5235),
+                                    color: Color(CommonColors.listHeader),
                                     child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 32, right: 54),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Contribuição',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                height: 1.2,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Data',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                height: 1.2,
-                                              ),
-                                            ),
-                                          ],
-                                        )),
+                                      padding:
+                                          EdgeInsets.only(left: 32, right: 54),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Contribuição',
+                                            style: CommonText.itemSubtitle,
+                                          ),
+                                          Text(
+                                            'Data',
+                                            style: CommonText.itemSubtitle,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                   Expanded(
-                                      child: Scrollbar(
-                                    isAlwaysShown: true,
-                                    controller: _scrollController,
-                                    child: ListView.builder(
-                                        controller: _scrollController,
-                                        itemCount: _pendingItems.length,
-                                        itemBuilder: (ctx, index) =>
-                                            _contributionItem(ctx, index)),
-                                  ))
+                                    child: Scrollbar(
+                                      isAlwaysShown: true,
+                                      controller: _scrollController,
+                                      child: ListView.builder(
+                                          controller: _scrollController,
+                                          itemCount: _pendingItems.length,
+                                          itemBuilder: (ctx, index) =>
+                                              _contributionItem(ctx, index)),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],
@@ -265,10 +259,10 @@ class Contribution {
 
 Border _insetBorder() {
   return Border(
-      right: BorderSide(color: Color(0x5FEFCBBA), width: 4.0),
-      bottom: BorderSide(color: Color(0x5FEFCBBA), width: 4.0),
-      left: BorderSide(color: Color(0x5A000000), width: 4.0),
-      top: BorderSide(color: Color(0x5A000000), width: 4.0));
+      right: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
+      bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
+      left: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
+      top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0));
 }
 
 List _mockItems() {
