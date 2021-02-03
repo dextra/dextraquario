@@ -34,7 +34,7 @@ class ContributionServices {
       "description": description,
       "contribution_link": contribution_link,
       "category": category,
-      "approval": approval.toString().split('.').last,
+      "approval": approval.status,
     });
   }
 
@@ -66,7 +66,7 @@ class ContributionServices {
   //Get all contributions depending on the approval
   Future<List<ContributionModel>> getContributionsByApprovalStatus(
       ApprovalStatus approvalStatus) async {
-    String approvalString = approvalStatus.toString().split('.').last;
+    String approvalString = approvalStatus.status;
     List<ContributionModel> contributions = [];
 
     final data = await firebaseFirestore
