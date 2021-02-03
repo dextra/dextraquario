@@ -15,7 +15,6 @@ import 'components/fish.dart';
 import 'assets.dart';
 import 'game.dart';
 
-import 'package:dextraquario/services/user_service.dart';
 import './dextra_quario.dart';
 import './components/fish.dart';
 import './assets.dart';

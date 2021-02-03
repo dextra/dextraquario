@@ -8,12 +8,14 @@ import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
 import 'package:provider/provider.dart';
 
+import 'overlays/admin_overlay.dart';
 import 'overlays/fish_overlay.dart';
 import './dextra_quario.dart';
 
 import './overlays/fish_overlay.dart';
 import './overlays/login_screen_overlay.dart';
 import './overlays/home_screen_overlay.dart';
+import 'overlays/gear_overlay.dart';
 
 class GameScreen extends StatelessWidget {
   final DextraQuario game;
@@ -52,11 +54,30 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                       game.overlays.remove('LoginScreenOverlay');
                       game.overlays.add('HomeScreenOverlay');
+                      game.overlays.add('gearOverlay');
                     }
                   });
                 },
                 'HomeScreenOverlay': (ctx, game) {
                   return HomeScreenOverlay();
+                },
+                'gearOverlay': (ctx, game) {
+                  return GearOverlay(
+                    onOpen: () {
+                      if (!game.overlays.isActive('adminOverlay')) {
+                        game.overlays.add('adminOverlay');
+                        game.overlays.remove('gearOverlay');
+                      }
+                    },
+                  );
+                },
+                'adminOverlay': (ctx, game) {
+                  return AdminOverlay(
+                    onClose: () {
+                      game.overlays.remove('adminOverlay');
+                      game.overlays.add('gearOverlay');
+                    },
+                  );
                 },
                 'addContributionScreenOverlay': (ctx, game) {
                   return null;
