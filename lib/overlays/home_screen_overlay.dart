@@ -25,14 +25,32 @@ class HomeScreenOverlay extends StatelessWidget {
                         children: [
                           Image.asset('images/ranking_left_pannel72px.png'),
                           Container(
-                            padding: EdgeInsets.only(top: 14, left: 27),
+                            padding: EdgeInsets.only(top: 14, left: 28),
                             child: Image.asset('images/silver_medal.png'),
                           ),
                         ],
                       ),
-                      Container(
-                        child:
-                            Image.asset('images/ranking_center_panel72px.png'),
+                      Stack(
+                        children: [
+                          Image.asset('images/ranking_center_panel72px.png'),
+                          Container(
+                            padding: EdgeInsets.only(top: 23),
+                            child: Text(
+                              'Marcio Souza',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 48,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                      blurRadius: 0,
+                                      offset: Offset(4.0, 4.0),
+                                      color: Color.fromARGB(255, 0, 0, 0))
+                                ],
+                              ),
+                            ),
+                            transform: Matrix4.translationValues(0, -12, 0),
+                          ),
+                        ],
                       ),
                       Container(
                         child:
