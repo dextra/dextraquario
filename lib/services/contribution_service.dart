@@ -6,6 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum ApprovalStatus { APPROVED, DENIED, ANALYZING }
 
+extension ApprovalStatusExtension on ApprovalStatus {
+  String get status => this.toString().split('.').last;
+}
+
 class ContributionServices {
   String collection = "contributions";
   FirebaseFirestore firebase = FirebaseFirestore.instance;
@@ -13,25 +17,20 @@ class ContributionServices {
   /*
   CONSTANTES DO APPROVAL
   "ANALYZING" -- em analise
-  "ACCEPTED" -- aceito
+  "APPROVED" -- aceito
   "DENIED" -- negado
   */
 
-  void createContribution(
-      [String id,
-      String user_id,
-      DateTime date,
-      String description,
-      String contribution_link,
-      String category,
-      ApprovalStatus approval]) {
-    firebaseFirestore.collection(collection).doc(id).set({
+  void createContribution(String user_id, DateTime date, String description,
+      String contribution_link, String category,
+      [ApprovalStatus approval = ApprovalStatus.ANALYZING]) {
+    firebaseFirestore.collection(collection).add({
       "user_id": user_id,
       "date": date,
       "description": description,
       "contribution_link": contribution_link,
       "category": category,
-      "approval": approval.toString().split('.').last,
+      "approval": approval.status,
     });
   }
 
@@ -58,6 +57,24 @@ class ContributionServices {
   Future<List<ContributionModel>> getAll() async {
     List<ContributionModel> contributions = [];
     final data = await firebaseFirestore.collection(collection).get();
+
+    await Future.forEach(data.docs, (item) {
+      contributions.add(ContributionModel.fromSnapshot(item));
+    });
+
+    return contributions;
+  }
+
+  //Get all contributions depending on the approval
+  Future<List<ContributionModel>> getContributionsByApprovalStatus(
+      ApprovalStatus approvalStatus) async {
+    String approvalString = approvalStatus.status;
+    List<ContributionModel> contributions = [];
+
+    final data = await firebaseFirestore
+        .collection(collection)
+        .where("approval", isEqualTo: approvalString)
+        .get();
 
     await Future.forEach(data.docs, (item) {
       contributions.add(ContributionModel.fromSnapshot(item));

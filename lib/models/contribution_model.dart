@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ContributionModel {
   // constantes com os nomes dos documentos no banco de dados
-  static const CONTRIBUTION_ID = "contribution_id";
   static const USER_ID = "user_id";
   static const DATE = "date";
   static const CATEGORY = "category";
@@ -12,7 +11,7 @@ class ContributionModel {
 
   String _contributionid;
   String _userid;
-  DateTime _date;
+  Timestamp _date;
   String _category;
   String _link;
   String _description;
@@ -21,7 +20,7 @@ class ContributionModel {
   //  getters
   String get contribution_id => _contributionid;
   String get user_id => _userid;
-  DateTime get date => _date;
+  DateTime get date => _date.toDate();
   String get category => _category;
   String get contribution_link => _link;
   String get description => _description;
@@ -29,7 +28,7 @@ class ContributionModel {
 
   // GET
   ContributionModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _contributionid = snapshot.data()[CONTRIBUTION_ID];
+    _contributionid = snapshot.id;
     _userid = snapshot.data()[USER_ID];
     _date = snapshot.data()[DATE];
     _category = snapshot.data()[CATEGORY];
