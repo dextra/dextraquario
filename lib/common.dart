@@ -19,3 +19,13 @@ class CommonText {
   static TextStyle itemSubtitle =
       TextStyle(color: Colors.white, fontSize: 14, height: 1.5);
 }
+
+class Common {
+  Common._();
+
+  static Border insetBorder = Border(
+      right: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
+      bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
+      left: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
+      top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0));
+}

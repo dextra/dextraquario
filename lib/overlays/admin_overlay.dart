@@ -158,7 +158,7 @@ class AdminOverlay extends StatelessWidget {
                                         Color(CommonColors.boxInsetBackground),
                                   ),
                                 ],
-                                border: _insetBorder(),
+                                border: Common.insetBorder,
                               ),
                               child: Column(
                                 children: [
@@ -212,14 +212,6 @@ class AdminOverlay extends StatelessWidget {
       ],
     );
   }
-}
-
-Border _insetBorder() {
-  return Border(
-      right: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
-      bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
-      left: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
-      top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0));
 }
 
 List _mockItems() {
