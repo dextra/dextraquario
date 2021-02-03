@@ -60,9 +60,12 @@ void main() async {
         title: 'Dextraquario',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Press Start 2P',
+          dividerColor: Colors.transparent,
+          highlightColor: Color(0xFFA15531),
         ),
         home: AppScreensController(game: game),
-      )));
+      )));               
 }
 
 class AppScreensController extends StatelessWidget {
