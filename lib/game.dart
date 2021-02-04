@@ -90,7 +90,10 @@ class GameScreen extends StatelessWidget {
                 },
                 'addContributionScreenOverlay': (ctx, game) {
                   return AddContributionScreenOverlay(
-                    onClick: () {},
+                    onClick: () {
+                      game.overlays.remove('addContributionScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
+                    },
                   );
                 }
               },
