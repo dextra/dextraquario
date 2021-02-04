@@ -45,7 +45,6 @@ class AuthProvider with ChangeNotifier {
       );
       await auth.signInWithCredential(credential).then((userCredentials) async {
         _user = userCredentials.user;
-        var userInfo = userCredentials.additionalUserInfo;
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
         await prefs.setString("id", _user.uid);
@@ -53,9 +52,9 @@ class AuthProvider with ChangeNotifier {
         if (!await _userServices.doesUserExist(_user.uid) &&
             _user.email.endsWith("@dextra-sw.com")) {
           _userServices.createUser(
-            id: _user.uid,
-            name: _user.displayName,
-            photo: _user.photoURL,
+            _user.uid,
+            _user.displayName,
+            _user.photoURL,
           );
         }
 
