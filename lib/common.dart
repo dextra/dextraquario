@@ -35,7 +35,8 @@ class Common {
     top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
   );
 
-  static Widget contributionItem(Contribution contribution, int index) {
+  static Widget contributionItem(Contribution contribution, int index,
+      {bool canApprove = true}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -57,10 +58,12 @@ class Common {
             contribution.getItemDescription(),
             style: CommonText.itemTitle,
           ),
-          subtitle: Text(
-            contribution.author,
-            style: CommonText.itemSubtitle,
-          ),
+          subtitle: canApprove
+              ? Text(
+                  contribution.author,
+                  style: CommonText.itemSubtitle,
+                )
+              : null,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -77,32 +80,34 @@ class Common {
                     ),
                   ]),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 48, bottom: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 16),
-                        child: SpriteButton(
-                            width: 32,
-                            height: 32,
-                            onPressed: null,
-                            label: null,
-                            sprite: Assets.closeButton32,
-                            pressedSprite: Assets.closeButton32),
-                      ),
-                      SpriteButton(
-                          width: 32,
-                          height: 32,
-                          onPressed: null,
-                          label: null,
-                          sprite: Assets.closeButton32,
-                          pressedSprite: Assets.closeButton32),
-                    ],
-                  ),
-                ),
+                canApprove
+                    ? Padding(
+                        padding: EdgeInsets.only(right: 48, bottom: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 16),
+                              child: SpriteButton(
+                                  width: 32,
+                                  height: 32,
+                                  onPressed: null,
+                                  label: null,
+                                  sprite: Assets.closeButton32,
+                                  pressedSprite: Assets.closeButton32),
+                            ),
+                            SpriteButton(
+                                width: 32,
+                                height: 32,
+                                onPressed: null,
+                                label: null,
+                                sprite: Assets.closeButton32,
+                                pressedSprite: Assets.closeButton32),
+                          ],
+                        ),
+                      )
+                    : Center()
               ],
             )
           ],
