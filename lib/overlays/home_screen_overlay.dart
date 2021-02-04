@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:dextraquario/assets.dart';
+import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenOverlay extends StatelessWidget {
@@ -42,6 +44,24 @@ class HomeScreenOverlay extends StatelessWidget {
                         child:
                             Image.asset('images/ranking_center_panel72px.png'),
                       ),
+                      Container(
+                        child: Text(
+                          'Marcio Souza',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            shadows: <Shadow>[
+                              Shadow(
+                                blurRadius: 0,
+                                offset: Offset(4.0, 4.0),
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              )
+                            ],
+                          ),
+                        ),
+                        padding: EdgeInsets.only(bottom: 12),
+                        transform: Matrix4.translationValues(-220, 0, 0),
+                      ),
                     ],
                   ),
                 ),
@@ -82,6 +102,24 @@ class HomeScreenOverlay extends StatelessWidget {
                         child:
                             Image.asset('images/ranking_right_panel72px.png'),
                       ),
+                      Container(
+                        child: Text(
+                          'Adriano Maringolo',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            shadows: <Shadow>[
+                              Shadow(
+                                blurRadius: 0,
+                                offset: Offset(4.0, 4.0),
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              )
+                            ],
+                          ),
+                        ),
+                        padding: EdgeInsets.only(bottom: 12),
+                        transform: Matrix4.translationValues(-200, 0, 0),
+                      ),
                     ],
                   ),
                 ),
@@ -114,6 +152,24 @@ class HomeScreenOverlay extends StatelessWidget {
                 Container(
                   child: Image.asset('images/ranking_right_panel.png'),
                 ),
+                Container(
+                  child: Text(
+                    'Erick Zanardo',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      shadows: <Shadow>[
+                        Shadow(
+                          blurRadius: 0,
+                          offset: Offset(4.0, 4.0),
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        )
+                      ],
+                    ),
+                  ),
+                  padding: EdgeInsets.only(bottom: 15),
+                  transform: Matrix4.translationValues(-270, 0, 0),
+                ),
               ],
             ),
           ),
@@ -131,6 +187,31 @@ class HomeScreenOverlay extends StatelessWidget {
                 Container(
                     padding: EdgeInsets.only(bottom: 111.0, right: 89.0),
                     child: Image.asset('images/add_button.png'))
+              ],
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(right: 478, bottom: 103),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                NineTileBox(
+                  image: Assets.userEmptyImage,
+                  tileSize: 16,
+                  destTileSize: 24,
+                  width: 96,
+                  height: 96,
+                ),
+                NineTileBox(
+                  image: Assets.panelImage,
+                  tileSize: 12,
+                  destTileSize: 16,
+                  width: 288,
+                  height: 80,
+                ),
               ],
             ),
           ),
