@@ -54,20 +54,22 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                       game.overlays.remove('LoginScreenOverlay');
                       game.overlays.add('HomeScreenOverlay');
-                      game.overlays.add('gearOverlay');
                     }
                   });
                 },
                 'HomeScreenOverlay': (ctx, game) {
-                  return HomeScreenOverlay();
-                },
-                'gearOverlay': (ctx, game) {
-                  return GearOverlay(
-                    onOpen: () {
-                      if (!game.overlays.isActive('adminOverlay')) {
-                        game.overlays.add('adminOverlay');
-                        game.overlays.remove('gearOverlay');
-                      }
+                  return HomeScreenOverlay(
+                    onAddClick: () {
+                      game.overlays.add('addContributionScreenOverlay');
+                    },
+                    onGearClick: () {
+                      game.overlays.add('adminOverlay');
+                    },
+                    onRankingClick: () {
+                      //game.overlays.add('rankingOverlay')
+                    },
+                    onUserClick: () {
+                      //game.overlays.add('userOverlay')
                     },
                   );
                 },
@@ -75,7 +77,7 @@ class GameScreen extends StatelessWidget {
                   return AdminOverlay(
                     onClose: () {
                       game.overlays.remove('adminOverlay');
-                      game.overlays.add('gearOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
                   );
                 },
