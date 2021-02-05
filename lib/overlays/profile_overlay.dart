@@ -1,6 +1,7 @@
 import 'package:dextraquario/fish_info.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
+import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';
@@ -13,6 +14,37 @@ class ProfileOverlay extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
   ProfileOverlay({this.onClose});
+
+  Widget _contributionNumber(ItemType type) {
+    int count = 0;
+
+    _contributions.forEach((e) {
+      e.type == type ? count += 1 : null;
+    });
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 32,
+          height: 32,
+          padding: EdgeInsets.only(right: 8),
+          child: SpriteWidget(
+            sprite: Assets.ui
+                .getSprite(type.toString().replaceAll('ItemType.', '')),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(right: 8),
+          child: Text(
+            '${count}',
+            style: CommonText.heightOneShadow(14),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +100,79 @@ class ProfileOverlay extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
+                                  // Photo container
                                   Container(
                                     width: 126,
                                     height: 126,
                                     color: Colors.grey,
                                   ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 40),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Vinícius Levorato',
+                                          style: CommonText.heightOneShadow(20),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 8,
+                                            bottom: 20,
+                                          ),
+                                          child: Text(
+                                            '${_contributions.length} contribuições',
+                                            style: CommonText.itemTitle,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            _contributionNumber(ItemType
+                                                .CONTRIBUICAO_COMUNIDADE),
+                                            _contributionNumber(
+                                                ItemType.DESAFIO_TECNICO),
+                                            _contributionNumber(ItemType
+                                                .ENTREVISTA_PARTICIPACAO),
+                                            _contributionNumber(ItemType
+                                                .ENTREVISTA_AVALIACAO_TESTE),
+                                            _contributionNumber(
+                                                ItemType.CAFE_COM_CODIGO),
+                                            _contributionNumber(
+                                                ItemType.ARTIGO_BLOG_DEXTRA),
+                                            _contributionNumber(ItemType.CHAPA),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 263),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 48,
+                                          width: 48,
+                                          margin: EdgeInsets.only(bottom: 16),
+                                          child: Image.asset(
+                                            "images/profileMedal.png",
+                                          ),
+                                        ),
+                                        Text(
+                                          '#15',
+                                          style: CommonText.heightOneShadow(18),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
