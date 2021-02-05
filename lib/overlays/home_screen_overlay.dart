@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dextraquario/assets.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dextraquario/common.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
@@ -63,55 +64,19 @@ class HomeScreenOverlay extends StatelessWidget {
             // Segundo lugar
             Container(
               padding: EdgeInsets.only(top: 23, right: 170),
-              child: Text(
-                'Segundo',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  shadows: <Shadow>[
-                    Shadow(
-                        blurRadius: 0,
-                        offset: Offset(1.0, 1.0),
-                        color: Color.fromARGB(255, 0, 0, 0))
-                  ],
-                ),
-              ),
+              child: Text('Segundo', style: CommonText.itemTitle),
             ),
 
             //Primeiro lugar
             Container(
               padding: EdgeInsets.only(top: 24),
-              child: Text(
-                'Primeiro',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  shadows: <Shadow>[
-                    Shadow(
-                        blurRadius: 0,
-                        offset: Offset(1.0, 1.0),
-                        color: Color.fromARGB(255, 0, 0, 0))
-                  ],
-                ),
-              ),
+              child: Text('Primeiro', style: CommonText.itemTitle),
             ),
 
             //Terceiro Lugar
             Container(
               padding: EdgeInsets.only(top: 23, left: 170),
-              child: Text(
-                'Terceiro',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  shadows: <Shadow>[
-                    Shadow(
-                        blurRadius: 0,
-                        offset: Offset(1.0, 1.0),
-                        color: Color.fromARGB(255, 0, 0, 0))
-                  ],
-                ),
-              ),
+              child: Text('Terceiro', style: CommonText.itemTitle),
             ),
           ],
         ),
