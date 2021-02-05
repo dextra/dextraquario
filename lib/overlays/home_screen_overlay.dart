@@ -142,95 +142,153 @@ class HomeScreenOverlay extends StatelessWidget {
           ),
         ),
         // Painel do canto inferior esquerdo
-        GestureDetector(
-          child: Container(
-            padding: EdgeInsets.only(bottom: 95.0, right: 700.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Stack(
-                    children: [
-                      NineTileBox(
-                        image: Assets.userEmptyBottom,
-                        tileSize: 16,
-                        destTileSize: 24,
-                        width: 96,
-                        height: 96,
-                      ),
-                      NineTileBox(
-                        image: Assets.userEmptyFrame,
-                        tileSize: 16,
-                        destTileSize: 24,
-                        width: 96,
-                        height: 96,
-                      ),
-                    ],
-                  ),
-                  NineTileBox(
-                    image: Assets.panelImage,
-                    tileSize: 12,
-                    destTileSize: 16,
-                    width: 288,
-                    height: 80,
-                  ),
-                ],
-              ),
-            ),
+        Positioned(
+          bottom: 108,
+          left: 192,
+          child: NineTileBox(
+            image: Assets.panelImage,
+            tileSize: 12,
+            destTileSize: 16,
+            width: 288,
+            height: 80,
           ),
-          onTap: () {
-            onUserClick?.call();
-          },
         ),
         Positioned(
-          bottom: 125.0,
-          left: 300.0,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Vinicius Levorato',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        shadows: <Shadow>[
-                          Shadow(
-                            blurRadius: 0,
-                            offset: Offset(4.0, 4.0),
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10.0),
-                      child: Text(
-                        '2 contribuições',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          shadows: <Shadow>[
-                            Shadow(
-                              blurRadius: 0,
-                              offset: Offset(4.0, 4.0),
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ],
-                        ),
-                      ),
+          bottom: 128,
+          left: 222,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Nome do Usuário',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  shadows: <Shadow>[
+                    Shadow(
+                      blurRadius: 0,
+                      offset: Offset(4.0, 4.0),
+                      color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'X contribuições',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    shadows: <Shadow>[
+                      Shadow(
+                        blurRadius: 0,
+                        offset: Offset(4.0, 4.0),
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+        Positioned(
+          bottom: 100,
+          left: 96,
+          child: Stack(
+            children: [
+              NineTileBox(
+                image: Assets.userEmptyBottom,
+                tileSize: 16,
+                destTileSize: 24,
+                width: 96,
+                height: 96,
+              ),
+              NineTileBox(
+                image: Assets.userEmptyFrame,
+                tileSize: 16,
+                destTileSize: 24,
+                width: 96,
+                height: 96,
+              ),
+            ],
+          ),
+        ),
+        // GestureDetector(
+        //   child: Row(
+        //     children: [
+        //       Stack(
+        //         children: [
+        //           NineTileBox(
+        //             image: Assets.userEmptyBottom,
+        //             tileSize: 16,
+        //             destTileSize: 24,
+        //             width: 96,
+        //             height: 96,
+        //           ),
+        //           NineTileBox(
+        //             image: Assets.userEmptyFrame,
+        //             tileSize: 16,
+        //             destTileSize: 24,
+        //             width: 96,
+        //             height: 96,
+        //           ),
+        //         ],
+        //       ),
+        //       NineTileBox(
+        //         image: Assets.panelImage,
+        //         tileSize: 12,
+        //         destTileSize: 16,
+        //         width: 288,
+        //         height: 80,
+        //       ),
+        //     ],
+        //   ),
+        //   onTap: () {
+        //     onUserClick?.call();
+        //   },
+        // ),
+        // Row(
+        //   children: [
+        //     Column(
+        //       mainAxisAlignment: MainAxisAlignment.end,
+        //       children: [
+        //         Text(
+        //           'Nome do Usuário',
+        //           style: TextStyle(
+        //             color: Colors.white,
+        //             fontSize: 14,
+        //             shadows: <Shadow>[
+        //               Shadow(
+        //                 blurRadius: 0,
+        //                 offset: Offset(4.0, 4.0),
+        //                 color: Color.fromARGB(255, 0, 0, 0),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         Container(
+        //           padding: EdgeInsets.only(top: 10.0),
+        //           child: Text(
+        //             'X contribuições',
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //               fontSize: 14,
+        //               shadows: <Shadow>[
+        //                 Shadow(
+        //                   blurRadius: 0,
+        //                   offset: Offset(4.0, 4.0),
+        //                   color: Color.fromARGB(255, 0, 0, 0),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }
