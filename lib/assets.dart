@@ -16,6 +16,9 @@ class Assets {
   static Sprite profileMedal;
   static dui.Image panelImage;
   static dui.Image buttonImage;
+  static dui.Image buttonShadow;
+  static dui.Image panelShadow;
+  static dui.Image closeButtonImage;
 
   static Future<void> load() async {
     fishes = await FireAtlas.loadAsset('atlases/fishes.fa');
@@ -41,5 +44,9 @@ class Assets {
     profileMedal = Sprite(_profileMedal);
 
     buttonImage = await Flame.images.load('button.png');
+    buttonShadow = await Flame.images.load('button_shadow.png');
+    panelImage = await Flame.images.load('panel.png');
+    panelShadow = await Flame.images.load('panel_shadow.png');
+    closeButtonImage = await Flame.images.load('close_button.png');
   }
 }

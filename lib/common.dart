@@ -12,6 +12,8 @@ class CommonColors {
   static int listHeader = 0xFF9E5235;
   static int lightBorder = 0x5FEFCBBA;
   static int darkBorder = 0x5A000000;
+  static Color darkBackground = Color.fromRGBO(161, 84, 48, 1);
+  static Color lightBackground = Color.fromRGBO(192, 108, 76, 1);
 }
 
 class CommonText {

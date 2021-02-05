@@ -1,4 +1,5 @@
 import 'package:dextraquario/overlays/profile_overlay.dart';
+import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'LoginScreenOverlay': (ctx, game) {
+                'loginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -54,13 +55,13 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
-                      game.overlays.remove('LoginScreenOverlay');
-                      game.overlays.add('HomeScreenOverlay');
+                      game.overlays.remove('loginScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
                       game.overlays.add('gearOverlay');
                     }
                   });
                 },
-                'HomeScreenOverlay': (ctx, game) {
+                'homeScreenOverlay': (ctx, game) {
                   return HomeScreenOverlay();
                 },
                 'gearOverlay': (ctx, game) {
@@ -96,10 +97,15 @@ class GameScreen extends StatelessWidget {
                   );
                 },
                 'addContributionScreenOverlay': (ctx, game) {
-                  return null;
+                  return AddContributionScreenOverlay(
+                    onClick: () {
+                      game.overlays.remove('addContributionScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
+                    },
+                  );
                 }
               },
-              initialActiveOverlays: ['LoginScreenOverlay'],
+              initialActiveOverlays: ['loginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);
