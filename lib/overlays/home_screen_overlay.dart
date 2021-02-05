@@ -37,81 +37,92 @@ class HomeScreenOverlay extends StatelessWidget {
           ),
         ),
 
-        //Primeiro lugar
-        Positioned(
-          top: 24,
-          left: 645,
-          child: Text(
-            'Primeiro',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              shadows: <Shadow>[
-                Shadow(
-                  blurRadius: 0,
-                  offset: Offset(4.0, 4.0),
-                  color: Color.fromARGB(255, 0, 0, 0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Segundo lugar
+            Container(
+              padding: EdgeInsets.only(top: 23, right: 170),
+              child: Text(
+                'Segundo',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  shadows: <Shadow>[
+                    Shadow(
+                        blurRadius: 0,
+                        offset: Offset(1.0, 1.0),
+                        color: Color.fromARGB(255, 0, 0, 0))
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
 
-        // Segundo lugar
-        Positioned(
-          top: 23,
-          left: 363,
-          child: Text(
-            'Segundo',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              shadows: <Shadow>[
-                Shadow(
-                  blurRadius: 0,
-                  offset: Offset(4.0, 4.0),
-                  color: Color.fromARGB(255, 0, 0, 0),
+            //Primeiro lugar
+            Container(
+              padding: EdgeInsets.only(top: 24),
+              child: Text(
+                'Primeiro',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  shadows: <Shadow>[
+                    Shadow(
+                        blurRadius: 0,
+                        offset: Offset(1.0, 1.0),
+                        color: Color.fromARGB(255, 0, 0, 0))
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
 
-        //Terceiro Lugar
-        Positioned(
-          top: 23,
-          left: 928,
-          child: Text(
-            'Terceiro',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              shadows: <Shadow>[
-                Shadow(
-                  blurRadius: 0,
-                  offset: Offset(4.0, 4.0),
-                  color: Color.fromARGB(255, 0, 0, 0),
+            //Terceiro Lugar
+            Container(
+              padding: EdgeInsets.only(top: 23, left: 170),
+              child: Text(
+                'Terceiro',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  shadows: <Shadow>[
+                    Shadow(
+                        blurRadius: 0,
+                        offset: Offset(1.0, 1.0),
+                        color: Color.fromARGB(255, 0, 0, 0))
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
 
         //Medalhas
-        Positioned(
-          top: 8,
-          left: 589,
-          child: Image.asset('images/gold_medal.png'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 14, right: 740),
+              child: Image.asset('images/silver_medal.png'),
+            ),
+          ],
         ),
-        Positioned(
-          top: 14,
-          left: 327,
-          child: Image.asset('images/silver_medal.png'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 8, right: 200),
+              child: Image.asset('images/gold_medal.png'),
+            ),
+          ],
         ),
-        Positioned(
-          top: 14,
-          left: 892,
-          child: Image.asset('images/bronze_medal.png'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 14, left: 380),
+              child: Image.asset('images/bronze_medal.png'),
+            ),
+          ],
         ),
 
         // Botões de configurações e adicionar
@@ -166,10 +177,9 @@ class HomeScreenOverlay extends StatelessWidget {
                   fontSize: 14,
                   shadows: <Shadow>[
                     Shadow(
-                      blurRadius: 0,
-                      offset: Offset(4.0, 4.0),
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
+                        blurRadius: 0,
+                        offset: Offset(1.0, 1.0),
+                        color: Color.fromARGB(255, 0, 0, 0))
                   ],
                 ),
               ),
@@ -182,10 +192,9 @@ class HomeScreenOverlay extends StatelessWidget {
                     fontSize: 14,
                     shadows: <Shadow>[
                       Shadow(
-                        blurRadius: 0,
-                        offset: Offset(4.0, 4.0),
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
+                          blurRadius: 0,
+                          offset: Offset(1.0, 1.0),
+                          color: Color.fromARGB(255, 0, 0, 0))
                     ],
                   ),
                 ),
@@ -215,80 +224,6 @@ class HomeScreenOverlay extends StatelessWidget {
             ],
           ),
         ),
-        // GestureDetector(
-        //   child: Row(
-        //     children: [
-        //       Stack(
-        //         children: [
-        //           NineTileBox(
-        //             image: Assets.userEmptyBottom,
-        //             tileSize: 16,
-        //             destTileSize: 24,
-        //             width: 96,
-        //             height: 96,
-        //           ),
-        //           NineTileBox(
-        //             image: Assets.userEmptyFrame,
-        //             tileSize: 16,
-        //             destTileSize: 24,
-        //             width: 96,
-        //             height: 96,
-        //           ),
-        //         ],
-        //       ),
-        //       NineTileBox(
-        //         image: Assets.panelImage,
-        //         tileSize: 12,
-        //         destTileSize: 16,
-        //         width: 288,
-        //         height: 80,
-        //       ),
-        //     ],
-        //   ),
-        //   onTap: () {
-        //     onUserClick?.call();
-        //   },
-        // ),
-        // Row(
-        //   children: [
-        //     Column(
-        //       mainAxisAlignment: MainAxisAlignment.end,
-        //       children: [
-        //         Text(
-        //           'Nome do Usuário',
-        //           style: TextStyle(
-        //             color: Colors.white,
-        //             fontSize: 14,
-        //             shadows: <Shadow>[
-        //               Shadow(
-        //                 blurRadius: 0,
-        //                 offset: Offset(4.0, 4.0),
-        //                 color: Color.fromARGB(255, 0, 0, 0),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //         Container(
-        //           padding: EdgeInsets.only(top: 10.0),
-        //           child: Text(
-        //             'X contribuições',
-        //             style: TextStyle(
-        //               color: Colors.white,
-        //               fontSize: 14,
-        //               shadows: <Shadow>[
-        //                 Shadow(
-        //                   blurRadius: 0,
-        //                   offset: Offset(4.0, 4.0),
-        //                   color: Color.fromARGB(255, 0, 0, 0),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }

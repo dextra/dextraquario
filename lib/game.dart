@@ -66,10 +66,10 @@ class GameScreen extends StatelessWidget {
                       game.overlays.add('adminOverlay');
                     },
                     onRankingClick: () {
-                      //game.overlays.add('rankingOverlay')
+                      game.overlays.add('rankingOverlay');
                     },
                     onUserClick: () {
-                      //game.overlays.add('userOverlay')
+                      game.overlays.add('userOverlay');
                     },
                   );
                 },
