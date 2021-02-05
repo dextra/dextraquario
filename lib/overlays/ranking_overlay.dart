@@ -1,4 +1,5 @@
 import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
@@ -6,18 +7,42 @@ import 'package:flutter/material.dart';
 import '../assets.dart';
 import '../common.dart';
 
-class RankingOverlay extends StatelessWidget {
+class RankingOverlay extends StatefulWidget {
   final Function onClose;
-  final List<UserMockup> _users = _mockUsers();
-  final ScrollController _scrollController = ScrollController();
 
   RankingOverlay({this.onClose});
 
-  Widget _buildItem(BuildContext buildContext, int index) {
+  @override
+  _RankingOverlayState createState() => _RankingOverlayState();
+}
+
+class _RankingOverlayState extends State<RankingOverlay> {
+  UserServices _userServices = UserServices();
+  Future<List<UserModel>> _dbUsers;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _dbUsers = _userServices.getAll(); // get from DB
+  }
+
+  // User list
+  Widget _userList(List<UserModel> users) {
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: users.length,
+      itemBuilder: (ctx, index) => _buildItem(ctx, index, users),
+    );
+  }
+
+  // Build user item
+  Widget _buildItem(
+      BuildContext buildContext, int index, List<UserModel> users) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _userItem(_users[index], index),
+        _userItem(users[index], index),
         Divider(
           color: Colors.black26,
           indent: 20,
@@ -27,7 +52,8 @@ class RankingOverlay extends StatelessWidget {
     );
   }
 
-  Widget _userItem(UserMockup user, int index) {
+  // User item
+  Widget _userItem(UserModel user, int index) {
     return Padding(
       padding: EdgeInsets.only(
         left: 68,
@@ -74,7 +100,7 @@ class RankingOverlay extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 44, right: 44),
               child: SpriteButton(
-                  onPressed: () => onClose?.call(),
+                  onPressed: () => widget.onClose?.call(),
                   label: null,
                   width: 48,
                   height: 48,
@@ -162,21 +188,35 @@ class RankingOverlay extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    color: Colors.black.withOpacity(0.25),
-                                    margin: EdgeInsets.symmetric(vertical: 8),
-                                    child: _userItem(_users[14], 14),
-                                  ),
+                                  // -- Para ser implementado na próxima task
+                                  // Container(
+                                  //   color: Colors.black.withOpacity(0.25),
+                                  //   margin: EdgeInsets.symmetric(vertical: 8),
+                                  //   child: _userItem(_users[14], 14),
+                                  // ),
                                   Expanded(
                                     child: Scrollbar(
                                       isAlwaysShown: true,
                                       controller: _scrollController,
-                                      child: ListView.builder(
-                                        controller: _scrollController,
-                                        itemCount: _users.length,
-                                        itemBuilder: (ctx, index) =>
-                                            _buildItem(ctx, index),
-                                      ),
+                                      child: FutureBuilder(
+                                          // waiting for the _dbUsers data
+                                          future: _dbUsers,
+                                          builder: (context, snapshot) {
+                                            // if the connection worked
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              // return the user list
+                                              return _userList(snapshot.data);
+                                            } else {
+                                              // loading
+                                              return Container(
+                                                  padding:
+                                                      EdgeInsets.only(top: 20),
+                                                  child: Text('Loading...',
+                                                      style: CommonText
+                                                          .panelTitle));
+                                            }
+                                          }),
                                     ),
                                   ),
                                 ],
@@ -195,32 +235,4 @@ class RankingOverlay extends StatelessWidget {
       ],
     );
   }
-}
-
-List _mockUsers() {
-  return <UserMockup>[
-    UserMockup(name: 'Erick Zanardo', score: 25),
-    UserMockup(name: 'Marcio Souza', score: 20),
-    UserMockup(name: 'Adriano Maringolo', score: 11),
-    UserMockup(name: 'Fellipe Mendes', score: 10),
-    UserMockup(name: 'Priscila Contiero', score: 10),
-    UserMockup(name: 'Gustavo Bigardi', score: 8),
-    UserMockup(name: 'Mauro Takeda', score: 7),
-    UserMockup(name: 'Leonardo Bilia', score: 7),
-    UserMockup(name: 'Tyemy Kuga', score: 6),
-    UserMockup(name: 'Leonardo Paranhos', score: 6),
-    UserMockup(name: 'Leandro Lima', score: 5),
-    UserMockup(name: 'Leandro Lima', score: 5),
-    UserMockup(name: 'Leandro Lima', score: 4),
-    UserMockup(name: 'Leandro Lima', score: 4),
-    UserMockup(name: 'Vinícius Levorato', score: 2),
-    UserMockup(name: 'Mauro Takeda', score: 1),
-  ];
-}
-
-class UserMockup {
-  UserMockup({this.name, this.score});
-
-  String name;
-  int score;
 }
