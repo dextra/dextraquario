@@ -85,11 +85,16 @@ class ContributionServices {
 
   // Update the contribution approval status
   Future updateContributionApproval(
-      String contribution_id, bool approved) async {
+      String contribution_id, bool approved, String user_id) async {
     String approvalStatus;
 
     if (approved) {
       approvalStatus = ApprovalStatus.APPROVED.toString().split('.').last;
+
+      // Update user score
+      firebaseFirestore.collection('users').doc(user_id).update({
+        'score': FieldValue.increment(1),
+      });
     } else {
       approvalStatus = ApprovalStatus.DENIED.toString().split('.').last;
     }

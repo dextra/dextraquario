@@ -6,8 +6,8 @@ class UserServices {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   // Create user
-  void createUser(
-      {String id, String name, String photo, bool admin = false, int score}) {
+  void createUser(String id, String name, String photo,
+      [bool admin = false, int score = 0]) {
     firebaseFirestore
         .collection(collection)
         .doc(id)
