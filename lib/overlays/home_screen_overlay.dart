@@ -19,163 +19,100 @@ class HomeScreenOverlay extends StatelessWidget {
   @override
   Widget build(context) {
     return Stack(children: [
-      // Painel do ranking esquerdo
+      // Painel do ranking
       Container(
         child: Align(
           alignment: Alignment.topCenter,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.only(right: 586),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: [
-                        Image.asset('images/ranking_left_pannel72px.png'),
-                        Container(
-                          padding: EdgeInsets.only(top: 14, left: 27),
-                          child: Image.asset('images/silver_medal.png'),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      child: Image.asset('images/ranking_center_panel72px.png'),
-                    ),
-                    Container(
-                      child: Image.asset('images/ranking_center_panel72px.png'),
-                    ),
-                    Container(
-                      child: Image.asset('images/ranking_center_panel72px.png'),
-                    ),
-                    Container(
-                      child: Text(
-                        'Marcio Souza',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          shadows: <Shadow>[
-                            Shadow(
-                              blurRadius: 0,
-                              offset: Offset(4.0, 4.0),
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            )
-                          ],
-                        ),
-                      ),
-                      padding: EdgeInsets.only(bottom: 12),
-                      transform: Matrix4.translationValues(-220, 0, 0),
-                    ),
-                  ],
-                ),
+              Positioned(
+                top: 0,
+                right: 720,
+                child: Image.asset('images/ranking_panel.png'),
               ),
             ],
           ),
         ),
       ),
-      // Painel do ranking direito
-      Container(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.only(left: 586),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: [
-                        Image.asset('images/ranking_center_pannel72px.png'),
-                        Container(
-                          padding: EdgeInsets.only(top: 14, right: 0),
-                          child: Image.asset('images/bronze_medal.png'),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      child: Image.asset('images/ranking_center_panel72px.png'),
-                    ),
-                    Container(
-                      child: Image.asset('images/ranking_center_panel72px.png'),
-                    ),
-                    Container(
-                      child: Image.asset('images/ranking_right_panel72px.png'),
-                    ),
-                    Container(
-                      child: Text(
-                        'Adriano Maringolo',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          shadows: <Shadow>[
-                            Shadow(
-                              blurRadius: 0,
-                              offset: Offset(4.0, 4.0),
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            )
-                          ],
-                        ),
-                      ),
-                      padding: EdgeInsets.only(bottom: 12),
-                      transform: Matrix4.translationValues(-200, 0, 0),
-                    ),
-                  ],
-                ),
+
+      //Primeiro lugar
+      Positioned(
+        top: 24,
+        left: 645,
+        child: Text(
+          'Primeiro',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            shadows: <Shadow>[
+              Shadow(
+                blurRadius: 0,
+                offset: Offset(4.0, 4.0),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ],
           ),
         ),
       ),
-      // Painel do ranking do meio
-      Container(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  Image.asset('images/ranking_left_pannel.png'),
-                  Container(
-                    padding: EdgeInsets.only(top: 8, left: 29),
-                    child: Image.asset('images/gold_medal.png'),
-                  ),
-                ],
-              ),
-              Container(
-                child: Image.asset('images/ranking_center_panel.png'),
-              ),
-              Container(
-                child: Image.asset('images/ranking_center_panel.png'),
-              ),
-              Container(
-                child: Image.asset('images/ranking_right_panel.png'),
-              ),
-              Container(
-                child: Text(
-                  'Erick Zanardo',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    shadows: <Shadow>[
-                      Shadow(
-                        blurRadius: 0,
-                        offset: Offset(4.0, 4.0),
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
-                    ],
-                  ),
-                ),
-                padding: EdgeInsets.only(bottom: 15),
-                transform: Matrix4.translationValues(-270, 0, 0),
+
+      // Segundo lugar
+      Positioned(
+        top: 23,
+        left: 363,
+        child: Text(
+          'Segundo',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            shadows: <Shadow>[
+              Shadow(
+                blurRadius: 0,
+                offset: Offset(4.0, 4.0),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
             ],
           ),
         ),
       ),
+
+      //Terceiro Lugar
+      Positioned(
+        top: 23,
+        left: 928,
+        child: Text(
+          'Terceiro',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            shadows: <Shadow>[
+              Shadow(
+                blurRadius: 0,
+                offset: Offset(4.0, 4.0),
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+      //Medalhas
+      Positioned(
+        top: 8,
+        left: 589,
+        child: Image.asset('images/gold_medal.png'),
+      ),
+      Positioned(
+        top: 14,
+        left: 327,
+        child: Image.asset('images/silver_medal.png'),
+      ),
+      Positioned(
+        top: 14,
+        left: 892,
+        child: Image.asset('images/bronze_medal.png'),
+      ),
+
       // Botões de configurações e adicionar
       Container(
         child: Align(
