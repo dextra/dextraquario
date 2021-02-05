@@ -1,19 +1,34 @@
 import 'dart:ui';
 
 import 'package:dextraquario/components/custom_dropdown.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';
 import '../common.dart';
+import '../models/user_model.dart';
+import '../services/contribution_service.dart';
+import '../services/contribution_service.dart';
 
-class AddContributionScreenOverlay extends StatelessWidget {
+class AddContributionScreenOverlay extends StatefulWidget {
   final Function onClick;
-  AddContributionScreenOverlay({this.onClick});
+  final User user;
 
+  AddContributionScreenOverlay({this.onClick, this.user});
+
+  @override
+  _AddContributionScreenOverlayState createState() =>
+      _AddContributionScreenOverlayState();
+}
+
+class _AddContributionScreenOverlayState
+    extends State<AddContributionScreenOverlay> {
   final descricaoController = TextEditingController();
   final linkController = TextEditingController();
+  final tipoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final ContributionServices _contributionServices = ContributionServices();
 
   @override
   Widget build(context) {
@@ -138,7 +153,11 @@ class AddContributionScreenOverlay extends StatelessWidget {
                                           Container(
                                             padding: EdgeInsets.only(top: 10.0),
                                             height: 56,
-                                            child: CustomDropdown(),
+                                            child: CustomDropdown(
+                                              onClick: (String option) {
+                                                tipoController.text = option;
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -342,7 +361,15 @@ class AddContributionScreenOverlay extends StatelessWidget {
                                       child: GestureDetector(
                                         onTap: () {
                                           if (_formKey.currentState
-                                              .validate()) {}
+                                              .validate()) {
+                                            _contributionServices
+                                                .createContribution(
+                                                    widget.user.uid,
+                                                    DateTime.now(),
+                                                    descricaoController.text,
+                                                    linkController.text,
+                                                    tipoController.text);
+                                          }
                                         },
                                         child: Stack(
                                           children: [
@@ -442,7 +469,7 @@ class AddContributionScreenOverlay extends StatelessWidget {
                         child: Image.asset('images/close_button.png'),
                       ),
                       onTap: () {
-                        onClick();
+                        widget.onClick();
                       },
                     ),
                   ],
