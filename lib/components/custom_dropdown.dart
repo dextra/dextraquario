@@ -3,13 +3,10 @@ import 'dart:ui';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import '../common.dart';
 
 class CustomDropdown extends StatefulWidget {
-  String text;
-  double itemHeight;
-
-  CustomDropdown({Key key, @required this.text, @required this.itemHeight})
-      : super(key: key);
+  CustomDropdown({Key key}) : super(key: key);
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();
@@ -22,26 +19,27 @@ class _CustomDropdownState extends State<CustomDropdown> {
   OverlayEntry floatingDropdown;
   double angleArrow;
   EdgeInsets paddingArrow;
+  String text = 'Tipo de Contribuição';
+  double itemHeight;
 
   @override
   void initState() {
-    actionKey = LabeledGlobalKey(widget.text);
+    super.initState();
+    actionKey = LabeledGlobalKey(text);
     angleArrow = 90;
     paddingArrow = EdgeInsets.only(left: 0, top: 0);
-    super.initState();
   }
 
   void findDropdownData() {
     RenderBox renderBox = actionKey.currentContext.findRenderObject();
-    height = renderBox.size.height;
-    setState(() {
-      widget.itemHeight = height;
-    });
-
-    width = renderBox.size.width;
     Offset offset = renderBox.localToGlobal(Offset.zero);
-    xPosition = offset.dx;
-    yPosition = offset.dy;
+    setState(() {
+      height = renderBox.size.height;
+      itemHeight = height;
+      width = renderBox.size.width;
+      xPosition = offset.dx;
+      yPosition = offset.dy;
+    });
   }
 
   OverlayEntry _createFloatingDropdown() {
@@ -49,26 +47,23 @@ class _CustomDropdownState extends State<CustomDropdown> {
       return Expanded(
         child: Container(
           padding: EdgeInsets.only(
-              left: xPosition, top: yPosition + height, right: xPosition),
+            left: xPosition,
+            top: yPosition + height,
+            right: xPosition,
+          ),
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 1,
-              ),
+              SizedBox(height: 1),
               Material(
                 elevation: 2,
                 child: Container(
-                  height: 7 * widget.itemHeight,
+                  height: 7 * itemHeight,
                   child: Column(
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Desafio Técnico';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Desafio Técnico');
                           });
                         },
                         child: DropDownItem.first(
@@ -78,11 +73,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Entrevista Participação';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Entrevista Participação');
                           });
                         },
                         child: DropDownItem(
@@ -92,11 +83,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Entrevista Avaliação Teste';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Entrevista Avaliação Teste');
                           });
                         },
                         child: DropDownItem(
@@ -106,11 +93,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Café com código';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Café com Código');
                           });
                         },
                         child: DropDownItem(
@@ -120,11 +103,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Contribuição Comunidade';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Contribuição Comunidade');
                           });
                         },
                         child: DropDownItem(
@@ -134,11 +113,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Artigo Blog Dextra';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Artigo Blog Dextra');
                           });
                         },
                         child: DropDownItem(
@@ -148,11 +123,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.text = 'Chapa';
-                            floatingDropdown.remove();
-                            angleArrow = 90;
-                            paddingArrow = EdgeInsets.only(left: 0, top: 0);
-                            isDropdownOpened = false;
+                            setDropdownClickState('Chapa');
                           });
                         },
                         child: DropDownItem.last(
@@ -172,10 +143,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   Border _insetBorder() {
     return Border(
-        right: BorderSide(color: Color(0x5FEFCBBA), width: 2.0),
-        bottom: BorderSide(color: Color(0x5FEFCBBA), width: 2.0),
-        left: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.5), width: 2.0),
-        top: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.5), width: 2.0));
+        right: BorderSide(color: Color(CommonColors.lightBorder), width: 2.0),
+        bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 2.0),
+        left: BorderSide(color: Color(CommonColors.darkBorder), width: 2.0),
+        top: BorderSide(color: Color(CommonColors.darkBorder), width: 2.0));
   }
 
   @override
@@ -201,11 +172,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(192, 108, 76, 1),
+          color: CommonColors.lightBackground,
           border: _insetBorder(),
           boxShadow: <BoxShadow>[
             BoxShadow(
-              color: Color(0xFFC06C4C),
+              color: Color(CommonColors.boxInsetBackground),
             ),
           ],
         ),
@@ -216,7 +187,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               child: Container(
                 padding: EdgeInsets.only(left: 16),
                 child: Text(
-                  widget.text,
+                  text,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.white,
@@ -246,9 +217,13 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       ),
                     ),
                     Container(
-                        padding: paddingArrow,
-                        child: Icon(Icons.play_arrow,
-                            size: 24, color: Color.fromRGBO(161, 84, 48, 1))),
+                      padding: paddingArrow,
+                      child: Icon(
+                        Icons.play_arrow,
+                        size: 24,
+                        color: CommonColors.darkBackground,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -257,6 +232,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
         ),
       ),
     );
+  }
+
+  void setDropdownClickState(String option) {
+    text = option;
+    floatingDropdown.remove();
+    angleArrow = 90;
+    paddingArrow = EdgeInsets.only(left: 0, top: 0);
+    isDropdownOpened = false;
   }
 }
 
@@ -288,10 +271,10 @@ class DropDownItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(
-          top: isFirstItem ? Radius.zero : Radius.zero,
-          bottom: isLastItem ? Radius.zero : Radius.zero,
+          top: Radius.zero,
+          bottom: Radius.zero,
         ),
-        color: Color.fromRGBO(192, 108, 76, 1),
+        color: CommonColors.lightBackground,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Row(

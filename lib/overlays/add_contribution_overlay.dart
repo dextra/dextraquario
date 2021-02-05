@@ -5,6 +5,7 @@ import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';
+import '../common.dart';
 
 class AddContributionScreenOverlay extends StatelessWidget {
   final Function onClick;
@@ -137,10 +138,7 @@ class AddContributionScreenOverlay extends StatelessWidget {
                                           Container(
                                             padding: EdgeInsets.only(top: 10.0),
                                             height: 56,
-                                            child: CustomDropdown(
-                                              itemHeight: 56,
-                                              text: 'Tipo de contribuições',
-                                            ),
+                                            child: CustomDropdown(),
                                           ),
                                         ],
                                       ),
@@ -202,7 +200,8 @@ class AddContributionScreenOverlay extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Color(0xFFC06C4C),
+                                                  color: Color(CommonColors
+                                                      .boxInsetBackground),
                                                 ),
                                               ],
                                               border: _insetBorder(),
@@ -273,7 +272,8 @@ class AddContributionScreenOverlay extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Color(0xFFC06C4C),
+                                                  color: Color(CommonColors
+                                                      .boxInsetBackground),
                                                 ),
                                               ],
                                               border: _insetBorder(),
@@ -458,8 +458,8 @@ class AddContributionScreenOverlay extends StatelessWidget {
 
 Border _insetBorder() {
   return Border(
-      right: BorderSide(color: Color(0x5FEFCBBA), width: 2.0),
-      bottom: BorderSide(color: Color(0x5FEFCBBA), width: 2.0),
-      left: BorderSide(color: Color(0x5A000000), width: 2.0),
-      top: BorderSide(color: Color(0x5A000000), width: 2.0));
+      right: BorderSide(color: Color(CommonColors.lightBorder), width: 2.0),
+      bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 2.0),
+      left: BorderSide(color: Color(CommonColors.darkBorder), width: 2.0),
+      top: BorderSide(color: Color(CommonColors.darkBorder), width: 2.0));
 }
