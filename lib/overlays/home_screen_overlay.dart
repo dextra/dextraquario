@@ -219,12 +219,23 @@ class HomeScreenOverlay extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  NineTileBox(
-                    image: Assets.userEmptyImage,
-                    tileSize: 16,
-                    destTileSize: 24,
-                    width: 96,
-                    height: 96,
+                  Stack(
+                    children: [
+                      NineTileBox(
+                        image: Assets.userEmptyBottom,
+                        tileSize: 16,
+                        destTileSize: 24,
+                        width: 96,
+                        height: 96,
+                      ),
+                      NineTileBox(
+                        image: Assets.userEmptyFrame,
+                        tileSize: 16,
+                        destTileSize: 24,
+                        width: 96,
+                        height: 96,
+                      ),
+                    ],
                   ),
                   NineTileBox(
                     image: Assets.panelImage,
