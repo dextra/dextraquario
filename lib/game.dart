@@ -1,3 +1,5 @@
+import 'package:dextraquario/overlays/add_contribution_overlay.dart';
+import 'package:dextraquario/overlays/ranking_overlay.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +42,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'LoginScreenOverlay': (ctx, game) {
+                'loginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -52,6 +54,7 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
+<<<<<<< HEAD
                       game.overlays.remove('LoginScreenOverlay');
                       game.overlays.add('HomeScreenOverlay');
                     }
@@ -70,6 +73,24 @@ class GameScreen extends StatelessWidget {
                     },
                     onUserClick: () {
                       game.overlays.add('userOverlay');
+=======
+                      game.overlays.remove('loginScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
+                      game.overlays.add('gearOverlay');
+                    }
+                  });
+                },
+                'homeScreenOverlay': (ctx, game) {
+                  return HomeScreenOverlay();
+                },
+                'gearOverlay': (ctx, game) {
+                  return GearOverlay(
+                    onOpen: () {
+                      if (!game.overlays.isActive('adminOverlay')) {
+                        game.overlays.add('adminOverlay');
+                        game.overlays.remove('gearOverlay');
+                      }
+>>>>>>> origin/develop
                     },
                   );
                 },
@@ -81,11 +102,23 @@ class GameScreen extends StatelessWidget {
                     },
                   );
                 },
+                'rankingOverlay': (ctx, game) {
+                  return RankingOverlay(
+                    onClose: () {
+                      game.overlays.remove('rankingOverlay');
+                    },
+                  );
+                },
                 'addContributionScreenOverlay': (ctx, game) {
-                  return null;
+                  return AddContributionScreenOverlay(
+                    onClick: () {
+                      game.overlays.remove('addContributionScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
+                    },
+                  );
                 }
               },
-              initialActiveOverlays: ['LoginScreenOverlay'],
+              initialActiveOverlays: ['loginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);

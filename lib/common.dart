@@ -7,6 +7,8 @@ class CommonColors {
   static int listHeader = 0xFF9E5235;
   static int lightBorder = 0x5FEFCBBA;
   static int darkBorder = 0x5A000000;
+  static Color darkBackground = Color.fromRGBO(161, 84, 48, 1);
+  static Color lightBackground = Color.fromRGBO(192, 108, 76, 1);
 }
 
 class CommonText {
@@ -18,4 +20,14 @@ class CommonText {
       TextStyle(color: Colors.white, fontSize: 14, height: 1.2);
   static TextStyle itemSubtitle =
       TextStyle(color: Colors.white, fontSize: 14, height: 1.5);
+}
+
+class Common {
+  Common._();
+
+  static Border insetBorder = Border(
+      right: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
+      bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
+      left: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
+      top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0));
 }
