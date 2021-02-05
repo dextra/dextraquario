@@ -144,7 +144,7 @@ class HomeScreenOverlay extends StatelessWidget {
         // Painel do canto inferior esquerdo
         GestureDetector(
           child: Container(
-            padding: EdgeInsets.only(right: 478, bottom: 103),
+            padding: EdgeInsets.only(bottom: 95.0, right: 700.0),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -183,8 +183,9 @@ class HomeScreenOverlay extends StatelessWidget {
             onUserClick?.call();
           },
         ),
-        Container(
-          padding: EdgeInsets.only(bottom: 132.0, right: 386.0),
+        Positioned(
+          bottom: 125.0,
+          left: 300.0,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Row(
