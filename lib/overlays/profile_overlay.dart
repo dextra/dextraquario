@@ -48,6 +48,9 @@ class ProfileOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // User fetched ranking position
+    int rank = 3;
+
     return Stack(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -163,11 +166,11 @@ class ProfileOverlay extends StatelessWidget {
                                           width: 48,
                                           margin: EdgeInsets.only(bottom: 16),
                                           child: Image.asset(
-                                            "images/profileMedal.png",
+                                            "images/${_getUserRankMedal(rank)}.png",
                                           ),
                                         ),
                                         Text(
-                                          '#15',
+                                          '#${rank}',
                                           style: CommonText.heightOneShadow(18),
                                         ),
                                       ],
@@ -245,6 +248,19 @@ class ProfileOverlay extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+String _getUserRankMedal(int rank) {
+  switch (rank) {
+    case 1:
+      return "gold_medal";
+    case 2:
+      return "silver_medal48";
+    case 3:
+      return "bronze_medal48";
+    default:
+      return "wood_medal48";
   }
 }
 
