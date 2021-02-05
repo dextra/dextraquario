@@ -4,9 +4,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import '../common.dart';
+import '../services/contribution_service.dart';
 
 class CustomDropdown extends StatefulWidget {
-  CustomDropdown({Key key}) : super(key: key);
+  final Function onClick;
+  CustomDropdown({Key key, this.onClick}) : super(key: key);
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();
@@ -235,6 +237,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 
   void setDropdownClickState(String option) {
+    widget.onClick(option);
     text = option;
     floatingDropdown.remove();
     angleArrow = 90;
