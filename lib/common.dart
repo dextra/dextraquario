@@ -17,12 +17,31 @@ class CommonColors {
 class CommonText {
   CommonText._();
 
-  static TextStyle panelTitle =
-      TextStyle(fontSize: 18, height: 1, color: Colors.white);
-  static TextStyle itemTitle =
-      TextStyle(color: Colors.white, fontSize: 14, height: 1.2);
-  static TextStyle itemSubtitle =
-      TextStyle(color: Colors.white, fontSize: 14, height: 1.5);
+  static TextStyle panelTitle = TextStyle(
+      fontSize: 18,
+      height: 1,
+      color: Colors.white,
+      shadows: [
+        Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))
+      ]);
+  static TextStyle itemTitle = TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+      height: 1.2,
+      shadows: [
+        Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))
+      ]);
+  static TextStyle itemSubtitle = TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+      height: 1.5,
+      shadows: [
+        Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))
+      ]);
+  static TextStyle heightOneShadow(double size) =>
+      TextStyle(color: Colors.white, fontSize: size, height: 1, shadows: [
+        Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))
+      ]);
 }
 
 class Common {
