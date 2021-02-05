@@ -1,5 +1,6 @@
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -86,6 +87,7 @@ class GameScreen extends StatelessWidget {
                     onClose: () {
                       game.overlays.remove('rankingOverlay');
                     },
+                    userAuth: authProvider.user,
                   );
                 },
                 'addContributionScreenOverlay': (ctx, game) {
