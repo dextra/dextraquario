@@ -13,6 +13,7 @@ class Assets {
   static Sprite gear;
   static Sprite closeButton32;
   static Sprite closeButton48;
+  static Sprite profileMedal;
   static dui.Image panelImage;
   static dui.Image buttonImage;
 
@@ -35,6 +36,9 @@ class Assets {
 
     final _closeButton48 = await Flame.images.load('closeButton48.png');
     closeButton48 = Sprite(_closeButton48);
+
+    final _profileMedal = await Flame.images.load('profileMedal.png');
+    profileMedal = Sprite(_profileMedal);
 
     buttonImage = await Flame.images.load('button.png');
   }
