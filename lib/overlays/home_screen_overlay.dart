@@ -1,23 +1,43 @@
 import 'dart:ui';
 
 import 'package:dextraquario/assets.dart';
+import 'package:dextraquario/services/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
+import '../models/user_model.dart';
+import 'package:dextraquario/widgets/loading.dart';
 
 class HomeScreenOverlay extends StatelessWidget {
   final Function onGearClick;
   final Function onAddClick;
   final Function onUserClick;
   final Function onRankingClick;
+  final User user;
 
   HomeScreenOverlay(
       {this.onGearClick,
       this.onAddClick,
       this.onUserClick,
-      this.onRankingClick});
+      this.onRankingClick,
+      this.user});
 
   @override
   Widget build(context) {
+    final userModel = UserServices().getUserById(user.uid);
+    return FutureBuilder(
+      future: userModel,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return page(context, snapshot.data);
+        } else {
+          return Loading();
+        }
+      },
+    );
+  }
+
+  Widget page(context, UserModel userModel) {
     return Stack(
       children: [
         // Painel do ranking
@@ -171,7 +191,7 @@ class HomeScreenOverlay extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Nome do Usuário',
+                userModel.name,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -186,7 +206,7 @@ class HomeScreenOverlay extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
-                  'X contribuições',
+                  userModel.score.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -214,6 +234,7 @@ class HomeScreenOverlay extends StatelessWidget {
                 width: 96,
                 height: 96,
               ),
+              Image.network(userModel.photo),
               NineTileBox(
                 image: Assets.userEmptyFrame,
                 tileSize: 16,
