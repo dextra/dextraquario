@@ -110,8 +110,10 @@ class AdminOverlay extends StatelessWidget {
                                         controller: _scrollController,
                                         itemCount: _pendingItems.length,
                                         itemBuilder: (ctx, index) =>
-                                            Common.contributionItem(
-                                                _pendingItems[index], index),
+                                            ContributionItem(
+                                          contribution: _pendingItems[index],
+                                          index: index,
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -55,9 +55,18 @@ class Common {
     left: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
     top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
   );
+}
 
-  static Widget contributionItem(Contribution contribution, int index,
-      {bool canApprove = true}) {
+class ContributionItem extends StatelessWidget {
+  final Contribution contribution;
+  final int index;
+  final bool canApprove;
+
+  ContributionItem(
+      {Contribution this.contribution, int this.index, this.canApprove});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
