@@ -131,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                                       Container(
                                         width: 126,
                                         height: 126,
-                                        color: Colors.grey,
+                                        child: Image.network(user.photo),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(left: 16),

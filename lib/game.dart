@@ -56,7 +56,7 @@ class GameScreen extends StatelessWidget {
                     } else {
                       appProvider.changeLoading();
                       game.overlays.remove('LoginScreenOverlay');
-                      game.overlays.add('HomeScreenOverlay');
+                      game.overlays.add('profileOverlay');
                     }
                   });
                 },
