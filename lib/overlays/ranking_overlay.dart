@@ -134,17 +134,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                   ),
                                                   onTap: () {
                                                     setState(() {
-                                                      if (typeOfSorting ==
-                                                          TypeOfSorting
-                                                              .SCORE_DESC) {
-                                                        typeOfSorting =
-                                                            TypeOfSorting
-                                                                .SCORE_ASC;
-                                                      } else {
-                                                        typeOfSorting =
-                                                            TypeOfSorting
-                                                                .SCORE_DESC;
-                                                      }
+                                                      changeTypeOfSorting();
                                                     });
                                                   },
                                                 ),
@@ -160,17 +150,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                   ),
                                                   onTap: () {
                                                     setState(() {
-                                                      if (typeOfSorting ==
-                                                          TypeOfSorting
-                                                              .NAME_ASC) {
-                                                        typeOfSorting =
-                                                            TypeOfSorting
-                                                                .NAME_DESC;
-                                                      } else {
-                                                        typeOfSorting =
-                                                            TypeOfSorting
-                                                                .NAME_ASC;
-                                                      }
+                                                      changeTypeOfSorting();
                                                     });
                                                   },
                                                 ),
@@ -182,17 +162,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                   ),
                                                   onTap: () {
                                                     setState(() {
-                                                      if (typeOfSorting ==
-                                                          TypeOfSorting
-                                                              .SCORE_DESC) {
-                                                        typeOfSorting =
-                                                            TypeOfSorting
-                                                                .SCORE_ASC;
-                                                      } else {
-                                                        typeOfSorting =
-                                                            TypeOfSorting
-                                                                .SCORE_DESC;
-                                                      }
+                                                      changeTypeOfSorting();
                                                     });
                                                   },
                                                 ),
@@ -274,6 +244,37 @@ class _RankingOverlayState extends State<RankingOverlay> {
       ],
     );
   }
+
+  // Change the type of sorting (asc <--> desc)
+  void changeTypeOfSorting() {
+    // if type is
+    switch (typeOfSorting) {
+      // score desc -> change to score asc
+      case TypeOfSorting.SCORE_DESC:
+        {
+          typeOfSorting = TypeOfSorting.SCORE_ASC;
+        }
+        break;
+      // score asc -> change to score desc
+      case TypeOfSorting.SCORE_ASC:
+        {
+          typeOfSorting = TypeOfSorting.SCORE_DESC;
+        }
+        break;
+      // name desc -> change to name asc
+      case TypeOfSorting.NAME_DESC:
+        {
+          typeOfSorting = TypeOfSorting.NAME_ASC;
+        }
+        break;
+      // name asc -> change to name desc
+      case TypeOfSorting.NAME_ASC:
+        {
+          typeOfSorting = TypeOfSorting.NAME_DESC;
+        }
+        break;
+    }
+  }
 }
 
 // Loading screen
@@ -313,12 +314,34 @@ class UserList extends StatelessWidget {
     return ListView.builder(
       controller: scrollController,
       itemCount: users.length,
-      itemBuilder: (ctx, index) => _buildItem(ctx, index, users),
+      itemBuilder: (ctx, index) => BuildItem(index: index, users: users),
     );
   }
 
-  Widget _buildItem(
+  /* Widget _buildItem(
       BuildContext buildContext, int index, List<UserRanking> users) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        UserItem(user: users[index]),
+        Divider(
+          color: Colors.black26,
+          indent: 20,
+          endIndent: 20,
+        ),
+      ],
+    );
+  } */
+}
+
+class BuildItem extends StatelessWidget {
+  final int index;
+  final List<UserRanking> users;
+
+  BuildItem({this.index, this.users});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
