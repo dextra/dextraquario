@@ -23,7 +23,7 @@ class UserModel {
 
   // GET
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _id = snapshot.data()[ID];
+    _id = snapshot.id;
     _name = snapshot.data()[NAME];
     _photo = snapshot.data()[PHOTO];
     _score = snapshot.data()[SCORE];
