@@ -3,7 +3,6 @@ import 'package:dextraquario/common.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
-import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../contribution.dart';
@@ -14,87 +13,6 @@ class AdminOverlay extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
   AdminOverlay({this.onClose});
-
-  Widget _contributionItem(BuildContext context, int index) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ExpansionTile(
-          leading: Container(
-            width: 64,
-            height: 64,
-            child: SpriteWidget(
-                sprite: Assets.ui.getSprite(
-              _pendingItems[index].type.toString().replaceAll('ItemType.', ''),
-            )),
-          ),
-          trailing: Text(
-            _pendingItems[index].date.toString(),
-            style: CommonText.itemTitle,
-          ),
-          title: Text(
-            _pendingItems[index].getItemDescription(),
-            style: CommonText.itemTitle,
-          ),
-          subtitle: Text(
-            _pendingItems[index].author,
-            style: CommonText.itemSubtitle,
-          ),
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
-                  child: Row(children: [
-                    Expanded(
-                      child: Text(
-                        _pendingItems[index].description +
-                            "\n\n" +
-                            _pendingItems[index].link,
-                        style: CommonText.itemSubtitle,
-                      ),
-                    ),
-                  ]),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 48, bottom: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                          padding: EdgeInsets.only(right: 16),
-                          child: SpriteButton(
-                              width: 32,
-                              height: 32,
-                              onPressed: null,
-                              label: null,
-                              sprite: Assets.closeButton32,
-                              pressedSprite: Assets.closeButton32)),
-                      SpriteButton(
-                          width: 32,
-                          height: 32,
-                          onPressed: null,
-                          label: null,
-                          sprite: Assets.closeButton32,
-                          pressedSprite: Assets.closeButton32),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-        Divider(
-          color: Colors.black26,
-          indent: 20,
-          endIndent: 20,
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +76,7 @@ class AdminOverlay extends StatelessWidget {
                                         Color(CommonColors.boxInsetBackground),
                                   ),
                                 ],
-                                border: _insetBorder(),
+                                border: Common.insetBorder,
                               ),
                               child: Column(
                                 children: [
@@ -192,7 +110,10 @@ class AdminOverlay extends StatelessWidget {
                                         controller: _scrollController,
                                         itemCount: _pendingItems.length,
                                         itemBuilder: (ctx, index) =>
-                                            _contributionItem(ctx, index),
+                                            ContributionItem(
+                                          contribution: _pendingItems[index],
+                                          index: index,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -212,14 +133,6 @@ class AdminOverlay extends StatelessWidget {
       ],
     );
   }
-}
-
-Border _insetBorder() {
-  return Border(
-      right: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
-      bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 4.0),
-      left: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0),
-      top: BorderSide(color: Color(CommonColors.darkBorder), width: 4.0));
 }
 
 List _mockItems() {

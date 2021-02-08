@@ -1,3 +1,6 @@
+import 'package:dextraquario/overlays/profile_overlay.dart';
+import 'package:dextraquario/overlays/add_contribution_overlay.dart';
+import 'package:dextraquario/overlays/ranking_overlay.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -54,33 +57,57 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                       game.overlays.remove('LoginScreenOverlay');
                       game.overlays.add('HomeScreenOverlay');
-                      game.overlays.add('gearOverlay');
                     }
                   });
                 },
                 'HomeScreenOverlay': (ctx, game) {
-                  return HomeScreenOverlay();
-                },
-                'gearOverlay': (ctx, game) {
-                  return GearOverlay(
-                    onOpen: () {
-                      if (!game.overlays.isActive('adminOverlay')) {
-                        game.overlays.add('adminOverlay');
-                        game.overlays.remove('gearOverlay');
-                      }
+                  return HomeScreenOverlay(
+                    onAddClick: () {
+                      game.overlays.add('addContributionScreenOverlay');
                     },
+                    onGearClick: () {
+                      game.overlays.add('adminOverlay');
+                    },
+                    onRankingClick: () {
+                      game.overlays.add('rankingOverlay');
+                    },
+                    onUserClick: () {
+                      game.overlays.add('userOverlay');
+                    },
+                    user: authProvider.user,
                   );
                 },
                 'adminOverlay': (ctx, game) {
                   return AdminOverlay(
                     onClose: () {
                       game.overlays.remove('adminOverlay');
-                      game.overlays.add('gearOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
                   );
                 },
+                'rankingOverlay': (ctx, game) {
+                  return RankingOverlay(
+                    onClose: () {
+                      game.overlays.remove('rankingOverlay');
+                    },
+                  );
+                },
+                'profileOverlay': (ctx, game) {
+                  return ProfileOverlay(
+                    onClose: () {
+                      game.overlays.remove('profileOverlay');
+                    },
+                    userAuth: authProvider.user,
+                  );
+                },
                 'addContributionScreenOverlay': (ctx, game) {
-                  return null;
+                  return AddContributionScreenOverlay(
+                    onClick: () {
+                      game.overlays.remove('addContributionScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
+                    },
+                    user: authProvider.user,
+                  );
                 }
               },
               initialActiveOverlays: ['LoginScreenOverlay'],
