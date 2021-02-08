@@ -96,6 +96,7 @@ class GameScreen extends StatelessWidget {
                       game.overlays.remove('addContributionScreenOverlay');
                       game.overlays.add('homeScreenOverlay');
                     },
+                    user: authProvider.user,
                   );
                 }
               },
