@@ -1,3 +1,4 @@
+import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
 import 'package:flame/game/game_widget.dart';
@@ -85,6 +86,13 @@ class GameScreen extends StatelessWidget {
                   return RankingOverlay(
                     onClose: () {
                       game.overlays.remove('rankingOverlay');
+                    },
+                  );
+                },
+                'profileOverlay': (ctx, game) {
+                  return ProfileOverlay(
+                    onClose: () {
+                      game.overlays.remove('profileOverlay');
                     },
                   );
                 },
