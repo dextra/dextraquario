@@ -25,12 +25,6 @@ void main() async {
   await Assets.load();
   await Firebase.initializeApp();
 
-  var teste = await UserServices().getTopUsers();
-
-  teste.forEach((element) {
-    print(element.name + " | " + element.score.toString());
-  });
-
   final fishes = await LoadFishes.loadFishes();
   final game = DextraQuario();
   int mostContributions = fishes.fold(

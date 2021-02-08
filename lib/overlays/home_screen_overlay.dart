@@ -46,77 +46,84 @@ class HomeScreenOverlay extends StatelessWidget {
     return Stack(
       children: [
         // Painel do ranking
-        Container(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Positioned(
-                  top: 0,
-                  right: 720,
-                  child: Image.asset('images/ranking_panel.png'),
+        GestureDetector(
+          onTap: () => onRankingClick?.call(),
+          child: Stack(
+            children: [
+              Container(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Positioned(
+                        top: 0,
+                        right: 720,
+                        child: Image.asset('images/ranking_panel.png'),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Segundo lugar
+                  Container(
+                    width: 280,
+                    padding: EdgeInsets.only(top: 24, left: 26),
+                    child: Text(topUsersList[1].getShortName(),
+                        style: CommonText.itemText),
+                  ),
+
+                  //Primeiro lugar
+                  Container(
+                      width: 175,
+                      padding: EdgeInsets.only(top: 24, left: 20),
+                      child: Text(topUsersList[0].getShortName(),
+                          style: CommonText.itemTitle)),
+
+                  //Terceiro Lugar
+                  Container(
+                    width: 280,
+                    padding: EdgeInsets.only(top: 24, left: 132),
+                    child: Text(topUsersList[2].getShortName(),
+                        style: CommonText.itemText),
+                  ),
+                ],
+              ),
+
+              //Medalhas
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 14, right: 740),
+                    child: Image.asset('images/silver_medal.png'),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 8, right: 200),
+                    child: Image.asset('images/gold_medal.png'),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 14, left: 380),
+                    child: Image.asset('images/bronze_medal.png'),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Segundo lugar
-            Container(
-              width: 250,
-              padding: EdgeInsets.only(top: 24, right: 96),
-              child: Text(topUsersList[1].getShortName(),
-                  style: CommonText.itemText),
-            ),
-
-            //Primeiro lugar
-            Container(
-                width: 175,
-                padding: EdgeInsets.only(top: 24, left: 20),
-                child: Text(topUsersList[0].getShortName(),
-                    style: CommonText.itemTitle)),
-
-            //Terceiro Lugar
-            Container(
-              width: 250,
-              padding: EdgeInsets.only(top: 24, left: 132),
-              child: Text(topUsersList[2].getShortName(),
-                  style: CommonText.itemText),
-            ),
-          ],
-        ),
-
-        //Medalhas
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 14, right: 740),
-              child: Image.asset('images/silver_medal.png'),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 8, right: 200),
-              child: Image.asset('images/gold_medal.png'),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 14, left: 380),
-              child: Image.asset('images/bronze_medal.png'),
-            ),
-          ],
         ),
 
         // Botões de logout e adicionar
@@ -168,58 +175,65 @@ class HomeScreenOverlay extends StatelessWidget {
         ),
 
         // Painel do canto inferior esquerdo
-        Positioned(
-          bottom: 108,
-          left: 192,
-          child: NineTileBox(
-            image: Assets.panelImage,
-            tileSize: 12,
-            destTileSize: 16,
-            width: 288,
-            height: 80,
-          ),
-        ),
-        Positioned(
-          bottom: 128,
-          left: 222,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                userModel.getShortName(),
-                style: CommonText.itemTitle,
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  userModel.score.toString() +
-                      " " +
-                      contributionPlural(userModel.score),
-                  style: CommonText.itemTitle,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          bottom: 100,
-          left: 96,
+        GestureDetector(
+          onTap: () => onUserClick?.call(),
           child: Stack(
             children: [
-              NineTileBox(
-                image: Assets.userEmptyBottom,
-                tileSize: 16,
-                destTileSize: 24,
-                width: 96,
-                height: 96,
+              Positioned(
+                bottom: 108,
+                left: 192,
+                child: NineTileBox(
+                  image: Assets.panelImage,
+                  tileSize: 12,
+                  destTileSize: 16,
+                  width: 288,
+                  height: 80,
+                ),
               ),
-              Image.network(userModel.photo),
-              NineTileBox(
-                image: Assets.userEmptyFrame,
-                tileSize: 16,
-                destTileSize: 24,
-                width: 96,
-                height: 96,
+              Positioned(
+                bottom: 128,
+                left: 222,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      userModel.getShortName(),
+                      style: CommonText.itemTitle,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: Text(
+                        userModel.score.toString() +
+                            " " +
+                            contributionPlural(userModel.score),
+                        style: CommonText.itemTitle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 100,
+                left: 96,
+                child: Stack(
+                  children: [
+                    NineTileBox(
+                      image: Assets.userEmptyBottom,
+                      tileSize: 16,
+                      destTileSize: 24,
+                      width: 96,
+                      height: 96,
+                    ),
+                    Image.network(userModel.photo),
+                    NineTileBox(
+                      image: Assets.userEmptyFrame,
+                      tileSize: 16,
+                      destTileSize: 24,
+                      width: 96,
+                      height: 96,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
