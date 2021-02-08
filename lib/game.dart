@@ -73,6 +73,7 @@ class GameScreen extends StatelessWidget {
                     onUserClick: () {
                       game.overlays.add('userOverlay');
                     },
+                    user: authProvider.user,
                   );
                 },
                 'adminOverlay': (ctx, game) {
