@@ -40,11 +40,22 @@ class ContributionServices {
         return ContributionModel.fromSnapshot(doc);
       });
 
-  // Get contribution by user
-  Future<ContributionModel> getContributionByUser(String id) =>
-      firebaseFirestore.collection(collection).doc(id).get().then((doc) {
-        return ContributionModel.fromSnapshot(doc);
-      });
+  // Get contributions by user
+  Future< List<ContributionModel> > getContributionByUser(String id) async {
+    List<ContributionModel> contributions = [];
+
+    final data = await firebaseFirestore
+        .collection(collection)
+        .where('user_id', isEqualTo: id)
+        .orderBy('date', descending: true)
+        .get();
+
+    await Future.forEach(data.docs, (contribution) {
+      contributions.add(ContributionModel.fromSnapshot(contribution));
+    });
+
+    return contributions;    
+  }
 
   // Does the contribution exists
   Future<bool> doesContributionExist(String id) async => firebase
