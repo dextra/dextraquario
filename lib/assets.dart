@@ -13,6 +13,7 @@ class Assets {
   static Sprite gear;
   static Sprite closeButton32;
   static Sprite closeButton48;
+  static Sprite profileMedal;
   static dui.Image panelImage;
   static dui.Image buttonImage;
   static dui.Image userEmptyBottom;
