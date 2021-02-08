@@ -134,7 +134,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                   ),
                                                   onTap: () {
                                                     setState(() {
-                                                      changeTypeOfSorting();
+                                                      changeTypeOfSortingScore();
                                                     });
                                                   },
                                                 ),
@@ -150,7 +150,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                   ),
                                                   onTap: () {
                                                     setState(() {
-                                                      changeTypeOfSorting();
+                                                      changeTypeOfSortingName();
                                                     });
                                                   },
                                                 ),
@@ -162,7 +162,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                   ),
                                                   onTap: () {
                                                     setState(() {
-                                                      changeTypeOfSorting();
+                                                      changeTypeOfSortingScore();
                                                     });
                                                   },
                                                 ),
@@ -245,8 +245,8 @@ class _RankingOverlayState extends State<RankingOverlay> {
     );
   }
 
-  // Change the type of sorting (asc <--> desc)
-  void changeTypeOfSorting() {
+  // Change the type of sorting SCORE (asc <--> desc)
+  void changeTypeOfSortingScore() {
     // if type is
     switch (typeOfSorting) {
       // score desc -> change to score asc
@@ -256,21 +256,28 @@ class _RankingOverlayState extends State<RankingOverlay> {
         }
         break;
       // score asc -> change to score desc
-      case TypeOfSorting.SCORE_ASC:
+      default:
         {
           typeOfSorting = TypeOfSorting.SCORE_DESC;
         }
         break;
-      // name desc -> change to name asc
-      case TypeOfSorting.NAME_DESC:
-        {
-          typeOfSorting = TypeOfSorting.NAME_ASC;
-        }
-        break;
+    }
+  }
+
+  // Change the type of sorting NAME (asc <--> desc)
+  void changeTypeOfSortingName() {
+    // if type is
+    switch (typeOfSorting) {
       // name asc -> change to name desc
       case TypeOfSorting.NAME_ASC:
         {
           typeOfSorting = TypeOfSorting.NAME_DESC;
+        }
+        break;
+      // name desc -> change to name asc
+      default:
+        {
+          typeOfSorting = TypeOfSorting.NAME_ASC;
         }
         break;
     }
