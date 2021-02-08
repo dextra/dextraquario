@@ -1,3 +1,4 @@
+import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,6 +89,13 @@ class GameScreen extends StatelessWidget {
                       game.overlays.remove('rankingOverlay');
                     },
                     userAuth: authProvider.user,
+                  );
+                },
+                'profileOverlay': (ctx, game) {
+                  return ProfileOverlay(
+                    onClose: () {
+                      game.overlays.remove('profileOverlay');
+                    },
                   );
                 },
                 'addContributionScreenOverlay': (ctx, game) {
