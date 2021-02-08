@@ -57,7 +57,6 @@ class GameScreen extends StatelessWidget {
                     } else {
                       appProvider.changeLoading();
                       game.overlays.remove('homeScreenOverlay');
-                      game.overlays.add('addContributionScreenOverlay');
                       game.overlays.add('gearOverlay');
                     }
                   });
