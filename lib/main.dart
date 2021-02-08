@@ -1,5 +1,6 @@
 import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
+import 'package:dextraquario/services/user_service.dart';
 import 'package:dextraquario/widgets/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Assets.load();
   await Firebase.initializeApp();
+
+  var teste = await UserServices().getTopUsers();
+
+  teste.forEach((element) {
+    print(element.name + " | " + element.score.toString());
+  });
 
   final fishes = await LoadFishes.loadFishes();
   final game = DextraQuario();

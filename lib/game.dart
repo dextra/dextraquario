@@ -1,6 +1,7 @@
 import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
+import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'LoginScreenOverlay': (ctx, game) {
+                'loginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -55,12 +56,12 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
-                      game.overlays.remove('LoginScreenOverlay');
-                      game.overlays.add('HomeScreenOverlay');
+                      game.overlays.remove('loginScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     }
                   });
                 },
-                'HomeScreenOverlay': (ctx, game) {
+                'homeScreenOverlay': (ctx, game) {
                   return HomeScreenOverlay(
                     onAddClick: () {
                       game.overlays.add('addContributionScreenOverlay');
@@ -73,6 +74,10 @@ class GameScreen extends StatelessWidget {
                     },
                     onUserClick: () {
                       game.overlays.add('userOverlay');
+                    },
+                    onLogoutClick: () {
+                      game.overlays.remove('homeScreenOverlay');
+                      game.overlays.add('loginScreenOverlay');
                     },
                     user: authProvider.user,
                   );
@@ -109,7 +114,7 @@ class GameScreen extends StatelessWidget {
                   );
                 }
               },
-              initialActiveOverlays: ['LoginScreenOverlay'],
+              initialActiveOverlays: ['loginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);

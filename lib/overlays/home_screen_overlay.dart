@@ -14,23 +14,27 @@ class HomeScreenOverlay extends StatelessWidget {
   final Function onAddClick;
   final Function onUserClick;
   final Function onRankingClick;
+  final Function onLogoutClick;
   final User user;
 
-  HomeScreenOverlay(
-      {this.onGearClick,
-      this.onAddClick,
-      this.onUserClick,
-      this.onRankingClick,
-      this.user});
+  HomeScreenOverlay({
+    this.onGearClick,
+    this.onAddClick,
+    this.onUserClick,
+    this.onRankingClick,
+    this.onLogoutClick,
+    this.user,
+  });
 
   @override
   Widget build(context) {
     final userModel = UserServices().getUserById(user.uid);
+    final topUsersList = UserServices().getTopUsers();
     return FutureBuilder(
-      future: userModel,
-      builder: (context, snapshot) {
+      future: Future.wait([userModel, topUsersList]),
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
-          return page(context, snapshot.data);
+          return page(context, snapshot.data[0], snapshot.data[1]);
         } else {
           return Loading();
         }
@@ -38,7 +42,7 @@ class HomeScreenOverlay extends StatelessWidget {
     );
   }
 
-  Widget page(context, UserModel userModel) {
+  Widget page(context, UserModel userModel, List<UserModel> topUsersList) {
     return Stack(
       children: [
         // Painel do ranking
@@ -63,20 +67,25 @@ class HomeScreenOverlay extends StatelessWidget {
           children: [
             // Segundo lugar
             Container(
-              padding: EdgeInsets.only(top: 23, right: 170),
-              child: Text('Segundo', style: CommonText.itemTitle),
+              width: 250,
+              padding: EdgeInsets.only(top: 24, right: 96),
+              child: Text(topUsersList[1].getShortName(),
+                  style: CommonText.itemText),
             ),
 
             //Primeiro lugar
             Container(
-              padding: EdgeInsets.only(top: 24),
-              child: Text('Primeiro', style: CommonText.itemTitle),
-            ),
+                width: 175,
+                padding: EdgeInsets.only(top: 24, left: 20),
+                child: Text(topUsersList[0].getShortName(),
+                    style: CommonText.itemTitle)),
 
             //Terceiro Lugar
             Container(
-              padding: EdgeInsets.only(top: 23, left: 170),
-              child: Text('Terceiro', style: CommonText.itemTitle),
+              width: 250,
+              padding: EdgeInsets.only(top: 24, left: 132),
+              child: Text(topUsersList[2].getShortName(),
+                  style: CommonText.itemText),
             ),
           ],
         ),
@@ -110,7 +119,7 @@ class HomeScreenOverlay extends StatelessWidget {
           ],
         ),
 
-        // Botões de configurações e adicionar
+        // Botões de logout e adicionar
         Container(
           child: Align(
             alignment: Alignment.centerRight,
@@ -120,9 +129,9 @@ class HomeScreenOverlay extends StatelessWidget {
                 GestureDetector(
                   child: Container(
                       padding: EdgeInsets.only(top: 44, right: 44),
-                      child: Image.asset('images/gear.png')),
+                      child: Image.asset('images/close_button.png')),
                   onTap: () {
-                    onGearClick?.call();
+                    onLogoutClick?.call();
                   },
                 ),
                 GestureDetector(
@@ -137,6 +146,27 @@ class HomeScreenOverlay extends StatelessWidget {
             ),
           ),
         ),
+
+        // Botão de configuração
+        Container(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  child: Container(
+                      padding: EdgeInsets.only(top: 44, left: 44),
+                      child: Image.asset('images/gear.png')),
+                  onTap: () {
+                    onGearClick?.call();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+
         // Painel do canto inferior esquerdo
         Positioned(
           bottom: 108,
@@ -156,13 +186,15 @@ class HomeScreenOverlay extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                userModel.name,
+                userModel.getShortName(),
                 style: CommonText.itemTitle,
               ),
               Container(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
-                  userModel.score.toString(),
+                  userModel.score.toString() +
+                      " " +
+                      contributionPlural(userModel.score),
                   style: CommonText.itemTitle,
                 ),
               ),
@@ -194,5 +226,13 @@ class HomeScreenOverlay extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String contributionPlural(int score) {
+    if (score == 1) {
+      return "Contribuição";
+    } else {
+      return "Contribuições";
+    }
   }
 }

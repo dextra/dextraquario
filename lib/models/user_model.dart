@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class UserModel {
   // constantes com os nomes dos documentos no banco de dados
@@ -20,6 +21,12 @@ class UserModel {
   String get photo => _photo;
   int get score => _score;
   bool get admin => _admin;
+
+  String getShortName() {
+    List<String> nameArray = _name.split(" ");
+    String shortName = nameArray.first + " " + nameArray.last;
+    return shortName;
+  }
 
   // GET
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
