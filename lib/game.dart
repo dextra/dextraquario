@@ -18,7 +18,6 @@ import './dextra_quario.dart';
 import './overlays/fish_overlay.dart';
 import './overlays/login_screen_overlay.dart';
 import './overlays/home_screen_overlay.dart';
-import 'overlays/gear_overlay.dart';
 
 class GameScreen extends StatelessWidget {
   final DextraQuario game;

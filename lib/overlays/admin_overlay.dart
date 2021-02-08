@@ -18,18 +18,31 @@ class AdminOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Padding(
-            padding: EdgeInsets.only(top: 44, right: 44),
-            child: SpriteButton(
-                onPressed: () => onClose?.call(),
-                label: null,
-                width: 48,
-                height: 48,
-                sprite: Assets.closeButton48,
-                pressedSprite: Assets.closeButton48),
-          ),
-        ]),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 44, right: 44),
+              child: Stack(
+                children: [
+                  Container(
+                    child: Image.asset('images/closeButton48.png',
+                        color: Color.fromRGBO(0, 0, 0, 0.5)),
+                    padding: EdgeInsets.only(top: 2.0, left: 0.0),
+                  ),
+                  SpriteButton(
+                    onPressed: () => onClose?.call(),
+                    label: null,
+                    width: 48,
+                    height: 48,
+                    sprite: Assets.closeButton48,
+                    pressedSprite: Assets.closeButton48,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
