@@ -44,7 +44,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'loginScreenOverlay': (ctx, game) {
+                'LoginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -56,29 +56,33 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
-                      game.overlays.remove('homeScreenOverlay');
-                      game.overlays.add('gearOverlay');
+                      game.overlays.remove('LoginScreenOverlay');
+                      game.overlays.add('HomeScreenOverlay');
                     }
                   });
                 },
-                'homeScreenOverlay': (ctx, game) {
-                  return HomeScreenOverlay();
-                },
-                'gearOverlay': (ctx, game) {
-                  return GearOverlay(
-                    onOpen: () {
-                      if (!game.overlays.isActive('adminOverlay')) {
-                        game.overlays.add('adminOverlay');
-                        game.overlays.remove('gearOverlay');
-                      }
+                'HomeScreenOverlay': (ctx, game) {
+                  return HomeScreenOverlay(
+                    onAddClick: () {
+                      game.overlays.add('addContributionScreenOverlay');
                     },
+                    onGearClick: () {
+                      game.overlays.add('adminOverlay');
+                    },
+                    onRankingClick: () {
+                      game.overlays.add('rankingOverlay');
+                    },
+                    onUserClick: () {
+                      game.overlays.add('userOverlay');
+                    },
+                    user: authProvider.user,
                   );
                 },
                 'adminOverlay': (ctx, game) {
                   return AdminOverlay(
                     onClose: () {
                       game.overlays.remove('adminOverlay');
-                      game.overlays.add('gearOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
                   );
                 },
@@ -108,7 +112,7 @@ class GameScreen extends StatelessWidget {
                   );
                 }
               },
-              initialActiveOverlays: ['loginScreenOverlay'],
+              initialActiveOverlays: ['LoginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);
