@@ -113,6 +113,7 @@ class AdminOverlay extends StatelessWidget {
                                             ContributionItem(
                                           contribution: _pendingItems[index],
                                           index: index,
+                                          canApprove: false,
                                         ),
                                       ),
                                     ),
