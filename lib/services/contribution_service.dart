@@ -1,6 +1,11 @@
+import 'package:dextraquario/fish_info.dart';
 import 'package:dextraquario/helper/constants.dart';
 
 import 'package:dextraquario/models/contribution_model.dart';
+import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/user_service.dart';
+
+import 'package:dextraquario/contribution.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -41,7 +46,7 @@ class ContributionServices {
       });
 
   // Get contributions by user
-  Future< List<ContributionModel> > getContributionByUser(String id) async {
+  Future<List<ContributionModel>> getContributionByUser(String id) async {
     List<ContributionModel> contributions = [];
 
     final data = await firebaseFirestore
@@ -52,9 +57,9 @@ class ContributionServices {
 
     await Future.forEach(data.docs, (contribution) {
       contributions.add(ContributionModel.fromSnapshot(contribution));
-    });
+    });    
 
-    return contributions;    
+    return contributions;
   }
 
   // Does the contribution exists
@@ -113,5 +118,20 @@ class ContributionServices {
     firebaseFirestore.collection(collection).doc(contribution_id).update({
       'approval': approvalStatus,
     });
+  }
+
+  Contribution convertContributionModelToContribution(
+      ContributionModel contributionModel) {
+    Contribution resultContribution;
+
+    resultContribution = Contribution(
+      contributionModel.date,
+      type: ItemType.DESAFIO_TECNICO,
+      author: contributionModel.author,
+      description: contributionModel.description,
+      link: contributionModel.contribution_link,
+    );
+
+    return resultContribution;
   }
 }

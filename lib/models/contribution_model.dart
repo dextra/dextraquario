@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/user_service.dart';
 
 class ContributionModel {
   // constantes com os nomes dos documentos no banco de dados
@@ -16,6 +18,7 @@ class ContributionModel {
   String _link;
   String _description;
   String _approval;
+  String _author;
 
   //  getters
   String get contribution_id => _contributionid;
@@ -25,6 +28,7 @@ class ContributionModel {
   String get contribution_link => _link;
   String get description => _description;
   String get approval => _approval;
+  String get author => _author;
 
   // GET
   ContributionModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -35,5 +39,13 @@ class ContributionModel {
     _link = snapshot.data()[LINK];
     _description = snapshot.data()[DESCRIPTION];
     _approval = snapshot.data()[APPROVAL];
+
+    _initAuthor();
+  }
+
+  Future _initAuthor() async {
+    UserModel user = await UserServices().getUserById(_userid);
+
+    _author = user.name;
   }
 }

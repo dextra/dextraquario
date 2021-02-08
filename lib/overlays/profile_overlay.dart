@@ -1,5 +1,7 @@
 import 'package:dextraquario/fish_info.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
@@ -62,11 +64,47 @@ class _ProfileOverlayState extends State<ProfileOverlay> {
 
 class ProfileScreen extends StatelessWidget {
   final Function onClose;
-  final List<Contribution> _contributions = _mockItems();
   final ScrollController _scrollController = ScrollController();
   final UserModel user;
+  List<Contribution> _contributions;
 
-  ProfileScreen({this.onClose, this.user});
+  ProfileScreen({this.onClose, this.user}) {
+    _initContributions();
+  }
+
+  Future _initContributions() async {
+    print('user:' + user.id);
+    List<ContributionModel> contributionList =
+        await ContributionServices().getContributionByUser(user.id);
+
+    print(contributionList[0].author);
+    _contributions = contributionList.map((contribution) {
+      print('''
+******************************
+
+
+CONTRIBUTIONS:
+${contribution.author}
+
+
+******************************
+''');
+
+      return ContributionServices()
+          .convertContributionModelToContribution(contribution);
+    }).toList();
+
+    print('''
+******************************
+
+
+CONTRIBUTIONS:
+${_contributions[0].author}
+
+
+******************************
+''');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +283,7 @@ class ProfileScreen extends StatelessWidget {
                                           child: ListView.builder(
                                             padding: EdgeInsets.only(top: 8),
                                             controller: _scrollController,
-                                            itemCount: _contributions.length,
+                                            itemCount: 1,
                                             itemBuilder: (ctx, index) =>
                                                 ContributionItem(
                                               contribution:
@@ -350,86 +388,86 @@ String _getUserRankMedal(int rank) {
   }
 }
 
-List _mockItems() {
-  return <Contribution>[
-    Contribution(
-      DateTime(2020, DateTime.september, 10),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Melhoria no Dextraquario para lidar com o gerenciamento de visibilidade da janela do browser',
-      link: 'https://github.com/dextra/dextraquario/pull/54',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CAFE_COM_CODIGO,
-      description: 'This is a mockup description.',
-      link: 'https://github.com/dextra/dextraquario/pull/yournumberhere',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.ARTIGO_BLOG_DEXTRA,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CHAPA,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-  ];
-}
+// List _mockItems() {
+//   return <Contribution>[
+//     Contribution(
+//       DateTime(2020, DateTime.september, 10),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Melhoria no Dextraquario para lidar com o gerenciamento de visibilidade da janela do browser',
+//       link: 'https://github.com/dextra/dextraquario/pull/54',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CAFE_COM_CODIGO,
+//       description: 'This is a mockup description.',
+//       link: 'https://github.com/dextra/dextraquario/pull/yournumberhere',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.ARTIGO_BLOG_DEXTRA,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CHAPA,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//     Contribution(
+//       DateTime(2021, DateTime.january, 1),
+//       author: 'Vinicius Levorato',
+//       type: ItemType.CONTRIBUICAO_COMUNIDADE,
+//       description:
+//           'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
+//       link: 'https://github.com/dextra/dextraquario/pull/35',
+//     ),
+//   ];
+// }
