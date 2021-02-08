@@ -55,8 +55,8 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
-                      game.overlays.remove('loginScreenOverlay');
-                      game.overlays.add('homeScreenOverlay');
+                      game.overlays.remove('homeScreenOverlay');
+                      game.overlays.add('addContributionScreenOverlay');
                       game.overlays.add('gearOverlay');
                     }
                   });
@@ -96,6 +96,7 @@ class GameScreen extends StatelessWidget {
                       game.overlays.remove('addContributionScreenOverlay');
                       game.overlays.add('homeScreenOverlay');
                     },
+                    user: authProvider.user,
                   );
                 }
               },
