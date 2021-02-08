@@ -42,7 +42,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'loginScreenOverlay': (ctx, game) {
+                'LoginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -101,7 +101,7 @@ class GameScreen extends StatelessWidget {
                   );
                 }
               },
-              initialActiveOverlays: ['loginScreenOverlay'],
+              initialActiveOverlays: ['LoginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);

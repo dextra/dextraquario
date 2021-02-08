@@ -157,31 +157,13 @@ class HomeScreenOverlay extends StatelessWidget {
             children: [
               Text(
                 userModel.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  shadows: <Shadow>[
-                    Shadow(
-                        blurRadius: 0,
-                        offset: Offset(1.0, 1.0),
-                        color: Color.fromARGB(255, 0, 0, 0))
-                  ],
-                ),
+                style: CommonText.itemTitle,
               ),
               Container(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
                   userModel.score.toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    shadows: <Shadow>[
-                      Shadow(
-                          blurRadius: 0,
-                          offset: Offset(1.0, 1.0),
-                          color: Color.fromARGB(255, 0, 0, 0))
-                    ],
-                  ),
+                  style: CommonText.itemTitle,
                 ),
               ),
             ],
