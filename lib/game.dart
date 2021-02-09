@@ -11,6 +11,7 @@ import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
 import 'package:provider/provider.dart';
 
+import 'helper/constants.dart';
 import 'overlays/admin_overlay.dart';
 import 'overlays/fish_overlay.dart';
 import './dextra_quario.dart';
@@ -42,7 +43,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'LoginScreenOverlay': (ctx, game) {
+                'loginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -54,24 +55,35 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
-                      game.overlays.remove('LoginScreenOverlay');
-                      game.overlays.add('HomeScreenOverlay');
+                      game.overlays.remove('loginScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     }
                   });
                 },
-                'HomeScreenOverlay': (ctx, game) {
+                'homeScreenOverlay': (ctx, game) {
                   return HomeScreenOverlay(
                     onAddClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('addContributionScreenOverlay');
                     },
                     onGearClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('adminOverlay');
                     },
                     onRankingClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('rankingOverlay');
                     },
                     onUserClick: () {
-                      game.overlays.add('userOverlay');
+                      game.overlays.remove('homeScreenOverlay');
+                      game.overlays.add('profileOverlay');
+                    },
+                    onLogoutClick: () async {
+                      await authProvider.signOut();
+
+                      game.overlays.remove('homeScreenOverlay');
+
+                      game.overlays.add('loginScreenOverlay');
                     },
                     user: authProvider.user,
                   );
@@ -88,13 +100,16 @@ class GameScreen extends StatelessWidget {
                   return RankingOverlay(
                     onClose: () {
                       game.overlays.remove('rankingOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
+                    userAuth: authProvider.user,
                   );
                 },
                 'profileOverlay': (ctx, game) {
                   return ProfileOverlay(
                     onClose: () {
                       game.overlays.remove('profileOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
                     userAuth: authProvider.user,
                   );
@@ -109,7 +124,7 @@ class GameScreen extends StatelessWidget {
                   );
                 }
               },
-              initialActiveOverlays: ['LoginScreenOverlay'],
+              initialActiveOverlays: ['loginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);

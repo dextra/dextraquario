@@ -43,6 +43,7 @@ class LoginScreenOverlay extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 48,
+                height: 1.2,
                 shadows: <Shadow>[
                   Shadow(
                     blurRadius: 0,
@@ -52,8 +53,8 @@ class LoginScreenOverlay extends StatelessWidget {
                 ],
               ),
             ),
-            padding: EdgeInsets.only(bottom: 132),
-            transform: Matrix4.translationValues(0, -12, 0),
+            padding: EdgeInsets.only(bottom: 144),
+            transform: Matrix4.translationValues(0, -16, 0),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

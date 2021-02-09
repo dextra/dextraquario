@@ -37,9 +37,24 @@ class UserServices {
         return users;
       });
 
+  // Is the user an admin
   Future<bool> isAdmin(String user_id) async {
     UserModel user = await getUserById(user_id);
 
     return user.admin;
   }
+
+  Future<List<UserModel>> getTopUsers() async => firebaseFirestore
+          .collection(collection)
+          .orderBy("score", descending: true)
+          .orderBy("name")
+          .limit(3)
+          .get()
+          .then((result) {
+        List<UserModel> users = [];
+        for (DocumentSnapshot user in result.docs) {
+          users.add(UserModel.fromSnapshot(user));
+        }
+        return users;
+      });
 }

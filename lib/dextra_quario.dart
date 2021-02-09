@@ -41,8 +41,24 @@ class DextraQuario extends BaseGame with TapDetector {
   }
 
   void _calcScaleFactor() {
-    final _scaleRaw = (min(size.x, size.y) / (min(GAME_WIDTH, GAME_HEIGHT)));
-    _scaleFactor = _scaleRaw - _scaleRaw % 0.02;
+    final window_width = size.x;
+    final window_height = size.y;
+
+    if (GAME_WIDTH > GAME_HEIGHT) {
+      if ((window_width / window_height) > (GAME_WIDTH / GAME_HEIGHT)) {
+        _scaleFactor = window_width / GAME_WIDTH;
+      } else {
+        _scaleFactor = window_height / GAME_HEIGHT;
+      }
+    } else {
+      if ((window_height / window_width) > (GAME_HEIGHT / GAME_WIDTH)) {
+        _scaleFactor = window_width / GAME_HEIGHT;
+      } else {
+        _scaleFactor = window_height / GAME_WIDTH;
+      }
+    }
+
+    _scaleFactor = _scaleFactor + _scaleFactor * 0.02;
 
     final _finalWidth = _scaleFactor * GAME_WIDTH;
     final _finalHeight = _scaleFactor * GAME_HEIGHT;
