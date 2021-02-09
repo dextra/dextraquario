@@ -154,6 +154,7 @@ class HomeScreenOverlay extends StatelessWidget {
           left: 222,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 userModel.name,
@@ -162,7 +163,10 @@ class HomeScreenOverlay extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
-                  userModel.score.toString(),
+                  userModel.score.toString() +
+                      (userModel.score > 1
+                          ? " contribuições"
+                          : " contribuição"),
                   style: CommonText.itemTitle,
                 ),
               ),
@@ -181,7 +185,14 @@ class HomeScreenOverlay extends StatelessWidget {
                 width: 96,
                 height: 96,
               ),
-              Image.network(userModel.photo),
+              Container(
+                padding: EdgeInsets.only(top: 16, left: 16),
+                child: Image.network(
+                  userModel.photo,
+                  width: 64,
+                  height: 64,
+                ),
+              ),
               NineTileBox(
                 image: Assets.userEmptyFrame,
                 tileSize: 16,
