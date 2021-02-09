@@ -2,7 +2,6 @@ import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/user_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
@@ -12,27 +11,28 @@ import '../assets.dart';
 import '../common.dart';
 import '../contribution.dart';
 
+// ignore: must_be_immutable
 class ProfileOverlay extends StatefulWidget {
   final Function onClose;
-  final User userAuth;
+  String userID;
 
-  ProfileOverlay({this.onClose, this.userAuth});
+  ProfileOverlay({this.onClose, this.userID});
 
   @override
   State<StatefulWidget> createState() =>
-      _ProfileOverlayState(onClose: this.onClose, userAuth: this.userAuth);
+      _ProfileOverlayState(onClose: this.onClose, userID: this.userID);
 }
 
 class _ProfileOverlayState extends State<ProfileOverlay> {
   final Function onClose;
-  final User userAuth;
+  final String userID;
 
-  _ProfileOverlayState({this.onClose, this.userAuth});
+  _ProfileOverlayState({this.onClose, this.userID});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: UserServices().getUserById(userAuth.uid),
+      future: UserServices().getUserById(userID),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ProfileScreen(
