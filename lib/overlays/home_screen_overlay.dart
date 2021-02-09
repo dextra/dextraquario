@@ -5,6 +5,7 @@ import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dextraquario/common.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
+import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import 'package:dextraquario/widgets/loading.dart';
@@ -51,11 +52,19 @@ class HomeScreenOverlay extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   Widget page(context, UserModel userModel, List<UserModel> topUsersList,
       double scaleFactor) {
     return Stack(children: [
       // Painel do ranking
       GestureDetector(
+=======
+  Widget page(context, UserModel userModel, List<UserModel> topUsersList) {
+    return Stack(
+      children: [
+        // Painel do ranking
+        GestureDetector(
+>>>>>>> 2a4fb1c26afad27a8edd7368fa38d0a6e349d1a8
           onTap: () => onRankingClick?.call(),
           child: Stack(
             children: [
@@ -192,6 +201,7 @@ class HomeScreenOverlay extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+<<<<<<< HEAD
                       GestureDetector(
                         child: Container(
                             padding: EdgeInsets.only(
@@ -203,6 +213,27 @@ class HomeScreenOverlay extends StatelessWidget {
                         onTap: () {
                           onGearClick?.call();
                         },
+=======
+                      Padding(
+                        padding: EdgeInsets.only(top: 44, left: 44),
+                        child: Stack(
+                          children: [
+                            Container(
+                              child: Image.asset('images/gear.png',
+                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
+                              padding: EdgeInsets.only(top: 2.0, left: 0.0),
+                            ),
+                            SpriteButton(
+                              onPressed: () => onGearClick?.call(),
+                              label: null,
+                              width: 48,
+                              height: 48,
+                              sprite: Assets.gear,
+                              pressedSprite: Assets.gear,
+                            ),
+                          ],
+                        ),
+>>>>>>> 2a4fb1c26afad27a8edd7368fa38d0a6e349d1a8
                       ),
                     ],
                   ),
@@ -230,17 +261,21 @@ class HomeScreenOverlay extends StatelessWidget {
                       left: 222 * scaleFactor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             userModel.getShortName(),
                             style: CommonText.itemTitle,
                           ),
+
+                          // Botão de configuração
                           Container(
                             padding: EdgeInsets.only(top: 10.0),
                             child: Text(
                               userModel.score.toString() +
-                                  " " +
-                                  contributionPlural(userModel.score),
+                                  (userModel.score > 1
+                                      ? " contribuições"
+                                      : " contribuição"),
                               style: CommonText.itemTitle,
                             ),
                           ),
@@ -259,7 +294,14 @@ class HomeScreenOverlay extends StatelessWidget {
                             width: 96,
                             height: 96,
                           ),
-                          Image.network(userModel.photo),
+                          Container(
+                            padding: EdgeInsets.only(top: 16, left: 16),
+                            child: Image.network(
+                              userModel.photo,
+                              width: 64,
+                              height: 64,
+                            ),
+                          ),
                           NineTileBox(
                             image: Assets.userEmptyFrame,
                             tileSize: 16,
@@ -274,15 +316,9 @@ class HomeScreenOverlay extends StatelessWidget {
                 ),
               ),
             ],
-          ))
-    ]);
-  }
-
-  String contributionPlural(int score) {
-    if (score == 1) {
-      return "Contribuição";
-    } else {
-      return "Contribuições";
-    }
+          ),
+        ),
+      ],
+    );
   }
 }
