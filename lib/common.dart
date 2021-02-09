@@ -40,6 +40,13 @@ class CommonText {
       shadows: [
         Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))
       ]);
+  static TextStyle itemText = TextStyle(
+      color: Colors.white,
+      fontSize: 12,
+      height: 1.2,
+      shadows: [
+        Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))
+      ]);
   static TextStyle heightOneShadow(double size) =>
       TextStyle(color: Colors.white, fontSize: size, height: 1, shadows: [
         Shadow(color: Colors.black.withOpacity(0.75), offset: Offset(1, 1))

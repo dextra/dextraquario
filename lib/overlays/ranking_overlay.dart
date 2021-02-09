@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,16 +46,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 44, right: 44),
-              child: SpriteButton(
-                  onPressed: () => widget.onClose?.call(),
-                  label: null,
-                  width: 48,
-                  height: 48,
-                  sprite: Assets.closeButton48,
-                  pressedSprite: Assets.closeButton48),
-            ),
+            CloseButtonWidget(onClick: widget.onClose),
           ],
         ),
         Column(
