@@ -1,4 +1,3 @@
-import 'package:dextraquario/models/user_model.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';

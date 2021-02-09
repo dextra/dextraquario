@@ -4,7 +4,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import '../common.dart';
-import '../services/contribution_service.dart';
 
 class CustomDropdown extends StatefulWidget {
   final Function onClick;

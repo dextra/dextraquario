@@ -1,14 +1,18 @@
+import 'dart:math';
+
 class FishInfo {
   String name;
   String fishColor;
   int ranking;
   List<FishItem> fishItems;
+  static List<String> fishColorList = ['red', 'blue', 'yellow', 'pink', 'green'];
+  static final _random = new Random(); 
 
   FishInfo({this.name, this.fishColor, this.fishItems});
 
-  FishInfo.fromJson(Map<String, dynamic> json)
+  FishInfo.fromJson(Map<String, dynamic> json)  
       : name = json['name'],
-        fishColor = json['fishColor'],
+        fishColor = fishColorList[_random.nextInt(fishColorList.length)],
         ranking = json['ranking'],
         fishItems = json['items']
             .map((fishItem) => FishItem.fromJson(fishItem))

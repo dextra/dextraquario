@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 
 import '../assets.dart';
 import '../common.dart';
-import '../models/user_model.dart';
-import '../services/contribution_service.dart';
 import '../services/contribution_service.dart';
 
 class AddContributionScreenOverlay extends StatefulWidget {

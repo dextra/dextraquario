@@ -5,6 +5,7 @@ import 'package:flame/flame.dart';
 
 class LoadFishes {
   static Future<List<FishInfo>> loadFishes() async {
+
     String fishesString = await Flame.assets.readFile('fishes.json');
     Map fishMap = jsonDecode(fishesString);
     return fishMap['fishes']

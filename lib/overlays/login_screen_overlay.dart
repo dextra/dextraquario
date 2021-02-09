@@ -4,7 +4,6 @@ import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 import 'package:dextraquario/providers/app.dart';
 import 'package:provider/provider.dart';
-import 'package:dextraquario/providers/auth.dart';
 import '../assets.dart';
 
 class LoginScreenOverlay extends StatelessWidget {
@@ -14,7 +13,6 @@ class LoginScreenOverlay extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     final AppProvider appProvider = Provider.of<AppProvider>(context);
     appProvider.changeLoading();
     return BackdropFilter(
