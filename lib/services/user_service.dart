@@ -37,6 +37,7 @@ class UserServices {
         return users;
       });
 
+  // Is the user an admin
   Future<bool> isAdmin(String user_id) async {
     UserModel user = await getUserById(user_id);
 

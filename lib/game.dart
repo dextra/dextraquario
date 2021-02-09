@@ -1,7 +1,6 @@
 import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
-import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -63,15 +62,19 @@ class GameScreen extends StatelessWidget {
                 'homeScreenOverlay': (ctx, game) {
                   return HomeScreenOverlay(
                     onAddClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('addContributionScreenOverlay');
                     },
                     onGearClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('adminOverlay');
                     },
                     onRankingClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('rankingOverlay');
                     },
                     onUserClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('profileOverlay');
                     },
                     onLogoutClick: () {
@@ -93,13 +96,16 @@ class GameScreen extends StatelessWidget {
                   return RankingOverlay(
                     onClose: () {
                       game.overlays.remove('rankingOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
+                    userAuth: authProvider.user,
                   );
                 },
                 'profileOverlay': (ctx, game) {
                   return ProfileOverlay(
                     onClose: () {
                       game.overlays.remove('profileOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
                     userAuth: authProvider.user,
                   );
