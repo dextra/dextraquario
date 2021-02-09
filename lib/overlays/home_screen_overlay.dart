@@ -132,7 +132,7 @@ class HomeScreenOverlay extends StatelessWidget {
                       GestureDetector(
                         child: Container(
                             padding: EdgeInsets.only(top: 44, right: 44),
-                            child: Image.asset('images/close_button.png')),
+                            child: Image.asset('images/closeButton48.png')),
                         onTap: () {
                           onLogoutClick?.call();
                         },
