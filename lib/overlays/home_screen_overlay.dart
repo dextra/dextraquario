@@ -161,7 +161,7 @@ class HomeScreenOverlay extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 44, right: 44),
+                        padding: EdgeInsets.only(top: 44, left: 44),
                         child: Stack(
                           children: [
                             Container(
@@ -180,14 +180,6 @@ class HomeScreenOverlay extends StatelessWidget {
                           ],
                         ),
                       ),
-                      /* GestureDetector(
-                        child: Container(
-                            padding: EdgeInsets.only(top: 44, left: 44),
-                            child: Image.asset('images/gear.png')),
-                        onTap: () {
-                          onGearClick?.call();
-                        },
-                      ), */
                     ],
                   ),
                 ),

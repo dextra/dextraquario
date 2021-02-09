@@ -25,6 +25,9 @@ class Assets {
     background = await FireAtlas.loadAsset('atlases/background.fa');
     ui = await FireAtlas.loadAsset('atlases/ui.fa');
 
+    final _gearImage = await Flame.images.load('gear.png');
+    gear = Sprite(_gearImage);
+
     final _bubbleImage = await Flame.images.load('bubble.png');
     bubble = Sprite(_bubbleImage);
 
