@@ -87,7 +87,7 @@ class HomeScreenOverlay extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.only(top: 14, right: 740),
-              child: Image.asset('images/silver_medal.png'),
+              child: Image.asset('images/silver_medal33.png'),
             ),
           ],
         ),
@@ -105,7 +105,7 @@ class HomeScreenOverlay extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.only(top: 14, left: 380),
-              child: Image.asset('images/bronze_medal.png'),
+              child: Image.asset('images/bronze_medal33.png'),
             ),
           ],
         ),
