@@ -148,9 +148,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                           .itemSubtitle,
                                                     ),
                                                     onTap: () {
-                                                      setState(() {
-                                                        changeTypeOfSortingScore();
-                                                      });
+                                                      changeTypeOfSortingScore();
                                                     },
                                                   ),
                                                   GestureDetector(
@@ -164,9 +162,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                       ),
                                                     ),
                                                     onTap: () {
-                                                      setState(() {
-                                                        changeTypeOfSortingScore();
-                                                      });
+                                                      changeTypeOfSortingName();
                                                     },
                                                   ),
                                                   GestureDetector(
@@ -176,9 +172,7 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                           .itemSubtitle,
                                                     ),
                                                     onTap: () {
-                                                      setState(() {
-                                                        changeTypeOfSortingScore();
-                                                      });
+                                                      changeTypeOfSortingScore();
                                                     },
                                                   ),
                                                 ],
@@ -266,40 +260,48 @@ class _RankingOverlayState extends State<RankingOverlay> {
 
   // Change the type of sorting SCORE (asc <--> desc)
   void changeTypeOfSortingScore() {
-    // if type is
-    switch (typeOfSorting) {
-      // score desc -> change to score asc
-      case TypeOfSorting.SCORE_DESC:
-        {
-          typeOfSorting = TypeOfSorting.SCORE_ASC;
+    setState(
+      () {
+        // if type is
+        switch (typeOfSorting) {
+          // score desc -> change to score asc
+          case TypeOfSorting.SCORE_DESC:
+            {
+              typeOfSorting = TypeOfSorting.SCORE_ASC;
+            }
+            break;
+          // score asc -> change to score desc
+          default:
+            {
+              typeOfSorting = TypeOfSorting.SCORE_DESC;
+            }
+            break;
         }
-        break;
-      // score asc -> change to score desc
-      default:
-        {
-          typeOfSorting = TypeOfSorting.SCORE_DESC;
-        }
-        break;
-    }
+      },
+    );
   }
 
   // Change the type of sorting NAME (asc <--> desc)
   void changeTypeOfSortingName() {
-    // if type is
-    switch (typeOfSorting) {
-      // name asc -> change to name desc
-      case TypeOfSorting.NAME_ASC:
-        {
-          typeOfSorting = TypeOfSorting.NAME_DESC;
+    setState(
+      () {
+        // if type is
+        switch (typeOfSorting) {
+          // name asc -> change to name desc
+          case TypeOfSorting.NAME_ASC:
+            {
+              typeOfSorting = TypeOfSorting.NAME_DESC;
+            }
+            break;
+          // name desc -> change to name asc
+          default:
+            {
+              typeOfSorting = TypeOfSorting.NAME_ASC;
+            }
+            break;
         }
-        break;
-      // name desc -> change to name asc
-      default:
-        {
-          typeOfSorting = TypeOfSorting.NAME_ASC;
-        }
-        break;
-    }
+      },
+    );
   }
 }
 
