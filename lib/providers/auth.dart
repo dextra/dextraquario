@@ -86,7 +86,8 @@ class AuthProvider with ChangeNotifier {
 
   Future signOut() async {
     await auth.signOut();
-    _status = Status.Unauthenticated;
+    await _googleSignIn.signOut();
+    await _googleSignIn.disconnect();
     notifyListeners();
   }
 

@@ -1,8 +1,10 @@
 import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
+import 'package:dextraquario/services/user_service.dart';
 import 'package:dextraquario/widgets/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import 'package:dextraquario/load_fishes.dart';
@@ -21,9 +23,10 @@ import './assets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GoogleSignIn _googleSignIn = GoogleSignIn();
   await Assets.load();
   await Firebase.initializeApp();
-
+  await _googleSignIn.disconnect();
   final fishes = await LoadFishes.loadFishes();
   final game = DextraQuario();
   int mostContributions = fishes.fold(
