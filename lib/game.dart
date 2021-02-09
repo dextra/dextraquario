@@ -1,6 +1,7 @@
 import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class GameScreen extends StatelessWidget {
                         game.currentFishInfo = null;
                       });
                 },
-                'LoginScreenOverlay': (ctx, game) {
+                'loginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
                     Map result = await authProvider.signInWithGoogle();
                     bool success = result['success'];
@@ -55,24 +56,28 @@ class GameScreen extends StatelessWidget {
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
-                      game.overlays.remove('LoginScreenOverlay');
-                      game.overlays.add('HomeScreenOverlay');
+                      game.overlays.remove('loginScreenOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     }
                   });
                 },
-                'HomeScreenOverlay': (ctx, game) {
+                'homeScreenOverlay': (ctx, game) {
                   return HomeScreenOverlay(
                     onAddClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('addContributionScreenOverlay');
                     },
                     onGearClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('adminOverlay');
                     },
                     onRankingClick: () {
+                      game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('rankingOverlay');
                     },
                     onUserClick: () {
-                      game.overlays.add('userOverlay');
+                      game.overlays.remove('homeScreenOverlay');
+                      game.overlays.add('profileOverlay');
                     },
                     user: authProvider.user,
                   );
@@ -89,13 +94,16 @@ class GameScreen extends StatelessWidget {
                   return RankingOverlay(
                     onClose: () {
                       game.overlays.remove('rankingOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
+                    userAuth: authProvider.user,
                   );
                 },
                 'profileOverlay': (ctx, game) {
                   return ProfileOverlay(
                     onClose: () {
                       game.overlays.remove('profileOverlay');
+                      game.overlays.add('homeScreenOverlay');
                     },
                     userAuth: authProvider.user,
                   );
@@ -110,7 +118,7 @@ class GameScreen extends StatelessWidget {
                   );
                 }
               },
-              initialActiveOverlays: ['LoginScreenOverlay'],
+              initialActiveOverlays: ['loginScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);
