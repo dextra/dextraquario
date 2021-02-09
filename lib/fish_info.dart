@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:dextraquario/services/contribution_service.dart';
 
 class FishInfo {
   String name;
@@ -7,6 +8,7 @@ class FishInfo {
   List<FishItem> fishItems;
   static List<String> fishColorList = ['red', 'blue', 'yellow', 'pink', 'green'];
   static final _random = new Random(); 
+  ContributionServices _contributionServices = new ContributionServices();
 
   FishInfo({this.name, this.fishColor, this.fishItems});
 
