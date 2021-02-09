@@ -9,7 +9,6 @@ class Assets {
   static FireAtlas background;
   static FireAtlas ui;
   static Sprite bubble;
-  static Sprite panelTile;
   static Sprite gear;
   static Sprite closeButton32;
   static Sprite closeButton48;
@@ -20,7 +19,6 @@ class Assets {
   static dui.Image userEmptyFrame;
   static dui.Image buttonShadow;
   static dui.Image panelShadow;
-  static dui.Image closeButtonImage;
 
   static Future<void> load() async {
     fishes = await FireAtlas.loadAsset('atlases/fishes.fa');
@@ -30,26 +28,18 @@ class Assets {
     final _bubbleImage = await Flame.images.load('bubble.png');
     bubble = Sprite(_bubbleImage);
 
-    panelImage = await Flame.images.load('panelTile.png');
-    panelTile = Sprite(panelImage);
-
-    final _gearImage = await Flame.images.load('gear48.png');
-    gear = Sprite(_gearImage);
-
     final _closeButton32 = await Flame.images.load('closeButton32.png');
     closeButton32 = Sprite(_closeButton32);
 
     final _closeButton48 = await Flame.images.load('closeButton48.png');
     closeButton48 = Sprite(_closeButton48);
 
-    buttonImage = await Flame.images.load('button.png');
-
     userEmptyBottom = await Flame.images.load('user_image_panel_filled.png');
 
     userEmptyFrame = await Flame.images.load('user_image_panel_empty.png');
+    buttonImage = await Flame.images.load('button.png');
     buttonShadow = await Flame.images.load('button_shadow.png');
     panelImage = await Flame.images.load('panel.png');
     panelShadow = await Flame.images.load('panel_shadow.png');
-    closeButtonImage = await Flame.images.load('close_button.png');
   }
 }
