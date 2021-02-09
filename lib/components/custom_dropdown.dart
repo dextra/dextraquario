@@ -4,11 +4,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import '../common.dart';
-import '../services/contribution_service.dart';
 
 class CustomDropdown extends StatefulWidget {
   final Function onClick;
-  CustomDropdown({Key key, this.onClick}) : super(key: key);
+  final double scaleFactor;
+  CustomDropdown({Key key, this.onClick, this.scaleFactor}) : super(key: key);
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();
@@ -59,7 +59,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               Material(
                 elevation: 2,
                 child: Container(
-                  height: 7 * itemHeight,
+                  height: 7 * itemHeight * widget.scaleFactor,
                   child: Column(
                     children: <Widget>[
                       GestureDetector(
@@ -70,6 +70,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem.first(
                           text: 'Desafio Técnico',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -80,6 +81,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Entrevista Participação',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -90,6 +92,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Entrevista Avaliação Teste',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -100,6 +103,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Café com código',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -110,6 +114,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Contribuição Comunidade',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -120,6 +125,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Artigo Blog Dextra',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -130,6 +136,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem.last(
                           text: 'Chapa',
+                          //scaleFactor: widget.scaleFactor,
                         ),
                       ),
                     ],
@@ -143,12 +150,16 @@ class _CustomDropdownState extends State<CustomDropdown> {
     });
   }
 
-  Border _insetBorder() {
+  Border _insetBorder(double scaleFactor) {
     return Border(
-        right: BorderSide(color: Color(CommonColors.lightBorder), width: 2.0),
-        bottom: BorderSide(color: Color(CommonColors.lightBorder), width: 2.0),
-        left: BorderSide(color: Color(CommonColors.darkBorder), width: 2.0),
-        top: BorderSide(color: Color(CommonColors.darkBorder), width: 2.0));
+        right: BorderSide(
+            color: Color(CommonColors.lightBorder), width: 2.0 * scaleFactor),
+        bottom: BorderSide(
+            color: Color(CommonColors.lightBorder), width: 2.0 * scaleFactor),
+        left: BorderSide(
+            color: Color(CommonColors.darkBorder), width: 2.0 * scaleFactor),
+        top: BorderSide(
+            color: Color(CommonColors.darkBorder), width: 2.0 * scaleFactor));
   }
 
   @override
@@ -166,7 +177,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
             floatingDropdown = _createFloatingDropdown();
             Overlay.of(context).insert(floatingDropdown);
             angleArrow = 270;
-            paddingArrow = EdgeInsets.only(left: 4, top: 0);
+            paddingArrow =
+                EdgeInsets.only(left: 4 * widget.scaleFactor, top: 0);
           }
 
           isDropdownOpened = !isDropdownOpened;
@@ -175,7 +187,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
       child: Container(
         decoration: BoxDecoration(
           color: CommonColors.lightBackground,
-          border: _insetBorder(),
+          border: _insetBorder(widget.scaleFactor),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Color(CommonColors.boxInsetBackground),
@@ -187,9 +199,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
           children: <Widget>[
             Flexible(
               child: Container(
-                padding: EdgeInsets.only(left: 16),
+                padding: EdgeInsets.only(left: 16 * widget.scaleFactor),
                 child: Text(
                   text,
+                  textScaleFactor: widget.scaleFactor,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.white,
@@ -197,7 +210,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       height: 1.5,
                       shadows: <Shadow>[
                         Shadow(
-                            offset: Offset(1, 1),
+                            offset: Offset(
+                                1 * widget.scaleFactor, 1 * widget.scaleFactor),
                             color: Color.fromRGBO(0, 0, 0, 0.75)),
                       ],
                       fontWeight: FontWeight.w400),
@@ -205,16 +219,16 @@ class _CustomDropdownState extends State<CustomDropdown> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 10),
+              padding: EdgeInsets.only(right: 10 * widget.scaleFactor),
               child: Transform.rotate(
                 angle: angleArrow * math.pi / 180,
                 child: Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 2),
+                      padding: EdgeInsets.only(left: 2 * widget.scaleFactor),
                       child: Icon(
                         Icons.play_arrow,
-                        size: 24,
+                        size: 24 * widget.scaleFactor,
                         color: Color.fromRGBO(0, 0, 0, 0.75),
                       ),
                     ),
@@ -222,7 +236,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       padding: paddingArrow,
                       child: Icon(
                         Icons.play_arrow,
-                        size: 24,
+                        size: 24 * widget.scaleFactor,
                         color: CommonColors.darkBackground,
                       ),
                     ),
