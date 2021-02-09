@@ -78,9 +78,11 @@ class GameScreen extends StatelessWidget {
                       game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('profileOverlay');
                     },
-                    onLogoutClick: () {
+                    onLogoutClick: () async {
+                      await authProvider.signOut();
+
                       game.overlays.remove('homeScreenOverlay');
-                      auth.signOut();
+
                       game.overlays.add('loginScreenOverlay');
                     },
                     user: authProvider.user,
