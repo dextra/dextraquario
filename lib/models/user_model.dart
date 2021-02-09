@@ -24,7 +24,7 @@ class UserModel {
 
   String getShortName() {
     List<String> nameArray = _name.split(" ");
-    String shortName = nameArray.first + " " + nameArray.last;
+    String shortName = '${nameArray.first} ${nameArray.last}';
     return shortName;
   }
 
