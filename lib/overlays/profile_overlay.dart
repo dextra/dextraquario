@@ -27,18 +27,28 @@ class ProfileOverlay extends StatefulWidget {
 class _ProfileOverlayState extends State<ProfileOverlay> {
   final Function onClose;
   final User userAuth;
+  Future<UserModel> _user;
+  Future<List<ContributionModel>> _contributions;
 
   _ProfileOverlayState({this.onClose, this.userAuth});
 
   @override
+  void initState() {
+    _contributions = ContributionServices().getContributionByUser(userAuth.uid);
+    _user = UserServices().getUserById(userAuth.uid);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: UserServices().getUserById(userAuth.uid),
+      future: Future.wait([_user, _contributions]),
       builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData) {
+          print('snapshot ${snapshot.data[0]}');
           return ProfileScreen(
             onClose: this.onClose,
-            user: snapshot.data,
+            listContributions: snapshot.data[1],
+            user: snapshot.data[0],
           );
         } else {
           return Column(
@@ -65,51 +75,20 @@ class _ProfileOverlayState extends State<ProfileOverlay> {
 class ProfileScreen extends StatelessWidget {
   final Function onClose;
   final ScrollController _scrollController = ScrollController();
+  final List<ContributionModel> listContributions;
   final UserModel user;
   List<Contribution> _contributions;
+  Future _doneFuture;
 
-  ProfileScreen({this.onClose, this.user}) {
-    _initContributions();
-  }
+  ProfileScreen({this.onClose, this.listContributions, this.user});
 
-  Future _initContributions() async {
-    print('user:' + user.id);
-    List<ContributionModel> contributionList =
-        await ContributionServices().getContributionByUser(user.id);
-
-    print(contributionList[0].author);
-    _contributions = contributionList.map((contribution) {
-      print('''
-******************************
-
-
-CONTRIBUTIONS:
-${contribution.author}
-
-
-******************************
-''');
-
-      return ContributionServices()
-          .convertContributionModelToContribution(contribution);
-    }).toList();
-
-    print('''
-******************************
-
-
-CONTRIBUTIONS:
-${_contributions[0].author}
-
-
-******************************
-''');
-  }
+  Future get initializationDone => _doneFuture;
 
   @override
   Widget build(BuildContext context) {
     // User fetched ranking position
     int rank = 3;
+    int numberOfContribs = _contributions != null ? _contributions.length : 0;
 
     return Stack(
       children: [
@@ -169,7 +148,6 @@ ${_contributions[0].author}
                                       Container(
                                         width: 126,
                                         height: 126,
-                                        child: Image.network(user.photo),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(left: 16),
@@ -190,7 +168,7 @@ ${_contributions[0].author}
                                                 bottom: 20,
                                               ),
                                               child: Text(
-                                                '${_contributions.length} contribuições',
+                                                '${numberOfContribs} contribuições',
                                                 style: CommonText.itemTitle,
                                               ),
                                             ),
@@ -201,33 +179,33 @@ ${_contributions[0].author}
                                                 ContributionNumber(
                                                   ItemType
                                                       .CONTRIBUICAO_COMUNIDADE,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.DESAFIO_TECNICO,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType
                                                       .ENTREVISTA_PARTICIPACAO,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType
                                                       .ENTREVISTA_AVALIACAO_TESTE,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.CAFE_COM_CODIGO,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.ARTIGO_BLOG_DEXTRA,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.CHAPA,
-                                                  _contributions,
+                                                  listContributions,
                                                 ),
                                               ],
                                             )
@@ -280,18 +258,21 @@ ${_contributions[0].author}
                                         child: Scrollbar(
                                           isAlwaysShown: true,
                                           controller: _scrollController,
-                                          child: ListView.builder(
-                                            padding: EdgeInsets.only(top: 8),
-                                            controller: _scrollController,
-                                            itemCount: 1,
-                                            itemBuilder: (ctx, index) =>
-                                                ContributionItem(
-                                              contribution:
-                                                  _contributions[index],
-                                              index: index,
-                                              canApprove: false,
-                                            ),
-                                          ),
+                                          child: _contributions != null
+                                              ? ListView.builder(
+                                                  padding:
+                                                      EdgeInsets.only(top: 8),
+                                                  controller: _scrollController,
+                                                  itemCount: 1,
+                                                  itemBuilder: (ctx, index) =>
+                                                      ContributionItem(
+                                                    contribution:
+                                                        _contributions[index],
+                                                    index: index,
+                                                    canApprove: false,
+                                                  ),
+                                                )
+                                              : Center(),
                                         ),
                                       ),
                                     ],
@@ -346,9 +327,11 @@ class ContributionNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     int count = 0;
 
-    contribs.forEach((e) {
-      e.type == type ? count += 1 : null;
-    });
+    if (contribs != null) {
+      contribs.forEach((e) {
+        e.type == type ? count += 1 : null;
+      });
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
