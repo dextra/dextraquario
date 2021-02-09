@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/components/custom_dropdown.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
@@ -455,26 +456,7 @@ class _AddContributionScreenOverlayState
             Positioned(
               top: 0.0,
               right: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(44.0),
-                child: Stack(
-                  children: [
-                    Container(
-                      child: Image.asset('images/closeButton48.png',
-                          color: Color.fromRGBO(0, 0, 0, 0.5)),
-                      padding: EdgeInsets.only(top: 2.0, left: 0.0),
-                    ),
-                    SpriteButton(
-                      onPressed: () => widget.onClick?.call(),
-                      label: null,
-                      width: 48,
-                      height: 48,
-                      sprite: Assets.closeButton48,
-                      pressedSprite: Assets.closeButton48,
-                    ),
-                  ],
-                ),
-              ),
+              child: CloseButtonWidget(onClick: widget.onClick),
             ),
           ],
         ),

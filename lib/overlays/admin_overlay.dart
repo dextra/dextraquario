@@ -2,8 +2,8 @@ import 'package:dextraquario/assets.dart';
 import 'package:dextraquario/common.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
+import 'package:dextraquario/components/close_button_widget.dart';
 
 import '../contribution.dart';
 
@@ -21,26 +21,7 @@ class AdminOverlay extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 44, right: 44),
-              child: Stack(
-                children: [
-                  Container(
-                    child: Image.asset('images/closeButton48.png',
-                        color: Color.fromRGBO(0, 0, 0, 0.5)),
-                    padding: EdgeInsets.only(top: 2.0, left: 0.0),
-                  ),
-                  SpriteButton(
-                    onPressed: () => onClose?.call(),
-                    label: null,
-                    width: 48,
-                    height: 48,
-                    sprite: Assets.closeButton48,
-                    pressedSprite: Assets.closeButton48,
-                  ),
-                ],
-              ),
-            ),
+            CloseButtonWidget(onClick: onClose),
           ],
         ),
         Column(
