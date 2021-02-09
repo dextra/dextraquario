@@ -5,9 +5,11 @@ import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dextraquario/common.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
+import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import 'package:dextraquario/widgets/loading.dart';
+import 'package:dextraquario/utils/scale_factor_calculator.dart';
 
 class HomeScreenOverlay extends StatelessWidget {
   final Function onGearClick;
@@ -30,22 +32,32 @@ class HomeScreenOverlay extends StatelessWidget {
   Widget build(context) {
     final userModel = UserServices().getUserById(user.uid);
     final topUsersList = UserServices().getTopUsers();
-    return FutureBuilder(
-      future: Future.wait([userModel, topUsersList]),
-      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          return page(context, snapshot.data[0], snapshot.data[1]);
-        } else {
-          return Loading();
-        }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+            constraints.maxWidth, constraints.maxHeight);
+        return FutureBuilder(
+          future: Future.wait([userModel, topUsersList]),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              return page(
+                  context, snapshot.data[0], snapshot.data[1], scaleFactor);
+            } else {
+              return Loading();
+            }
+          },
+        );
       },
     );
   }
 
-  Widget page(context, UserModel userModel, List<UserModel> topUsersList) {
-    return Stack(children: [
-      // Painel do ranking
-      GestureDetector(
+  Widget page(context, UserModel userModel, List<UserModel> topUsersList,
+      double scaleFactor) {
+    return Stack(
+      children: [
+        // Painel do ranking
+        GestureDetector(
           onTap: () => onRankingClick?.call(),
           child: Stack(
             children: [
@@ -57,8 +69,11 @@ class HomeScreenOverlay extends StatelessWidget {
                     children: [
                       Positioned(
                         top: 0,
-                        right: 720,
-                        child: Image.asset('images/ranking_panel.png'),
+                        right: 720 * scaleFactor,
+                        child: Image.asset(
+                          'images/ranking_panel.png',
+                          scale: 1 / scaleFactor,
+                        ),
                       ),
                     ],
                   ),
@@ -70,24 +85,31 @@ class HomeScreenOverlay extends StatelessWidget {
                 children: [
                   // Segundo lugar
                   Container(
-                    width: 280,
-                    padding: EdgeInsets.only(top: 24, left: 26),
+                    width: 280 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 24 * scaleFactor, left: 26 * scaleFactor),
                     child: Text(topUsersList[1].getShortName(),
+                        textScaleFactor: scaleFactor,
                         style: CommonText.itemText),
                   ),
 
                   //Primeiro lugar
                   Container(
-                      width: 175,
-                      padding: EdgeInsets.only(top: 24, left: 20),
-                      child: Text(topUsersList[0].getShortName(),
-                          style: CommonText.itemTitle)),
+                    width: 175 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 24 * scaleFactor, left: 20 * scaleFactor),
+                    child: Text(topUsersList[0].getShortName(),
+                        textScaleFactor: scaleFactor,
+                        style: CommonText.itemTitle),
+                  ),
 
                   //Terceiro Lugar
                   Container(
-                    width: 280,
-                    padding: EdgeInsets.only(top: 24, left: 132),
+                    width: 280 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 24 * scaleFactor, left: 132 * scaleFactor),
                     child: Text(topUsersList[2].getShortName(),
+                        textScaleFactor: scaleFactor,
                         style: CommonText.itemText),
                   ),
                 ],
@@ -98,8 +120,12 @@ class HomeScreenOverlay extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 14, right: 740),
-                    child: Image.asset('images/silver_medal33.png'),
+                    padding: EdgeInsets.only(
+                        top: 14 * scaleFactor, right: 740 * scaleFactor),
+                    child: Image.asset(
+                      'images/silver_medal33.png',
+                      scale: 1 / scaleFactor,
+                    ),
                   ),
                 ],
               ),
@@ -107,8 +133,12 @@ class HomeScreenOverlay extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 8, right: 200),
-                    child: Image.asset('images/gold_medal.png'),
+                    padding: EdgeInsets.only(
+                        top: 8 * scaleFactor, right: 200 * scaleFactor),
+                    child: Image.asset(
+                      'images/gold_medal.png',
+                      scale: 1 / scaleFactor,
+                    ),
                   ),
                 ],
               ),
@@ -116,8 +146,10 @@ class HomeScreenOverlay extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 14, left: 380),
-                    child: Image.asset('images/bronze_medal33.png'),
+                    padding: EdgeInsets.only(
+                        top: 14 * scaleFactor, left: 380 * scaleFactor),
+                    child: Image.asset('images/bronze_medal33.png',
+                        scale: 1 / scaleFactor),
                   ),
                 ],
               ),
@@ -131,17 +163,21 @@ class HomeScreenOverlay extends StatelessWidget {
                     children: [
                       GestureDetector(
                         child: Container(
-                            padding: EdgeInsets.only(top: 44, right: 44),
-                            child: Image.asset('images/closeButton48.png')),
+                            padding: EdgeInsets.only(
+                                top: 44 * scaleFactor, right: 44 * scaleFactor),
+                            child: Image.asset('images/closeButton48.png',
+                                scale: 1 / scaleFactor)),
                         onTap: () {
                           onLogoutClick?.call();
                         },
                       ),
                       GestureDetector(
                         child: Container(
-                            padding:
-                                EdgeInsets.only(bottom: 111.0, right: 89.0),
-                            child: Image.asset('images/add_button.png')),
+                            padding: EdgeInsets.only(
+                                bottom: 111.0 * scaleFactor,
+                                right: 89.0 * scaleFactor),
+                            child: Image.asset('images/add_button.png',
+                                scale: 1 / scaleFactor)),
                         onTap: () {
                           onAddClick?.call();
                         },
@@ -158,13 +194,29 @@ class HomeScreenOverlay extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        child: Container(
-                            padding: EdgeInsets.only(top: 44, left: 44),
-                            child: Image.asset('images/gear.png')),
-                        onTap: () {
-                          onGearClick?.call();
-                        },
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 44 * scaleFactor, left: 44 * scaleFactor),
+                        child: Stack(
+                          children: [
+                            Container(
+                              child: Image.asset('images/gear.png',
+                                  scale: 1 / scaleFactor,
+                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
+                              padding: EdgeInsets.only(
+                                  top: 2.0 * scaleFactor,
+                                  left: 0.0 * scaleFactor),
+                            ),
+                            SpriteButton(
+                              onPressed: () => onGearClick?.call(),
+                              label: null,
+                              width: 48 * scaleFactor,
+                              height: 48 * scaleFactor,
+                              sprite: Assets.gear,
+                              pressedSprite: Assets.gear,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -177,32 +229,38 @@ class HomeScreenOverlay extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned(
-                      bottom: 108,
-                      left: 192,
+                      bottom: 108 * scaleFactor,
+                      left: 192 * scaleFactor,
                       child: NineTileBox(
                         image: Assets.panelImage,
                         tileSize: 12,
-                        destTileSize: 16,
-                        width: 288,
-                        height: 80,
+                        destTileSize: 16 * scaleFactor,
+                        width: 288 * scaleFactor,
+                        height: 80 * scaleFactor,
                       ),
                     ),
                     Positioned(
-                      bottom: 128,
-                      left: 222,
+                      bottom: 128 * scaleFactor,
+                      left: 222 * scaleFactor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             userModel.getShortName(),
+                            textScaleFactor: scaleFactor,
                             style: CommonText.itemTitle,
                           ),
+
+                          // Botão de configuração
                           Container(
-                            padding: EdgeInsets.only(top: 10.0),
+                            padding: EdgeInsets.only(top: 10.0 * scaleFactor),
                             child: Text(
                               userModel.score.toString() +
-                                  " " +
-                                  contributionPlural(userModel.score),
+                                  (userModel.score > 1
+                                      ? " contribuições"
+                                      : " contribuição"),
+                              textScaleFactor: scaleFactor,
                               style: CommonText.itemTitle,
                             ),
                           ),
@@ -210,24 +268,32 @@ class HomeScreenOverlay extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 100,
-                      left: 96,
+                      bottom: 100 * scaleFactor,
+                      left: 96 * scaleFactor,
                       child: Stack(
                         children: [
                           NineTileBox(
                             image: Assets.userEmptyBottom,
                             tileSize: 16,
-                            destTileSize: 24,
-                            width: 96,
-                            height: 96,
+                            destTileSize: 24 * scaleFactor,
+                            width: 96 * scaleFactor,
+                            height: 96 * scaleFactor,
                           ),
-                          Image.network(userModel.photo),
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: 16 * scaleFactor, left: 16 * scaleFactor),
+                            child: Image.network(
+                              userModel.photo,
+                              width: 64 * scaleFactor,
+                              height: 64 * scaleFactor,
+                            ),
+                          ),
                           NineTileBox(
                             image: Assets.userEmptyFrame,
                             tileSize: 16,
-                            destTileSize: 24,
-                            width: 96,
-                            height: 96,
+                            destTileSize: 24 * scaleFactor,
+                            width: 96 * scaleFactor,
+                            height: 96 * scaleFactor,
                           ),
                         ],
                       ),
@@ -236,15 +302,9 @@ class HomeScreenOverlay extends StatelessWidget {
                 ),
               ),
             ],
-          ))
-    ]);
-  }
-
-  String contributionPlural(int score) {
-    if (score == 1) {
-      return "Contribuição";
-    } else {
-      return "Contribuições";
-    }
+          ),
+        ),
+      ],
+    );
   }
 }

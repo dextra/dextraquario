@@ -111,7 +111,7 @@ class GameScreen extends StatelessWidget {
                       game.overlays.remove('profileOverlay');
                       game.overlays.add('homeScreenOverlay');
                     },
-                    userAuth: authProvider.user,
+                    userID: authProvider.user.uid,
                   );
                 },
                 'addContributionScreenOverlay': (ctx, game) {
