@@ -1,5 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+enum ItemType {
+  DESAFIO_TECNICO,
+  ENTREVISTA_PARTICIPACAO,
+  ENTREVISTA_AVALIACAO_TESTE,
+  CAFE_COM_CODIGO,
+  CONTRIBUICAO_COMUNIDADE,
+  ARTIGO_BLOG_DEXTRA,
+  CHAPA
+}
+
 class ContributionModel {
   // constantes com os nomes dos documentos no banco de dados
   static const USER_ID = "user_id";
@@ -21,10 +31,33 @@ class ContributionModel {
   String get contribution_id => _contributionid;
   String get user_id => _userid;
   DateTime get date => _date.toDate();
-  String get category => _category;
+  ItemType get category =>
+      ItemType.values.firstWhere((e) => e.toString() == 'ItemType' + _category);
   String get contribution_link => _link;
   String get description => _description;
   String get approval => _approval;
+
+  // Get the title corresponding to the item type
+  String getItemTitle() {
+    switch (category) {
+      case ItemType.DESAFIO_TECNICO:
+        return 'Desafio Técnico';
+      case ItemType.ENTREVISTA_PARTICIPACAO:
+        return 'Apoio técnico em Entrevista';
+      case ItemType.ENTREVISTA_AVALIACAO_TESTE:
+        return 'Avaliação de código de candidato';
+      case ItemType.CAFE_COM_CODIGO:
+        return 'Café com código';
+      case ItemType.CONTRIBUICAO_COMUNIDADE:
+        return 'Contribuição para comunidade';
+      case ItemType.ARTIGO_BLOG_DEXTRA:
+        return 'Artigo no blog da Dextra';
+      case ItemType.CHAPA:
+        return 'Chapa';
+    }
+
+    return '';
+  }
 
   // GET
   ContributionModel.fromSnapshot(DocumentSnapshot snapshot) {

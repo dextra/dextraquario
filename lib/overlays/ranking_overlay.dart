@@ -5,7 +5,6 @@ import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';
@@ -316,21 +315,6 @@ class UserList extends StatelessWidget {
       itemBuilder: (ctx, index) => BuildItem(index: index, users: users),
     );
   }
-
-  /* Widget _buildItem(
-      BuildContext buildContext, int index, List<UserRanking> users) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        UserItem(user: users[index]),
-        Divider(
-          color: Colors.black26,
-          indent: 20,
-          endIndent: 20,
-        ),
-      ],
-    );
-  } */
 }
 
 class BuildItem extends StatelessWidget {
