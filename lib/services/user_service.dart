@@ -43,4 +43,18 @@ class UserServices {
 
     return user.admin;
   }
+
+  Future<List<UserModel>> getTopUsers() async => firebaseFirestore
+          .collection(collection)
+          .orderBy("score", descending: true)
+          .orderBy("name")
+          .limit(3)
+          .get()
+          .then((result) {
+        List<UserModel> users = [];
+        for (DocumentSnapshot user in result.docs) {
+          users.add(UserModel.fromSnapshot(user));
+        }
+        return users;
+      });
 }

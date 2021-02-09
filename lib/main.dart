@@ -1,5 +1,6 @@
 import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
+import 'package:dextraquario/services/user_service.dart';
 import 'package:dextraquario/widgets/loading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

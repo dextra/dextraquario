@@ -1,7 +1,6 @@
 import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/overlays/add_contribution_overlay.dart';
 import 'package:dextraquario/overlays/ranking_overlay.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +11,7 @@ import 'package:dextraquario/providers/app.dart';
 import 'package:dextraquario/providers/auth.dart';
 import 'package:provider/provider.dart';
 
+import 'helper/constants.dart';
 import 'overlays/admin_overlay.dart';
 import 'overlays/fish_overlay.dart';
 import './dextra_quario.dart';
@@ -77,6 +77,11 @@ class GameScreen extends StatelessWidget {
                     onUserClick: () {
                       game.overlays.remove('homeScreenOverlay');
                       game.overlays.add('profileOverlay');
+                    },
+                    onLogoutClick: () {
+                      game.overlays.remove('homeScreenOverlay');
+                      auth.signOut();
+                      game.overlays.add('loginScreenOverlay');
                     },
                     user: authProvider.user,
                   );
