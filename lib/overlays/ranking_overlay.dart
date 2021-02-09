@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/overlays/profile_overlay.dart';
-import 'package:dextraquario/extensions/hover_extensions.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
