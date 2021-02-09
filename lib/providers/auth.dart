@@ -87,6 +87,7 @@ class AuthProvider with ChangeNotifier {
   Future signOut() async {
     await auth.signOut();
     await _googleSignIn.signOut();
+    await _googleSignIn.disconnect();
     notifyListeners();
   }
 
