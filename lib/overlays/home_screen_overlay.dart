@@ -52,19 +52,12 @@ class HomeScreenOverlay extends StatelessWidget {
     );
   }
 
-<<<<<<< HEAD
   Widget page(context, UserModel userModel, List<UserModel> topUsersList,
       double scaleFactor) {
-    return Stack(children: [
-      // Painel do ranking
-      GestureDetector(
-=======
-  Widget page(context, UserModel userModel, List<UserModel> topUsersList) {
     return Stack(
       children: [
         // Painel do ranking
         GestureDetector(
->>>>>>> 2a4fb1c26afad27a8edd7368fa38d0a6e349d1a8
           onTap: () => onRankingClick?.call(),
           child: Stack(
             children: [
@@ -201,39 +194,29 @@ class HomeScreenOverlay extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-<<<<<<< HEAD
-                      GestureDetector(
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                top: 44 * scaleFactor, left: 44 * scaleFactor),
-                            child: Image.asset(
-                              'images/gear.png',
-                              scale: 1 / scaleFactor,
-                            )),
-                        onTap: () {
-                          onGearClick?.call();
-                        },
-=======
                       Padding(
-                        padding: EdgeInsets.only(top: 44, left: 44),
+                        padding: EdgeInsets.only(
+                            top: 44 * scaleFactor, left: 44 * scaleFactor),
                         child: Stack(
                           children: [
                             Container(
                               child: Image.asset('images/gear.png',
+                                  scale: 1 / scaleFactor,
                                   color: Color.fromRGBO(0, 0, 0, 0.5)),
-                              padding: EdgeInsets.only(top: 2.0, left: 0.0),
+                              padding: EdgeInsets.only(
+                                  top: 2.0 * scaleFactor,
+                                  left: 0.0 * scaleFactor),
                             ),
                             SpriteButton(
                               onPressed: () => onGearClick?.call(),
                               label: null,
-                              width: 48,
-                              height: 48,
+                              width: 48 * scaleFactor,
+                              height: 48 * scaleFactor,
                               sprite: Assets.gear,
                               pressedSprite: Assets.gear,
                             ),
                           ],
                         ),
->>>>>>> 2a4fb1c26afad27a8edd7368fa38d0a6e349d1a8
                       ),
                     ],
                   ),
@@ -251,7 +234,7 @@ class HomeScreenOverlay extends StatelessWidget {
                       child: NineTileBox(
                         image: Assets.panelImage,
                         tileSize: 12,
-                        destTileSize: 16,
+                        destTileSize: 16 * scaleFactor,
                         width: 288 * scaleFactor,
                         height: 80 * scaleFactor,
                       ),
@@ -265,17 +248,19 @@ class HomeScreenOverlay extends StatelessWidget {
                         children: [
                           Text(
                             userModel.getShortName(),
+                            textScaleFactor: scaleFactor,
                             style: CommonText.itemTitle,
                           ),
 
                           // Botão de configuração
                           Container(
-                            padding: EdgeInsets.only(top: 10.0),
+                            padding: EdgeInsets.only(top: 10.0 * scaleFactor),
                             child: Text(
                               userModel.score.toString() +
                                   (userModel.score > 1
                                       ? " contribuições"
                                       : " contribuição"),
+                              textScaleFactor: scaleFactor,
                               style: CommonText.itemTitle,
                             ),
                           ),
@@ -283,31 +268,32 @@ class HomeScreenOverlay extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 100,
-                      left: 96,
+                      bottom: 100 * scaleFactor,
+                      left: 96 * scaleFactor,
                       child: Stack(
                         children: [
                           NineTileBox(
                             image: Assets.userEmptyBottom,
                             tileSize: 16,
-                            destTileSize: 24,
-                            width: 96,
-                            height: 96,
+                            destTileSize: 24 * scaleFactor,
+                            width: 96 * scaleFactor,
+                            height: 96 * scaleFactor,
                           ),
                           Container(
-                            padding: EdgeInsets.only(top: 16, left: 16),
+                            padding: EdgeInsets.only(
+                                top: 16 * scaleFactor, left: 16 * scaleFactor),
                             child: Image.network(
                               userModel.photo,
-                              width: 64,
-                              height: 64,
+                              width: 64 * scaleFactor,
+                              height: 64 * scaleFactor,
                             ),
                           ),
                           NineTileBox(
                             image: Assets.userEmptyFrame,
                             tileSize: 16,
-                            destTileSize: 24,
-                            width: 96,
-                            height: 96,
+                            destTileSize: 24 * scaleFactor,
+                            width: 96 * scaleFactor,
+                            height: 96 * scaleFactor,
                           ),
                         ],
                       ),
