@@ -151,7 +151,7 @@ class _AddContributionScreenOverlayState
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
-                                                height: 1,
+                                                height: 1 * scaleFactor,
                                                 shadows: <Shadow>[
                                                   Shadow(
                                                     blurRadius: 0,
