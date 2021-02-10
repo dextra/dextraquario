@@ -1,5 +1,6 @@
 import 'dart:math';
-import 'package:dextraquario/services/contribution_service.dart';
+import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/user_service.dart';
 
 class FishInfo {
   String name;
@@ -8,16 +9,16 @@ class FishInfo {
   List<FishItem> fishItems;
   static List<String> fishColorList = ['red', 'blue', 'yellow', 'pink', 'green'];
   static final _random = new Random(); 
-  ContributionServices _contributionServices = new ContributionServices();
-
-  FishInfo({this.name, this.fishColor, this.fishItems});
+ // static UserServices _userServices = new UserServices();
+ 
+  FishInfo({this.name, this.fishColor, /*this.fishItems*/});
 
   FishInfo.fromJson(Map<String, dynamic> json)  
       : name = json['name'],
         fishColor = fishColorList[_random.nextInt(fishColorList.length)],
         ranking = json['ranking'],
         fishItems = json['items']
-            .map((fishItem) => FishItem.fromJson(fishItem))
+            .map((fishItem) => fishItem.fromJson(fishItem))
             .cast<FishItem>()
             .toList();
 
