@@ -354,7 +354,11 @@ class UserList extends StatelessWidget {
     return ListView.builder(
       controller: scrollController,
       itemCount: users.length,
-      itemBuilder: (ctx, index) => BuildItem(index: index, users: users),
+      itemBuilder: (ctx, index) => BuildItem(
+        index: index,
+        users: users,
+        onTapUser: onTapUser,
+      ),
     );
   }
 }
@@ -362,15 +366,19 @@ class UserList extends StatelessWidget {
 class BuildItem extends StatelessWidget {
   final int index;
   final List<UserRanking> users;
+  final Function onTapUser;
 
-  BuildItem({this.index, this.users});
+  BuildItem({this.index, this.users, this.onTapUser});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        UserItem(user: users[index]),
+        GestureDetector(
+          child: UserItem(user: users[index]),
+          onTap: () => onTapUser?.call(users[index].id),
+        ),
         Divider(
           color: Colors.black26,
           indent: 20,
