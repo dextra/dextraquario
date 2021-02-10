@@ -12,42 +12,21 @@ import '../assets.dart';
 import '../common.dart';
 import '../contribution.dart';
 
-// ignore: must_be_immutable
-class ProfileOverlay extends StatefulWidget {
-  final Function onClose;
-  String userID;
+class ProfileOverlay extends StatelessWidget {
+  final Function onClose;  
+  final String userID;  
+  UserServices _userServices = UserServices();
+  ContributionServices _contributionServices = ContributionServices();
 
   ProfileOverlay({this.onClose, this.userID});
 
   @override
-  State<StatefulWidget> createState() =>
-      _ProfileOverlayState(onClose: this.onClose, userID: this.userID);
-}
-
-class _ProfileOverlayState extends State<ProfileOverlay> {
-  UserServices _userServices = UserServices();
-  ContributionServices _contributionServices = ContributionServices();
-
-  Future<UserModel> _user;
-  Future<List<ContributionModel>> _contributions;
-
-  final Function onClose;
-  final String userID;
-
-  _ProfileOverlayState({this.onClose, this.userID});
-
-  @override
-  void initState() {
-    super.initState();
-
-    _user = _userServices.getUserById(userID);
-    _contributions = _contributionServices.getContributionsByUser(userID);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([_user, _contributions]),
+      future: Future.wait([
+        _userServices.getUserById(userID), 
+        _contributionServices.getContributionsByUser(userID)
+      ]),
       builder: (ctx, snapshot) {
         if (snapshot.hasData) {
           return ProfileScreen(
