@@ -211,30 +211,31 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                               isAlwaysShown: true,
                                               controller: _scrollController,
                                               child: FutureBuilder(
-                                                  // waiting for the _dbUsers data
-                                                  future: _dbUsers,
-                                                  builder: (context, snapshot) {
-                                                    // if the connection worked
-                                                    if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState.done) {
-                                                      // return the user list
-                                                      List<UserRanking>
-                                                          userRanking =
-                                                          orderUserList(
-                                                              snapshot.data,
-                                                              typeOfSorting);
-                                                      return UserList(
-                                                        onTapUser: onTapUser,
-                                                        users: userRanking,
-                                                        scrollController:
-                                                            _scrollController,
-                                                      );
-                                                    } else {
-                                                      // loading
-                                                      return Container();
-                                                    }
-                                                  }),
+                                                // waiting for the _dbUsers data
+                                                future: _dbUsers,
+                                                builder: (context, snapshot) {
+                                                  // if the connection worked
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.done) {
+                                                    // return the user list
+                                                    List<UserRanking>
+                                                        userRanking =
+                                                        orderUserList(
+                                                            snapshot.data,
+                                                            typeOfSorting);
+                                                    return UserList(
+                                                      onTapUser: onTapUser,
+                                                      users: userRanking,
+                                                      scrollController:
+                                                          _scrollController,
+                                                    );
+                                                  } else {
+                                                    // loading
+                                                    return Container();
+                                                  }
+                                                },
+                                              ),
                                             ),
                                           ),
                                         ],

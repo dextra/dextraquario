@@ -1,16 +1,13 @@
 import 'dart:ui';
-
 import 'package:dextraquario/assets.dart';
 import 'package:dextraquario/common.dart';
-import 'package:dextraquario/fish_info.dart';
 import 'package:dextraquario/models/contribution_model.dart';
+import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/contribution_service.dart';
+import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:dextraquario/components/close_button_widget.dart';
-
-import '../contribution.dart';
 
 class AdminOverlay extends StatefulWidget {
   final Function onClose;
@@ -25,14 +22,14 @@ class AdminOverlay extends StatefulWidget {
 class _AdminOverlayState extends State<AdminOverlay> {
   Future<List<ContributionModel>> _dbContributions;
   final ScrollController _scrollController = ScrollController();
+  Future<List<UserModel>> _dbUsers;
 
   @override
   void initState() {
     super.initState();
-    // typeOfSorting = TypeOfSorting.SCORE_DESC;
-    // _dbUsers = _userServices.getAll(); // get list of users from DB
-    // _user = _userServices.getUserById(widget.userAuth.uid); // get user from DB
-    _dbContributions = ContributionServices().getContributionsByApprovalStatus(ApprovalStatus.APPROVED);
+    _dbContributions = ContributionServices()
+        .getContributionsByApprovalStatus(ApprovalStatus.ANALYZING);
+    _dbUsers = UserServices().getAll();
   }
 
   @override
@@ -127,21 +124,40 @@ class _AdminOverlayState extends State<AdminOverlay> {
                                         isAlwaysShown: true,
                                         controller: _scrollController,
                                         child: FutureBuilder(
-                                          future: _dbContributions,
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState == ConnectionState.done) {
-                                              return ContributionList(pendingItems: snapshot.data, scrollController: _scrollController,);
+                                          future: Future.wait(
+                                            [
+                                              _dbUsers,
+                                              _dbContributions,
+                                            ],
+                                          ),
+                                          builder: (context,
+                                              AsyncSnapshot<List<dynamic>>
+                                                  snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              return ContributionList(
+                                                pendingItems: snapshot.data[1],
+                                                authors: snapshot.data[0],
+                                                scrollController:
+                                                    _scrollController,
+                                              );
                                             } else {
-                                               return Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                              // Loading screen
+                                              return Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         'Loading...',
-                                                        style: CommonText.panelTitle,
+                                                        style: CommonText
+                                                            .panelTitle,
                                                       ),
                                                     ],
                                                   ),
@@ -174,25 +190,27 @@ class _AdminOverlayState extends State<AdminOverlay> {
 class ContributionList extends StatelessWidget {
   final List<ContributionModel> pendingItems;
   final ScrollController scrollController;
+  final List<UserModel> authors;
 
-
-  ContributionList({this.pendingItems, this.scrollController})
+  ContributionList({this.pendingItems, this.scrollController, this.authors});
 
   @override
   Widget build(BuildContext context) {
-    
-
-
-    return pendingItems != null ? ListView.builder(
-      controller: scrollController,
-      itemCount: pendingItems.length,
-      itemBuilder: (ctx, index) =>
-          ContributionItem(
-        contribution: pendingItems[index],
-        index: index,
-        canApprove: false,
-      ),
-    ) : Center();
+    return pendingItems != null
+        ? ListView.builder(
+            controller: scrollController,
+            itemCount: pendingItems.length,
+            itemBuilder: (ctx, index) => ContributionItem(
+              contribution: pendingItems[index],
+              author: authors
+                  .firstWhere(
+                      (element) => element.id == pendingItems[index].user_id)
+                  .name,
+              index: index,
+              canApprove: true,
+            ),
+          )
+        : Center();
   }
 }
 

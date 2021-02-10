@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 
 enum ItemType {
   DESAFIO_TECNICO,
@@ -31,8 +32,10 @@ class ContributionModel {
   String get contribution_id => _contributionid;
   String get user_id => _userid;
   DateTime get date => _date.toDate();
-  ItemType get category =>
-      ItemType.values.firstWhere((e) => e.toString() == 'ItemType' + _category);
+  ItemType get category {
+    return EnumToString.fromString(ItemType.values, _category);
+  }
+
   String get contribution_link => _link;
   String get description => _description;
   String get approval => _approval;

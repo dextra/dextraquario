@@ -4,13 +4,10 @@ import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/components/custom_dropdown.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';
 import '../common.dart';
-import '../models/user_model.dart';
-import '../services/contribution_service.dart';
 import '../services/contribution_service.dart';
 
 class AddContributionScreenOverlay extends StatefulWidget {
@@ -364,13 +361,13 @@ class _AddContributionScreenOverlayState
                                         onTap: () {
                                           if (_formKey.currentState
                                               .validate()) {
-                                            _contributionServices
-                                                .createContribution(
-                                                    widget.user.uid,
-                                                    DateTime.now(),
-                                                    descricaoController.text,
-                                                    linkController.text,
-                                                    tipoController.text);
+                                            // _contributionServices
+                                            // .createContribution(
+                                            //     widget.user.uid,
+                                            //     DateTime.now(),
+                                            //     descricaoController.text,
+                                            //     linkController.text,
+                                            //     tipoController.text);
                                           }
                                         },
                                         child: Stack(

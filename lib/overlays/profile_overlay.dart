@@ -242,12 +242,13 @@ class ProfileScreen extends StatelessWidget {
                                             controller: _scrollController,
                                             itemCount: _contributions.length,
                                             itemBuilder: (ctx, index) =>
-                                                ContributionItem(
-                                              contribution:
-                                                  _contributions[index],
-                                              index: index,
-                                              canApprove: false,
-                                            ),
+                                                Center(),
+                                            //   ContributionItem(
+                                            //     contribution:
+                                            //     _contributions[index],
+                                            // index: index,
+                                            // canApprove: false,
+                                            // ),
                                           ),
                                         ),
                                       ),
