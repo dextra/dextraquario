@@ -4,6 +4,7 @@ import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/overlays/profile_overlay.dart';
 import 'package:dextraquario/services/user_service.dart';
+import 'package:dextraquario/utils/scale_factor_calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
@@ -63,198 +64,208 @@ class _RankingOverlayState extends State<RankingOverlay> {
         userID: _idToShow,
       );
     } else {
-      return Stack(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CloseButtonWidget(onClick: widget.onClose),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        child: Opacity(
-                          child: NineTileBox(
-                            image: Assets.panelShadow,
-                            tileSize: 12,
-                            destTileSize: 24,
-                            width: 559,
-                            height: 597,
+      return LayoutBuilder(builder: (context, constraints) {
+        double scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+            constraints.maxWidth, constraints.maxHeight);
+        return Stack(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CloseButtonWidget(
+                    onClick: widget.onClose, scaleFactor: scaleFactor),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          child: Opacity(
+                            child: NineTileBox(
+                              image: Assets.panelShadow,
+                              tileSize: 12,
+                              destTileSize: 24,
+                              width: 559,
+                              height: 597,
+                            ),
+                            opacity: 0.5,
                           ),
-                          opacity: 0.5,
+                          padding: EdgeInsets.only(top: 4.0, left: 2.0),
                         ),
-                        padding: EdgeInsets.only(top: 4.0, left: 2.0),
-                      ),
-                      ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                          child: NineTileBox(
-                            image: Assets.panelImage,
-                            tileSize: 12,
-                            destTileSize: 36,
-                            width: 972,
-                            height: 720,
-                            padding:
-                                EdgeInsets.only(top: 32, left: 18, right: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text('Classificação',
-                                        style: CommonText.panelTitle),
-                                    Container(
-                                      width: 928,
-                                      height: 624,
-                                      margin: EdgeInsets.only(top: 32),
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color(CommonColors
-                                                .boxInsetBackground),
-                                          ),
-                                        ],
-                                        border: Common.insetBorder,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            height: 42,
-                                            color:
-                                                Color(CommonColors.listHeader),
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 32, right: 54),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  GestureDetector(
-                                                    child: Text(
-                                                      'Class.',
-                                                      style: CommonText
-                                                          .itemSubtitle,
-                                                    ),
-                                                    onTap: () {
-                                                      changeTypeOfSortingScore();
-                                                    },
-                                                  ),
-                                                  GestureDetector(
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 527),
+                        ClipRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                            child: NineTileBox(
+                              image: Assets.panelImage,
+                              tileSize: 12,
+                              destTileSize: 36,
+                              width: 972,
+                              height: 720,
+                              padding:
+                                  EdgeInsets.only(top: 32, left: 18, right: 18),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Classificação',
+                                          style: CommonText.panelTitle),
+                                      Container(
+                                        width: 928,
+                                        height: 624,
+                                        margin: EdgeInsets.only(top: 32),
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(CommonColors
+                                                  .boxInsetBackground),
+                                            ),
+                                          ],
+                                          border: Common.insetBorder,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 42,
+                                              color: Color(
+                                                  CommonColors.listHeader),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 32, right: 54),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    GestureDetector(
                                                       child: Text(
-                                                        'Nome',
+                                                        'Class.',
                                                         style: CommonText
                                                             .itemSubtitle,
                                                       ),
+                                                      onTap: () {
+                                                        changeTypeOfSortingScore();
+                                                      },
                                                     ),
-                                                    onTap: () {
-                                                      changeTypeOfSortingName();
-                                                    },
-                                                  ),
-                                                  GestureDetector(
-                                                    child: Text(
-                                                      'Pontuação',
-                                                      style: CommonText
-                                                          .itemSubtitle,
+                                                    GestureDetector(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 527),
+                                                        child: Text(
+                                                          'Nome',
+                                                          style: CommonText
+                                                              .itemSubtitle,
+                                                        ),
+                                                      ),
+                                                      onTap: () {
+                                                        changeTypeOfSortingName();
+                                                      },
                                                     ),
-                                                    onTap: () {
-                                                      changeTypeOfSortingScore();
-                                                    },
-                                                  ),
-                                                ],
+                                                    GestureDetector(
+                                                      child: Text(
+                                                        'Pontuação',
+                                                        style: CommonText
+                                                            .itemSubtitle,
+                                                      ),
+                                                      onTap: () {
+                                                        changeTypeOfSortingScore();
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          FutureBuilder(
-                                              future: Future.wait(
-                                                  [_user, _dbUsers]),
-                                              builder: (context,
-                                                  AsyncSnapshot<List<dynamic>>
-                                                      snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.done) {
-                                                  // return the sorted user list
-                                                  List<UserRanking>
-                                                      userRanking =
-                                                      orderUserList(
-                                                          snapshot.data[1],
-                                                          TypeOfSorting
-                                                              .SCORE_DESC);
-                                                  // get the current user
-                                                  UserRanking currentUser =
-                                                      getCurrentUser(
-                                                          userRanking,
-                                                          snapshot.data[0]);
-                                                  return UserTopRanking(
-                                                    user: currentUser,
-                                                  );
-                                                } else {
-                                                  return LoadingUser();
-                                                }
-                                              }),
-                                          Expanded(
-                                            child: Scrollbar(
-                                              isAlwaysShown: true,
-                                              controller: _scrollController,
-                                              child: FutureBuilder(
-                                                  // waiting for the _dbUsers data
-                                                  future: _dbUsers,
-                                                  builder: (context, snapshot) {
-                                                    // if the connection worked
-                                                    if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState.done) {
-                                                      // return the user list
-                                                      List<UserRanking>
-                                                          userRanking =
-                                                          orderUserList(
-                                                              snapshot.data,
-                                                              typeOfSorting);
-                                                      return UserList(
-                                                        onTapUser: onTapUser,
-                                                        users: userRanking,
-                                                        scrollController:
-                                                            _scrollController,
-                                                      );
-                                                    } else {
-                                                      // loading
-                                                      return Container();
-                                                    }
-                                                  }),
+                                            FutureBuilder(
+                                                future: Future.wait(
+                                                    [_user, _dbUsers]),
+                                                builder: (context,
+                                                    AsyncSnapshot<List<dynamic>>
+                                                        snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.done) {
+                                                    // return the sorted user list
+                                                    List<UserRanking>
+                                                        userRanking =
+                                                        orderUserList(
+                                                            snapshot.data[1],
+                                                            TypeOfSorting
+                                                                .SCORE_DESC);
+                                                    // get the current user
+                                                    UserRanking currentUser =
+                                                        getCurrentUser(
+                                                            userRanking,
+                                                            snapshot.data[0]);
+                                                    return UserTopRanking(
+                                                      user: currentUser,
+                                                    );
+                                                  } else {
+                                                    return LoadingUser();
+                                                  }
+                                                }),
+                                            Expanded(
+                                              child: Scrollbar(
+                                                isAlwaysShown: true,
+                                                controller: _scrollController,
+                                                child: FutureBuilder(
+                                                    // waiting for the _dbUsers data
+                                                    future: _dbUsers,
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // if the connection worked
+                                                      if (snapshot
+                                                              .connectionState ==
+                                                          ConnectionState
+                                                              .done) {
+                                                        // return the user list
+                                                        List<UserRanking>
+                                                            userRanking =
+                                                            orderUserList(
+                                                                snapshot.data,
+                                                                typeOfSorting);
+                                                        return UserList(
+                                                          onTapUser: onTapUser,
+                                                          users: userRanking,
+                                                          scrollController:
+                                                              _scrollController,
+                                                        );
+                                                      } else {
+                                                        // loading
+                                                        return Container();
+                                                      }
+                                                    }),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      );
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        );
+      });
     }
   }
 
