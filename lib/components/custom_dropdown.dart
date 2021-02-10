@@ -70,7 +70,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem.first(
                           text: 'Desafio Técnico',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -81,7 +81,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Entrevista Participação',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -92,7 +92,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Entrevista Avaliação Teste',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -103,7 +103,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Café com código',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -114,7 +114,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Contribuição Comunidade',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -125,7 +125,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem(
                           text: 'Artigo Blog Dextra',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                       GestureDetector(
@@ -136,7 +136,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                         },
                         child: DropDownItem.last(
                           text: 'Chapa',
-                          //scaleFactor: widget.scaleFactor,
+                          scaleFactor: widget.scaleFactor,
                         ),
                       ),
                     ],
@@ -264,22 +264,31 @@ class DropDownItem extends StatelessWidget {
   final String text;
   final bool isFirstItem;
   final bool isLastItem;
+  final double scaleFactor;
 
   const DropDownItem(
-      {Key key, this.text, this.isFirstItem = false, this.isLastItem = false})
+      {Key key,
+      this.text,
+      this.isFirstItem = false,
+      this.isLastItem = false,
+      this.scaleFactor})
       : super(key: key);
 
-  factory DropDownItem.first({String text, bool isSelected}) {
+  factory DropDownItem.first(
+      {String text, bool isSelected, double scaleFactor}) {
     return DropDownItem(
       text: text,
       isFirstItem: true,
+      scaleFactor: scaleFactor,
     );
   }
 
-  factory DropDownItem.last({String text, bool isSelected}) {
+  factory DropDownItem.last(
+      {String text, bool isSelected, double scaleFactor}) {
     return DropDownItem(
       text: text,
       isLastItem: true,
+      scaleFactor: scaleFactor,
     );
   }
 
@@ -293,18 +302,20 @@ class DropDownItem extends StatelessWidget {
         ),
         color: CommonColors.lightBackground,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: EdgeInsets.symmetric(
+          horizontal: 16 * scaleFactor, vertical: 16 * scaleFactor),
       child: Row(
         children: <Widget>[
           Text(
             text,
+            textScaleFactor: scaleFactor,
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
               height: 1,
               fontWeight: FontWeight.w400,
               shadows: <Shadow>[
-                Shadow(offset: Offset(1, 1)),
+                Shadow(offset: Offset(1 * scaleFactor, 1 * scaleFactor)),
               ],
             ),
           ),
