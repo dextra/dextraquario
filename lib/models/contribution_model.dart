@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 
 enum ItemType {
   DESAFIO_TECNICO,
@@ -31,31 +32,10 @@ class ContributionModel {
   String get contribution_id => _contributionid;
   String get user_id => _userid;
   DateTime get date => _date.toDate();
-  ItemType get category => getItemTypeFromString();
+  ItemType get category => EnumToString.fromString(ItemType.values, _category);
   String get contribution_link => _link;
   String get description => _description;
-  String get approval => _approval;
-
-  ItemType getItemTypeFromString() {
-    switch (_category) {
-      case "DESAFIO_TECNICO":
-        return ItemType.DESAFIO_TECNICO;
-      case "ENTREVISTA_PARTICIPACAO":
-        return ItemType.ENTREVISTA_PARTICIPACAO;
-      case "ENTREVISTA_AVALIACAO_TESTE":
-        return ItemType.ENTREVISTA_AVALIACAO_TESTE;
-      case "CAFE_COM_CODIGO":
-        return ItemType.CAFE_COM_CODIGO;
-      case "CONTRIBUICAO_COMUNIDADE":
-        return ItemType.CONTRIBUICAO_COMUNIDADE;
-      case "ARTIGO_BLOG_DEXTRA":
-        return ItemType.ARTIGO_BLOG_DEXTRA;
-      case "CHAPA":
-        return ItemType.CHAPA;
-      default:
-        return ItemType.CHAPA;
-    }
-  }
+  String get approval => _approval;  
 
   // Get the title corresponding to the item type
   String getItemTitle() {

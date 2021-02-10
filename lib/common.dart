@@ -3,6 +3,7 @@ import 'package:dextraquario/models/contribution_model.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'assets.dart';
 
@@ -70,6 +71,7 @@ class ContributionItem extends StatelessWidget {
   final int index;
   final bool canApprove;
   final String author;
+  final df = new DateFormat('dd/MM/yyyy');
 
   ContributionItem(
       {this.contribution, this.author, this.index, this.canApprove});
@@ -90,7 +92,7 @@ class ContributionItem extends StatelessWidget {
             ),
           ),
           trailing: Text(
-            contribution.date.toString(),
+            df.format(contribution.date),            
             style: CommonText.itemTitle,
           ),
           title: Text(
