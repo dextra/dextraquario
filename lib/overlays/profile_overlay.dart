@@ -2,6 +2,7 @@ import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/fish_info.dart';
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/user_service.dart';
+import 'package:dextraquario/utils/scale_factor_calculator.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
@@ -31,31 +32,38 @@ class _ProfileOverlayState extends State<ProfileOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: UserServices().getUserById(userID),
-      builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return ProfileScreen(
-            onClose: this.onClose,
-            user: snapshot.data,
-          );
-        } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+            constraints.maxWidth, constraints.maxHeight);
+        return FutureBuilder(
+          future: UserServices().getUserById(userID),
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return ProfileScreen(
+                  onClose: this.onClose,
+                  user: snapshot.data,
+                  scaleFactor: scaleFactor);
+            } else {
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Loading...',
-                    style: CommonText.panelTitle,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Loading...',
+                        textScaleFactor: scaleFactor,
+                        style: CommonText.panelTitle,
+                      ),
+                    ],
                   ),
                 ],
-              ),
-            ],
-          );
-        }
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -66,8 +74,9 @@ class ProfileScreen extends StatelessWidget {
   final List<Contribution> _contributions = _mockItems();
   final ScrollController _scrollController = ScrollController();
   final UserModel user;
+  double scaleFactor;
 
-  ProfileScreen({this.onClose, this.user});
+  ProfileScreen({this.onClose, this.user, this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
@@ -103,10 +112,13 @@ class ProfileScreen extends StatelessWidget {
                   child: NineTileBox(
                     image: Assets.panelImage,
                     tileSize: 12,
-                    destTileSize: 36,
-                    width: 976,
-                    height: 736,
-                    padding: EdgeInsets.only(top: 32, left: 40, right: 40),
+                    destTileSize: 36 * scaleFactor,
+                    width: 976 * scaleFactor,
+                    height: 736 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 32 * scaleFactor,
+                        left: 40 * scaleFactor,
+                        right: 40 * scaleFactor),
                     child: Stack(
                       children: [
                         Row(
@@ -118,18 +130,20 @@ class ProfileScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 20),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 20 * scaleFactor),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       // Photo container
                                       Container(
-                                        width: 126,
-                                        height: 126,
+                                        width: 126 * scaleFactor,
+                                        height: 126 * scaleFactor,
                                         color: Colors.grey,
                                       ),
                                       Container(
-                                        margin: EdgeInsets.only(left: 16),
+                                        margin: EdgeInsets.only(
+                                            left: 16 * scaleFactor),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -138,16 +152,18 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Text(
                                               '${user.name}',
+                                              textScaleFactor: scaleFactor,
                                               style: CommonText.heightOneShadow(
                                                   20),
                                             ),
                                             Container(
                                               margin: EdgeInsets.only(
-                                                top: 8,
-                                                bottom: 20,
+                                                top: 8 * scaleFactor,
+                                                bottom: 20 * scaleFactor,
                                               ),
                                               child: Text(
                                                 '${_contributions.length} contribuições',
+                                                textScaleFactor: scaleFactor,
                                                 style: CommonText.itemTitle,
                                               ),
                                             ),
@@ -156,36 +172,36 @@ class ProfileScreen extends StatelessWidget {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 ContributionNumber(
-                                                  ItemType
-                                                      .CONTRIBUICAO_COMUNIDADE,
-                                                  _contributions,
-                                                ),
+                                                    ItemType
+                                                        .CONTRIBUICAO_COMUNIDADE,
+                                                    _contributions,
+                                                    scaleFactor),
                                                 ContributionNumber(
-                                                  ItemType.DESAFIO_TECNICO,
-                                                  _contributions,
-                                                ),
+                                                    ItemType.DESAFIO_TECNICO,
+                                                    _contributions,
+                                                    scaleFactor),
                                                 ContributionNumber(
-                                                  ItemType
-                                                      .ENTREVISTA_PARTICIPACAO,
-                                                  _contributions,
-                                                ),
+                                                    ItemType
+                                                        .ENTREVISTA_PARTICIPACAO,
+                                                    _contributions,
+                                                    scaleFactor),
                                                 ContributionNumber(
-                                                  ItemType
-                                                      .ENTREVISTA_AVALIACAO_TESTE,
-                                                  _contributions,
-                                                ),
+                                                    ItemType
+                                                        .ENTREVISTA_AVALIACAO_TESTE,
+                                                    _contributions,
+                                                    scaleFactor),
                                                 ContributionNumber(
-                                                  ItemType.CAFE_COM_CODIGO,
-                                                  _contributions,
-                                                ),
+                                                    ItemType.CAFE_COM_CODIGO,
+                                                    _contributions,
+                                                    scaleFactor),
                                                 ContributionNumber(
-                                                  ItemType.ARTIGO_BLOG_DEXTRA,
-                                                  _contributions,
-                                                ),
+                                                    ItemType.ARTIGO_BLOG_DEXTRA,
+                                                    _contributions,
+                                                    scaleFactor),
                                                 ContributionNumber(
-                                                  ItemType.CHAPA,
-                                                  _contributions,
-                                                ),
+                                                    ItemType.CHAPA,
+                                                    _contributions,
+                                                    scaleFactor),
                                               ],
                                             )
                                           ],
@@ -195,9 +211,10 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  width: 894,
-                                  height: 471,
-                                  margin: EdgeInsets.only(top: 32),
+                                  width: 894 * scaleFactor,
+                                  height: 471 * scaleFactor,
+                                  margin:
+                                      EdgeInsets.only(top: 32 * scaleFactor),
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
@@ -210,12 +227,12 @@ class ProfileScreen extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Container(
-                                        height: 42,
+                                        height: 42 * scaleFactor,
                                         color: Color(CommonColors.listHeader),
                                         child: Padding(
                                           padding: EdgeInsets.only(
-                                            left: 32,
-                                            right: 54,
+                                            left: 32 * scaleFactor,
+                                            right: 54 * scaleFactor,
                                           ),
                                           child: Row(
                                             mainAxisAlignment:
@@ -223,10 +240,12 @@ class ProfileScreen extends StatelessWidget {
                                             children: [
                                               Text(
                                                 'Contribuição',
+                                                textScaleFactor: scaleFactor,
                                                 style: CommonText.itemSubtitle,
                                               ),
                                               Text(
                                                 'Data',
+                                                textScaleFactor: scaleFactor,
                                                 style: CommonText.itemSubtitle,
                                               ),
                                             ],
@@ -238,7 +257,8 @@ class ProfileScreen extends StatelessWidget {
                                           isAlwaysShown: true,
                                           controller: _scrollController,
                                           child: ListView.builder(
-                                            padding: EdgeInsets.only(top: 8),
+                                            padding: EdgeInsets.only(
+                                                top: 8 * scaleFactor),
                                             controller: _scrollController,
                                             itemCount: _contributions.length,
                                             itemBuilder: (ctx, index) =>
@@ -259,22 +279,25 @@ class ProfileScreen extends StatelessWidget {
                           ],
                         ),
                         Positioned(
-                          left: 800,
-                          top: 24,
+                          left: 800 * scaleFactor,
+                          top: 24 * scaleFactor,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                height: 48,
-                                width: 48,
-                                margin: EdgeInsets.only(bottom: 16),
+                                height: 48 * scaleFactor,
+                                width: 48 * scaleFactor,
+                                margin:
+                                    EdgeInsets.only(bottom: 16 * scaleFactor),
                                 child: Image.asset(
                                   "images/${_getUserRankMedal(rank)}.png",
+                                  scale: 1 / scaleFactor,
                                 ),
                               ),
                               Text(
                                 '#${rank}',
+                                textScaleFactor: scaleFactor,
                                 style: CommonText.heightOneShadow(18),
                               ),
                             ],
@@ -296,8 +319,9 @@ class ProfileScreen extends StatelessWidget {
 class ContributionNumber extends StatelessWidget {
   final ItemType type;
   final List<Contribution> contribs;
+  double scaleFactor;
 
-  ContributionNumber(this.type, this.contribs);
+  ContributionNumber(this.type, this.contribs, this.scaleFactor);
 
   @override
   Widget build(BuildContext context) {
@@ -312,19 +336,21 @@ class ContributionNumber extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: 32,
-          height: 32,
-          margin: EdgeInsets.only(right: 24, bottom: 8),
+          width: 32 * scaleFactor,
+          height: 32 * scaleFactor,
+          margin:
+              EdgeInsets.only(right: 24 * scaleFactor, bottom: 8 * scaleFactor),
           child: SpriteWidget(
             sprite: Assets.ui
                 .getSprite(type.toString().replaceAll('ItemType.', '')),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(right: 24),
+          margin: EdgeInsets.only(right: 24 * scaleFactor),
           child: Text(
             '${count}',
-            style: CommonText.heightOneShadow(14),
+            textScaleFactor: scaleFactor,
+            style: CommonText.heightOneShadow(14 * scaleFactor),
           ),
         ),
       ],
