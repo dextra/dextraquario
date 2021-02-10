@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../assets.dart';
 import '../common.dart';
 import '../services/contribution_service.dart';
+import '../models/contribution_model.dart';
 
 class AddContributionScreenOverlay extends StatefulWidget {
   final Function onClick;
@@ -28,6 +29,8 @@ class _AddContributionScreenOverlayState
   final tipoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final ContributionServices _contributionServices = ContributionServices();
+  ItemType type;
+  bool dropdownValidator = false;
 
   @override
   Widget build(context) {
@@ -153,8 +156,12 @@ class _AddContributionScreenOverlayState
                                             padding: EdgeInsets.only(top: 10.0),
                                             height: 56,
                                             child: CustomDropdown(
-                                              onClick: (String option) {
-                                                tipoController.text = option;
+                                              onClick: (ItemType option) {
+                                                type = option;
+
+                                                if (option != null) {
+                                                  dropdownValidator = true;
+                                                }
                                               },
                                             ),
                                           ),
@@ -360,14 +367,16 @@ class _AddContributionScreenOverlayState
                                       child: GestureDetector(
                                         onTap: () {
                                           if (_formKey.currentState
-                                              .validate()) {
-                                            // _contributionServices
-                                            // .createContribution(
-                                            //     widget.user.uid,
-                                            //     DateTime.now(),
-                                            //     descricaoController.text,
-                                            //     linkController.text,
-                                            //     tipoController.text);
+                                                  .validate() &&
+                                              dropdownValidator) {
+                                            _contributionServices
+                                                .createContribution(
+                                                    widget.user.uid,
+                                                    DateTime.now(),
+                                                    descricaoController.text,
+                                                    linkController.text,
+                                                    type);
+                                            widget.onClick?.call();
                                           }
                                         },
                                         child: Stack(

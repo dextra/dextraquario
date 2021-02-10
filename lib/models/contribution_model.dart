@@ -44,9 +44,9 @@ class ContributionModel {
   String getItemTitle() {
     switch (category) {
       case ItemType.DESAFIO_TECNICO:
-        return 'Desafio Técnico';
+        return 'Desafio técnico';
       case ItemType.ENTREVISTA_PARTICIPACAO:
-        return 'Apoio técnico em Entrevista';
+        return 'Apoio técnico em entrevista';
       case ItemType.ENTREVISTA_AVALIACAO_TESTE:
         return 'Avaliação de código de candidato';
       case ItemType.CAFE_COM_CODIGO:
