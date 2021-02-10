@@ -85,15 +85,6 @@ class ProfileScreen extends StatelessWidget {
 
     return Stack(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CloseButtonWidget(
-              onClick: onClose,
-              scaleFactor: scaleFactor,
-            ),
-          ],
-        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -312,6 +303,15 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            CloseButtonWidget(
+              onClick: onClose,
+              scaleFactor: scaleFactor,
             ),
           ],
         ),

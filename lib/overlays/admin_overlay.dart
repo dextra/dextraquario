@@ -31,12 +31,6 @@ class AdminOverlay extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CloseButtonWidget(onClick: onClose, scaleFactor: scaleFactor),
-              ],
-            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,6 +131,12 @@ class AdminOverlay extends StatelessWidget {
                     ),
                   ],
                 ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CloseButtonWidget(onClick: onClose, scaleFactor: scaleFactor),
               ],
             ),
           ],

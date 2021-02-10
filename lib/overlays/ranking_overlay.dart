@@ -69,13 +69,6 @@ class _RankingOverlayState extends State<RankingOverlay> {
             constraints.maxWidth, constraints.maxHeight);
         return Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CloseButtonWidget(
-                    onClick: widget.onClose, scaleFactor: scaleFactor),
-              ],
-            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,6 +271,13 @@ class _RankingOverlayState extends State<RankingOverlay> {
                     ),
                   ],
                 ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CloseButtonWidget(
+                    onClick: widget.onClose, scaleFactor: scaleFactor),
               ],
             ),
           ],
