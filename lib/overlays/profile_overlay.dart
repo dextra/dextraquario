@@ -15,8 +15,8 @@ import '../contribution.dart';
 class ProfileOverlay extends StatelessWidget {
   final Function onClose;  
   final String userID;  
-  UserServices _userServices = UserServices();
-  ContributionServices _contributionServices = ContributionServices();
+  final UserServices _userServices = UserServices();
+  final ContributionServices _contributionServices = ContributionServices();
 
   ProfileOverlay({this.onClose, this.userID});
 
@@ -62,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
   final UserModel user;
   final List<ContributionModel> contributions;
 
-  ProfileScreen({this.onClose, this.user, this.contributions}) {}
+  ProfileScreen({this.onClose, this.user, this.contributions});
 
   @override
   Widget build(BuildContext context) {
