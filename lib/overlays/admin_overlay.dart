@@ -52,10 +52,13 @@ class AdminOverlay extends StatelessWidget {
                       child: NineTileBox(
                         image: Assets.panelImage,
                         tileSize: 12,
-                        destTileSize: 36,
-                        width: 972,
-                        height: 720,
-                        padding: EdgeInsets.only(top: 32, left: 18, right: 18),
+                        destTileSize: 36 * scaleFactor,
+                        width: 972 * scaleFactor,
+                        height: 720 * scaleFactor,
+                        padding: EdgeInsets.only(
+                            top: 32 * scaleFactor,
+                            left: 18 * scaleFactor,
+                            right: 18 * scaleFactor),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,11 +68,13 @@ class AdminOverlay extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text('Contribuições pendentes',
+                                    textScaleFactor: scaleFactor,
                                     style: CommonText.panelTitle),
                                 Container(
-                                  width: 928,
-                                  height: 624,
-                                  margin: EdgeInsets.only(top: 32),
+                                  width: 928 * scaleFactor,
+                                  height: 624 * scaleFactor,
+                                  margin:
+                                      EdgeInsets.only(top: 32 * scaleFactor),
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
@@ -82,21 +87,24 @@ class AdminOverlay extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Container(
-                                        height: 42,
+                                        height: 42 * scaleFactor,
                                         color: Color(CommonColors.listHeader),
                                         child: Padding(
                                           padding: EdgeInsets.only(
-                                              left: 32, right: 54),
+                                              left: 32 * scaleFactor,
+                                              right: 54 * scaleFactor),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 'Contribuição',
+                                                textScaleFactor: scaleFactor,
                                                 style: CommonText.itemSubtitle,
                                               ),
                                               Text(
                                                 'Data',
+                                                textScaleFactor: scaleFactor,
                                                 style: CommonText.itemSubtitle,
                                               ),
                                             ],
@@ -116,6 +124,7 @@ class AdminOverlay extends StatelessWidget {
                                                   _pendingItems[index],
                                               index: index,
                                               canApprove: false,
+                                              scaleFactor: scaleFactor,
                                             ),
                                           ),
                                         ),
