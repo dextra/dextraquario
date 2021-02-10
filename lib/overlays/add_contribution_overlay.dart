@@ -33,7 +33,7 @@ class _AddContributionScreenOverlayState
   @override
   Widget build(context) {
     return LayoutBuilder(builder: (context, constraints) {
-      var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+      double scaleFactor = ScaleFactorCalculator.calcScaleFactor(
           constraints.maxWidth, constraints.maxHeight);
 
       return BackdropFilter(
