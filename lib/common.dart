@@ -4,7 +4,6 @@ import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'assets.dart';
-import 'utils/scale_factor_calculator.dart';
 
 class CommonColors {
   CommonColors._();
@@ -69,111 +68,108 @@ class ContributionItem extends StatelessWidget {
   final Contribution contribution;
   final int index;
   final bool canApprove;
+  double scaleFactor;
 
   ContributionItem(
-      {Contribution this.contribution, int this.index, this.canApprove});
+      {Contribution this.contribution,
+      int this.index,
+      this.canApprove,
+      this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
-            constraints.maxWidth, constraints.maxHeight);
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ExpansionTile(
-              leading: Container(
-                width: 64 * scaleFactor,
-                height: 64 * scaleFactor,
-                child: SpriteWidget(
-                  sprite: Assets.ui.getSprite(
-                    contribution.type.toString().replaceAll('ItemType.', ''),
-                  ),
-                ),
-              ),
-              trailing: Text(
-                contribution.date.toString(),
-                textScaleFactor: scaleFactor,
-                style: CommonText.itemTitle,
-              ),
-              title: Text(
-                contribution.getItemDescription(),
-                textScaleFactor: scaleFactor,
-                style: CommonText.itemTitle,
-              ),
-              subtitle: canApprove
-                  ? Text(
-                      contribution.author,
-                      textScaleFactor: scaleFactor,
-                      style: CommonText.itemSubtitle,
-                    )
-                  : null,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 92 * scaleFactor,
-                          right: 64 * scaleFactor,
-                          bottom: 16 * scaleFactor),
-                      child: Row(children: [
-                        Expanded(
-                          child: Text(
-                            contribution.description +
-                                "\n\n" +
-                                contribution.link,
-                            textScaleFactor: scaleFactor,
-                            style: CommonText.itemSubtitle,
-                          ),
-                        ),
-                      ]),
-                    ),
-                    canApprove
-                        ? Padding(
-                            padding: EdgeInsets.only(
-                                right: 48 * scaleFactor,
-                                bottom: 12 * scaleFactor),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 16 * scaleFactor),
-                                  child: SpriteButton(
-                                      width: 32 * scaleFactor,
-                                      height: 32 * scaleFactor,
-                                      onPressed: null,
-                                      label: null,
-                                      sprite: Assets.closeButton32,
-                                      pressedSprite: Assets.closeButton32),
-                                ),
-                                SpriteButton(
-                                    width: 32 * scaleFactor,
-                                    height: 32 * scaleFactor,
-                                    onPressed: null,
-                                    label: null,
-                                    sprite: Assets.closeButton32,
-                                    pressedSprite: Assets.closeButton32),
-                              ],
-                            ),
-                          )
-                        : Center()
-                  ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ExpansionTile(
+          tilePadding: EdgeInsets.symmetric(
+              vertical: 1.0 * scaleFactor, horizontal: 16.0 * scaleFactor),
+          leading: Container(
+            width: 64 * scaleFactor,
+            height: 64 * scaleFactor,
+            child: SpriteWidget(
+              sprite: Assets.ui.getSprite(
+                  contribution.type.toString().replaceAll('ItemType.', '')),
+            ),
+          ),
+          trailing: Text(
+            contribution.date.toString(),
+            textScaleFactor: scaleFactor,
+            style: CommonText.itemTitle,
+          ),
+          title: Text(
+            contribution.getItemDescription(),
+            textScaleFactor: scaleFactor,
+            style: CommonText.itemTitle,
+          ),
+          subtitle: canApprove
+              ? Text(
+                  contribution.author,
+                  textScaleFactor: scaleFactor,
+                  style: CommonText.itemSubtitle,
                 )
+              : null,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 92 * scaleFactor,
+                      right: 64 * scaleFactor,
+                      bottom: 16 * scaleFactor),
+                  child: Row(children: [
+                    Expanded(
+                      child: Text(
+                        contribution.description + "\n\n" + contribution.link,
+                        textScaleFactor: scaleFactor,
+                        style: CommonText.itemSubtitle,
+                      ),
+                    ),
+                  ]),
+                ),
+                canApprove
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                            right: 48 * scaleFactor, bottom: 12 * scaleFactor),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 16 * scaleFactor),
+                              child: SpriteButton(
+                                  width: 32 * scaleFactor,
+                                  height: 32 * scaleFactor,
+                                  onPressed: null,
+                                  label: null,
+                                  sprite: Assets.closeButton32,
+                                  pressedSprite: Assets.closeButton32),
+                            ),
+                            SpriteButton(
+                                width: 32 * scaleFactor,
+                                height: 32 * scaleFactor,
+                                onPressed: null,
+                                label: null,
+                                sprite: Assets.closeButton32,
+                                pressedSprite: Assets.closeButton32),
+                          ],
+                        ),
+                      )
+                    : Center()
               ],
-            ),
-            Divider(
-              color: Colors.black26,
-              indent: 20 * scaleFactor,
-              endIndent: 20 * scaleFactor,
-            ),
+            )
           ],
-        );
-      },
+        ),
+        Divider(
+          color: Colors.black26,
+          height: 16 * scaleFactor,
+          thickness: 1 * scaleFactor,
+          indent: 20 * scaleFactor,
+          endIndent: 20 * scaleFactor,
+        ),
+      ],
     );
   }
 }

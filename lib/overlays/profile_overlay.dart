@@ -88,7 +88,10 @@ class ProfileScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CloseButtonWidget(onClick: onClose),
+            CloseButtonWidget(
+              onClick: onClose,
+              scaleFactor: scaleFactor,
+            ),
           ],
         ),
         Column(
@@ -267,6 +270,7 @@ class ProfileScreen extends StatelessWidget {
                                                   _contributions[index],
                                               index: index,
                                               canApprove: false,
+                                              scaleFactor: scaleFactor,
                                             ),
                                           ),
                                         ),
