@@ -90,13 +90,14 @@ class _RankingOverlayState extends State<RankingOverlay> {
                             child: NineTileBox(
                               image: Assets.panelShadow,
                               tileSize: 12,
-                              destTileSize: 24,
-                              width: 559,
-                              height: 597,
+                              destTileSize: 24 * scaleFactor,
+                              width: 559 * scaleFactor,
+                              height: 597 * scaleFactor,
                             ),
                             opacity: 0.5,
                           ),
-                          padding: EdgeInsets.only(top: 4.0, left: 2.0),
+                          padding: EdgeInsets.only(
+                              top: 4.0 * scaleFactor, left: 2.0 * scaleFactor),
                         ),
                         ClipRect(
                           child: BackdropFilter(
@@ -104,11 +105,13 @@ class _RankingOverlayState extends State<RankingOverlay> {
                             child: NineTileBox(
                               image: Assets.panelImage,
                               tileSize: 12,
-                              destTileSize: 36,
-                              width: 972,
-                              height: 720,
-                              padding:
-                                  EdgeInsets.only(top: 32, left: 18, right: 18),
+                              destTileSize: 36 * scaleFactor,
+                              width: 972 * scaleFactor,
+                              height: 720 * scaleFactor,
+                              padding: EdgeInsets.only(
+                                  top: 32 * scaleFactor,
+                                  left: 18 * scaleFactor,
+                                  right: 18 * scaleFactor),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,11 +122,13 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text('Classificação',
+                                          textScaleFactor: scaleFactor,
                                           style: CommonText.panelTitle),
                                       Container(
-                                        width: 928,
-                                        height: 624,
-                                        margin: EdgeInsets.only(top: 32),
+                                        width: 928 * scaleFactor,
+                                        height: 624 * scaleFactor,
+                                        margin: EdgeInsets.only(
+                                            top: 32 * scaleFactor),
                                         decoration: BoxDecoration(
                                           boxShadow: [
                                             BoxShadow(
@@ -136,12 +141,13 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                         child: Column(
                                           children: [
                                             Container(
-                                              height: 42,
+                                              height: 42 * scaleFactor,
                                               color: Color(
                                                   CommonColors.listHeader),
                                               child: Padding(
                                                 padding: EdgeInsets.only(
-                                                    left: 32, right: 54),
+                                                    left: 32 * scaleFactor,
+                                                    right: 54 * scaleFactor),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -150,6 +156,8 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                     GestureDetector(
                                                       child: Text(
                                                         'Class.',
+                                                        textScaleFactor:
+                                                            scaleFactor,
                                                         style: CommonText
                                                             .itemSubtitle,
                                                       ),
@@ -159,11 +167,13 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                     ),
                                                     GestureDetector(
                                                       child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 527),
+                                                        padding: EdgeInsets.only(
+                                                            right: 527 *
+                                                                scaleFactor),
                                                         child: Text(
                                                           'Nome',
+                                                          textScaleFactor:
+                                                              scaleFactor,
                                                           style: CommonText
                                                               .itemSubtitle,
                                                         ),
@@ -175,6 +185,8 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                     GestureDetector(
                                                       child: Text(
                                                         'Pontuação',
+                                                        textScaleFactor:
+                                                            scaleFactor,
                                                         style: CommonText
                                                             .itemSubtitle,
                                                       ),
@@ -209,9 +221,12 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                             snapshot.data[0]);
                                                     return UserTopRanking(
                                                       user: currentUser,
+                                                      scaleFactor: scaleFactor,
                                                     );
                                                   } else {
-                                                    return LoadingUser();
+                                                    return LoadingUser(
+                                                        scaleFactor:
+                                                            scaleFactor);
                                                   }
                                                 }),
                                             Expanded(
@@ -239,6 +254,8 @@ class _RankingOverlayState extends State<RankingOverlay> {
                                                           users: userRanking,
                                                           scrollController:
                                                               _scrollController,
+                                                          scaleFactor:
+                                                              scaleFactor,
                                                         );
                                                       } else {
                                                         // loading
@@ -318,25 +335,39 @@ class _RankingOverlayState extends State<RankingOverlay> {
 
 // Loading screen
 class LoadingUser extends StatelessWidget {
+  final double scaleFactor;
+
+  LoadingUser({this.scaleFactor});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 20),
-        child: Text('Loading...', style: CommonText.panelTitle));
+      padding: EdgeInsets.only(top: 20 * scaleFactor),
+      child: Text(
+        'Loading...',
+        textScaleFactor: scaleFactor,
+        style: CommonText.panelTitle,
+      ),
+    );
   }
 }
 
 // User's own ID in the 1st place of the ranking
 class UserTopRanking extends StatelessWidget {
   final UserRanking user;
-  UserTopRanking({this.user});
+  final double scaleFactor;
+
+  UserTopRanking({this.user, this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black.withOpacity(0.25),
-      margin: EdgeInsets.symmetric(vertical: 8),
-      child: UserItem(user: user),
+      margin: EdgeInsets.symmetric(vertical: 8 * scaleFactor),
+      child: UserItem(
+        user: user,
+        scaleFactor: scaleFactor,
+      ),
     );
   }
 }
@@ -346,8 +377,10 @@ class UserList extends StatelessWidget {
   final List<UserRanking> users;
   final ScrollController scrollController;
   final Function onTapUser;
+  final double scaleFactor;
 
-  UserList({this.users, this.scrollController, this.onTapUser});
+  UserList(
+      {this.users, this.scrollController, this.onTapUser, this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
@@ -358,6 +391,7 @@ class UserList extends StatelessWidget {
         index: index,
         users: users,
         onTapUser: onTapUser,
+        scaleFactor: scaleFactor,
       ),
     );
   }
@@ -367,8 +401,9 @@ class BuildItem extends StatelessWidget {
   final int index;
   final List<UserRanking> users;
   final Function onTapUser;
+  final double scaleFactor;
 
-  BuildItem({this.index, this.users, this.onTapUser});
+  BuildItem({this.index, this.users, this.onTapUser, this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
@@ -376,13 +411,17 @@ class BuildItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          child: UserItem(user: users[index]),
+          child: UserItem(
+            user: users[index],
+            scaleFactor: scaleFactor,
+          ),
           onTap: () => onTapUser?.call(users[index].id),
         ),
         Divider(
           color: Colors.black26,
-          indent: 20,
-          endIndent: 20,
+          height: 16 * scaleFactor,
+          indent: 20 * scaleFactor,
+          endIndent: 20 * scaleFactor,
         ),
       ],
     );
@@ -392,18 +431,21 @@ class BuildItem extends StatelessWidget {
 // Each user item in the list
 class UserItem extends StatelessWidget {
   final UserRanking user;
-  UserItem({this.user});
+  final scaleFactor;
+
+  UserItem({this.user, this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: 68,
-        right: 54,
+        left: 68 * scaleFactor,
+        right: 54 * scaleFactor,
       ),
       child: ListTile(
         leading: Text(
           (user.rank + 1).toString(),
+          textScaleFactor: scaleFactor,
           style: CommonText.itemTitle,
         ),
         title: Row(
@@ -411,21 +453,24 @@ class UserItem extends StatelessWidget {
           children: [
             // Photo container
             Padding(
-              padding: EdgeInsets.only(left: 16, right: 20),
+              padding: EdgeInsets.only(
+                  left: 16 * scaleFactor, right: 20 * scaleFactor),
               child: Container(
-                height: 32,
-                width: 32,
+                height: 32 * scaleFactor,
+                width: 32 * scaleFactor,
                 color: Colors.grey,
               ),
             ),
             Text(
               user.name,
+              textScaleFactor: scaleFactor,
               style: CommonText.itemTitle,
             ),
           ],
         ),
         trailing: Text(
           '${user.score.toString()}',
+          textScaleFactor: scaleFactor,
           style: CommonText.itemTitle,
         ),
       ),
