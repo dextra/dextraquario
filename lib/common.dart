@@ -1,4 +1,5 @@
 import 'package:dextraquario/contribution.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
@@ -65,12 +66,13 @@ class Common {
 }
 
 class ContributionItem extends StatelessWidget {
-  final Contribution contribution;
+  final ContributionModel contribution;
   final int index;
   final bool canApprove;
+  final String author;
 
   ContributionItem(
-      {Contribution this.contribution, int this.index, this.canApprove});
+      {this.contribution, this.author, this.index, this.canApprove});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class ContributionItem extends StatelessWidget {
             height: 64,
             child: SpriteWidget(
               sprite: Assets.ui.getSprite(
-                contribution.type.toString().replaceAll('ItemType.', ''),
+                contribution.category.toString().replaceAll('ItemType.', ''),
               ),
             ),
           ),
@@ -92,12 +94,12 @@ class ContributionItem extends StatelessWidget {
             style: CommonText.itemTitle,
           ),
           title: Text(
-            contribution.getItemDescription(),
+            contribution.description,
             style: CommonText.itemTitle,
           ),
           subtitle: canApprove
               ? Text(
-                  contribution.author,
+                  author,
                   style: CommonText.itemSubtitle,
                 )
               : null,
@@ -111,7 +113,9 @@ class ContributionItem extends StatelessWidget {
                   child: Row(children: [
                     Expanded(
                       child: Text(
-                        contribution.description + "\n\n" + contribution.link,
+                        contribution.description +
+                            "\n\n" +
+                            contribution.contribution_link,
                         style: CommonText.itemSubtitle,
                       ),
                     ),

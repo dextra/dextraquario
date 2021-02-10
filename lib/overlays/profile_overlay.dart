@@ -1,6 +1,7 @@
 import 'package:dextraquario/components/close_button_widget.dart';
-import 'package:dextraquario/fish_info.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
@@ -24,20 +25,35 @@ class ProfileOverlay extends StatefulWidget {
 }
 
 class _ProfileOverlayState extends State<ProfileOverlay> {
+  UserServices _userServices = UserServices();
+  ContributionServices _contributionServices = ContributionServices();
+
+  Future<UserModel> _user;
+  Future<List<ContributionModel>> _contributions;
+
   final Function onClose;
   final String userID;
 
   _ProfileOverlayState({this.onClose, this.userID});
 
   @override
+  void initState() {
+    super.initState();
+
+    _user = _userServices.getUserById(userID);
+    _contributions = _contributionServices.getContributionsByUser(userID);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: UserServices().getUserById(userID),
+      future: Future.wait([_user, _contributions]),
       builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData) {
           return ProfileScreen(
             onClose: this.onClose,
-            user: snapshot.data,
+            user: snapshot.data[0],
+            contributions: snapshot.data[1],
           );
         } else {
           return Column(
@@ -63,11 +79,14 @@ class _ProfileOverlayState extends State<ProfileOverlay> {
 
 class ProfileScreen extends StatelessWidget {
   final Function onClose;
-  final List<Contribution> _contributions = _mockItems();
   final ScrollController _scrollController = ScrollController();
   final UserModel user;
+  final List<ContributionModel> contributions;
+  List<Contribution> _contributionsMock = _mockItems();
 
-  ProfileScreen({this.onClose, this.user});
+  ProfileScreen({this.onClose, this.user, this.contributions}) {
+    print('CONTRIBUTIONS: ${contributions[0]}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +145,7 @@ class ProfileScreen extends StatelessWidget {
                                       Container(
                                         width: 126,
                                         height: 126,
-                                        color: Colors.grey,
+                                        child: Image.network(user.photo),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(left: 16),
@@ -147,7 +166,9 @@ class ProfileScreen extends StatelessWidget {
                                                 bottom: 20,
                                               ),
                                               child: Text(
-                                                '${_contributions.length} contribuições',
+                                                user.score == 1
+                                                    ? '1 contribuição'
+                                                    : '${user.score} contribuições',
                                                 style: CommonText.itemTitle,
                                               ),
                                             ),
@@ -158,33 +179,33 @@ class ProfileScreen extends StatelessWidget {
                                                 ContributionNumber(
                                                   ItemType
                                                       .CONTRIBUICAO_COMUNIDADE,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.DESAFIO_TECNICO,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType
                                                       .ENTREVISTA_PARTICIPACAO,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType
                                                       .ENTREVISTA_AVALIACAO_TESTE,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.CAFE_COM_CODIGO,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.ARTIGO_BLOG_DEXTRA,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.CHAPA,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                               ],
                                             )
@@ -240,11 +261,12 @@ class ProfileScreen extends StatelessWidget {
                                           child: ListView.builder(
                                             padding: EdgeInsets.only(top: 8),
                                             controller: _scrollController,
-                                            itemCount: _contributions.length,
+                                            itemCount: contributions.length,
                                             itemBuilder: (ctx, index) =>
                                                 ContributionItem(
                                               contribution:
-                                                  _contributions[index],
+                                                  contributions[index],
+                                              author: user.name,
                                               index: index,
                                               canApprove: false,
                                             ),
@@ -295,7 +317,7 @@ class ProfileScreen extends StatelessWidget {
 
 class ContributionNumber extends StatelessWidget {
   final ItemType type;
-  final List<Contribution> contribs;
+  final List<ContributionModel> contribs;
 
   ContributionNumber(this.type, this.contribs);
 
@@ -304,7 +326,7 @@ class ContributionNumber extends StatelessWidget {
     int count = 0;
 
     contribs.forEach((e) {
-      e.type == type ? count += 1 : null;
+      e.category == type ? count += 1 : null;
     });
 
     return Column(
