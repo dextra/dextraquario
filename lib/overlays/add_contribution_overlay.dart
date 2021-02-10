@@ -152,7 +152,6 @@ class _AddContributionScreenOverlayState
                                                 color: Colors.white,
                                                 fontSize: 16,
                                                 height: 1,
-                                                fontWeight: FontWeight.w400,
                                                 shadows: <Shadow>[
                                                   Shadow(
                                                     blurRadius: 0,
@@ -168,7 +167,7 @@ class _AddContributionScreenOverlayState
                                             Container(
                                               padding: EdgeInsets.only(
                                                   top: 10.0 * scaleFactor),
-                                              height: 56,
+                                              height: 56 * scaleFactor,
                                               child: CustomDropdown(
                                                 onClick: (String option) {
                                                   tipoController.text = option;
