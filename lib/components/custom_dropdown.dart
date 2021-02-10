@@ -27,7 +27,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   @override
   void initState() {
-    print(widget.scaleFactor);
     super.initState();
     actionKey = LabeledGlobalKey(text);
     angleArrow = 90;
@@ -44,8 +43,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
       xPosition = offset.dx / widget.scaleFactor;
       yPosition = offset.dy;
     });
-    print("pos:" + xPosition.toString());
-    print("scale:" + widget.scaleFactor.toString());
   }
 
   OverlayEntry _createFloatingDropdown() {
