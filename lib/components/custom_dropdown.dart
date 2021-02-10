@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'dart:math' as math;
 
+import 'package:dextraquario/utils/scale_factor_calculator.dart';
 import 'package:flutter/material.dart';
 import '../common.dart';
 
@@ -26,6 +27,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   @override
   void initState() {
+    print(widget.scaleFactor);
     super.initState();
     actionKey = LabeledGlobalKey(text);
     angleArrow = 90;
@@ -36,117 +38,125 @@ class _CustomDropdownState extends State<CustomDropdown> {
     RenderBox renderBox = actionKey.currentContext.findRenderObject();
     Offset offset = renderBox.localToGlobal(Offset.zero);
     setState(() {
-      height = renderBox.size.height;
+      height = 56 * widget.scaleFactor;
       itemHeight = height;
-      width = renderBox.size.width;
-      xPosition = offset.dx;
+      width = 486;
+      xPosition = offset.dx / widget.scaleFactor;
       yPosition = offset.dy;
     });
+    print("pos:" + xPosition.toString());
+    print("scale:" + widget.scaleFactor.toString());
   }
 
   OverlayEntry _createFloatingDropdown() {
     return OverlayEntry(builder: (context) {
-      return Expanded(
-        child: Container(
+      return LayoutBuilder(builder: (context, constraints) {
+        var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+            constraints.maxWidth, constraints.maxHeight);
+
+        return Container(
+          width: width,
           padding: EdgeInsets.only(
-            left: xPosition,
-            top: yPosition + height,
-            right: xPosition,
+            left:
+                (MediaQuery.of(context).size.width - (width * scaleFactor)) / 2,
+            top: yPosition + height * scaleFactor,
+            right:
+                (MediaQuery.of(context).size.width - (width * scaleFactor)) / 2,
           ),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 1),
-              Material(
-                elevation: 2,
-                child: Container(
-                  height: 7 * itemHeight * widget.scaleFactor,
-                  child: Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Desafio Técnico');
-                          });
-                        },
-                        child: DropDownItem.first(
-                          text: 'Desafio Técnico',
-                          scaleFactor: widget.scaleFactor,
+          child: Expanded(
+            child: Column(
+              children: <Widget>[
+                Material(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState('Desafio Técnico');
+                            });
+                          },
+                          child: DropDownItem.first(
+                            text: 'Desafio Técnico',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Entrevista Participação');
-                          });
-                        },
-                        child: DropDownItem(
-                          text: 'Entrevista Participação',
-                          scaleFactor: widget.scaleFactor,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState('Entrevista Participação');
+                            });
+                          },
+                          child: DropDownItem(
+                            text: 'Entrevista Participação',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Entrevista Avaliação Teste');
-                          });
-                        },
-                        child: DropDownItem(
-                          text: 'Entrevista Avaliação Teste',
-                          scaleFactor: widget.scaleFactor,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState(
+                                  'Entrevista Avaliação Teste');
+                            });
+                          },
+                          child: DropDownItem(
+                            text: 'Entrevista Avaliação Teste',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Café com Código');
-                          });
-                        },
-                        child: DropDownItem(
-                          text: 'Café com código',
-                          scaleFactor: widget.scaleFactor,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState('Café com Código');
+                            });
+                          },
+                          child: DropDownItem(
+                            text: 'Café com código',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Contribuição Comunidade');
-                          });
-                        },
-                        child: DropDownItem(
-                          text: 'Contribuição Comunidade',
-                          scaleFactor: widget.scaleFactor,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState('Contribuição Comunidade');
+                            });
+                          },
+                          child: DropDownItem(
+                            text: 'Contribuição Comunidade',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Artigo Blog Dextra');
-                          });
-                        },
-                        child: DropDownItem(
-                          text: 'Artigo Blog Dextra',
-                          scaleFactor: widget.scaleFactor,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState('Artigo Blog Dextra');
+                            });
+                          },
+                          child: DropDownItem(
+                            text: 'Artigo Blog Dextra',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            setDropdownClickState('Chapa');
-                          });
-                        },
-                        child: DropDownItem.last(
-                          text: 'Chapa',
-                          scaleFactor: widget.scaleFactor,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setDropdownClickState('Chapa');
+                            });
+                          },
+                          child: DropDownItem.last(
+                            text: 'Chapa',
+                            scaleFactor: widget.scaleFactor,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
+        );
+      });
     });
   }
 
@@ -184,7 +194,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
           isDropdownOpened = !isDropdownOpened;
         });
       },
-      child: Container(
+      child: Flexible(
+          child: Container(
         decoration: BoxDecoration(
           color: CommonColors.lightBackground,
           border: _insetBorder(widget.scaleFactor),
@@ -207,7 +218,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                      height: 1.5,
+                      height: 1.5 * widget.scaleFactor,
                       shadows: <Shadow>[
                         Shadow(
                             offset: Offset(
@@ -246,7 +257,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 
@@ -294,12 +305,9 @@ class DropDownItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Flexible(
+        child: Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.zero,
-          bottom: Radius.zero,
-        ),
         color: CommonColors.lightBackground,
       ),
       padding: EdgeInsets.symmetric(
@@ -312,7 +320,7 @@ class DropDownItem extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
-              height: 1,
+              height: 1 * scaleFactor,
               fontWeight: FontWeight.w400,
               shadows: <Shadow>[
                 Shadow(offset: Offset(1 * scaleFactor, 1 * scaleFactor)),
@@ -322,6 +330,6 @@ class DropDownItem extends StatelessWidget {
           Spacer(),
         ],
       ),
-    );
+    ));
   }
 }

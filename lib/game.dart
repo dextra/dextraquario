@@ -124,7 +124,7 @@ class GameScreen extends StatelessWidget {
                   );
                 }
               },
-              initialActiveOverlays: ['loginScreenOverlay'],
+              initialActiveOverlays: ['addContributionScreenOverlay'],
             ),
             onHover: (event) {
               game.updateMouse(event.localPosition);
