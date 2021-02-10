@@ -366,7 +366,7 @@ class BuildItem extends StatelessWidget {
       children: [
         GestureDetector(
           child: UserItem(user: users[index]),
-          onTap: () => onTapUser(users[index].id),
+          onTap: () => onTapUser?.call(users[index].id),
         ),
         Divider(
           color: Colors.black26,
