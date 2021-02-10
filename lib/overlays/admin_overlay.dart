@@ -9,15 +9,27 @@ import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 import 'package:dextraquario/components/close_button_widget.dart';
 
-class AdminOverlay extends StatelessWidget {
+class AdminOverlay extends StatefulWidget {
   final Function onClose;
-  final ScrollController _scrollController = ScrollController();
-  final Future<List<ContributionModel>> _dbContributions =
-      ContributionServices()
-          .getContributionsByApprovalStatus(ApprovalStatus.ANALYZING);
-  final Future<List<UserModel>> _dbUsers = UserServices().getAll();
 
   AdminOverlay({this.onClose});
+
+  @override
+  _AdminOverlayState createState() => _AdminOverlayState();
+}
+
+class _AdminOverlayState extends State<AdminOverlay> {
+  final ScrollController _scrollController = ScrollController();
+  Future<List<ContributionModel>> _dbContributions;
+  Future<List<UserModel>> _dbUsers;
+
+  @override
+  void initState() {
+    super.initState();
+    _dbContributions = ContributionServices()
+        .getContributionsByApprovalStatus(ApprovalStatus.ANALYZING);
+    _dbUsers = UserServices().getAll();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +43,7 @@ class AdminOverlay extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CloseButtonWidget(onClick: () => onClose?.call()),
+              CloseButtonWidget(onClick: () => widget.onClose?.call()),
             ],
           ),
           Column(
@@ -127,6 +139,17 @@ class AdminOverlay extends StatelessWidget {
                                                 authors: snapshot.data[0],
                                                 scrollController:
                                                     _scrollController,
+                                                updateList: () => setState(
+                                                  () {
+                                                    _dbContributions =
+                                                        ContributionServices()
+                                                            .getContributionsByApprovalStatus(
+                                                                ApprovalStatus
+                                                                    .ANALYZING);
+                                                    _dbUsers =
+                                                        UserServices().getAll();
+                                                  },
+                                                ),
                                               );
                                             } else {
                                               // Loading screen
@@ -178,8 +201,13 @@ class ContributionList extends StatelessWidget {
   final List<ContributionModel> pendingItems;
   final ScrollController scrollController;
   final List<UserModel> authors;
+  final Function updateList;
 
-  ContributionList({this.pendingItems, this.scrollController, this.authors});
+  ContributionList(
+      {this.pendingItems,
+      this.scrollController,
+      this.authors,
+      this.updateList});
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +223,7 @@ class ContributionList extends StatelessWidget {
                   .name,
               index: index,
               canApprove: true,
+              updateList: updateList,
             ),
           )
         : Center();
