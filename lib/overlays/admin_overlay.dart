@@ -9,28 +9,15 @@ import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
 import 'package:dextraquario/components/close_button_widget.dart';
 
-class AdminOverlay extends StatefulWidget {
+class AdminOverlay extends StatelessWidget {
   final Function onClose;
-  // final List<Contribution> _pendingItems = _mockItems();
+  final ScrollController _scrollController = ScrollController();
+  final Future<List<ContributionModel>> _dbContributions =
+      ContributionServices()
+          .getContributionsByApprovalStatus(ApprovalStatus.ANALYZING);
+  final Future<List<UserModel>> _dbUsers = UserServices().getAll();
 
   AdminOverlay({this.onClose});
-
-  @override
-  _AdminOverlayState createState() => _AdminOverlayState();
-}
-
-class _AdminOverlayState extends State<AdminOverlay> {
-  Future<List<ContributionModel>> _dbContributions;
-  final ScrollController _scrollController = ScrollController();
-  Future<List<UserModel>> _dbUsers;
-
-  @override
-  void initState() {
-    super.initState();
-    _dbContributions = ContributionServices()
-        .getContributionsByApprovalStatus(ApprovalStatus.ANALYZING);
-    _dbUsers = UserServices().getAll();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +31,7 @@ class _AdminOverlayState extends State<AdminOverlay> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CloseButtonWidget(onClick: widget.onClose),
+              CloseButtonWidget(onClick: () => onClose?.call()),
             ],
           ),
           Column(
