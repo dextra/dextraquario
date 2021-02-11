@@ -56,7 +56,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           padding: EdgeInsets.only(
             left:
                 (MediaQuery.of(context).size.width - (width * scaleFactor)) / 2,
-            top: yPosition + height * scaleFactor,
+            top: yPosition + height,
             right:
                 (MediaQuery.of(context).size.width - (width * scaleFactor)) / 2,
           ),
