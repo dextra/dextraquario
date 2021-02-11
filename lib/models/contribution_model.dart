@@ -56,7 +56,7 @@ class ContributionModel {
         return 'Chapa';
     }
 
-    return '';
+    throw Exception('Contribution category is not a valid ItemType.');
   }
 
   // GET
