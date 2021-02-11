@@ -71,7 +71,7 @@ class ContributionItem extends StatelessWidget {
   final int index;
   final bool canApprove;
   final String author;
-  final df = new DateFormat('dd/MM/yyyy');
+  final df = DateFormat('dd/MM/yyyy');
 
   ContributionItem(
       {this.contribution, this.author, this.index, this.canApprove});
