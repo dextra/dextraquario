@@ -32,10 +32,7 @@ class ContributionModel {
   String get contribution_id => _contributionid;
   String get user_id => _userid;
   DateTime get date => _date.toDate();
-  ItemType get category {
-    return EnumToString.fromString(ItemType.values, _category);
-  }
-
+  ItemType get category => EnumToString.fromString(ItemType.values, _category);
   String get contribution_link => _link;
   String get description => _description;
   String get approval => _approval;

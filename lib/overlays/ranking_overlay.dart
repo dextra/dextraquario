@@ -344,7 +344,11 @@ class UserList extends StatelessWidget {
     return ListView.builder(
       controller: scrollController,
       itemCount: users.length,
-      itemBuilder: (ctx, index) => BuildItem(index: index, users: users),
+      itemBuilder: (ctx, index) => BuildItem(
+        index: index,
+        users: users,
+        onTapUser: onTapUser,
+      ),
     );
   }
 }
@@ -352,15 +356,19 @@ class UserList extends StatelessWidget {
 class BuildItem extends StatelessWidget {
   final int index;
   final List<UserRanking> users;
+  final Function onTapUser;
 
-  BuildItem({this.index, this.users});
+  BuildItem({this.index, this.users, this.onTapUser});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        UserItem(user: users[index]),
+        GestureDetector(
+          child: UserItem(user: users[index]),
+          onTap: () => onTapUser?.call(users[index].id),
+        ),
         Divider(
           color: Colors.black26,
           indent: 20,
@@ -397,7 +405,7 @@ class UserItem extends StatelessWidget {
               child: Container(
                 height: 32,
                 width: 32,
-                color: Colors.grey,
+                child: Image.network(user.photo),
               ),
             ),
             Text(
@@ -419,10 +427,11 @@ class UserItem extends StatelessWidget {
 class UserRanking {
   String id;
   String name;
+  String photo;
   int score;
   int rank;
 
-  UserRanking({this.id, this.name, this.rank, this.score});
+  UserRanking({this.id, this.name, this.rank, this.score, this.photo});
 }
 
 // Sorting the users list
@@ -435,7 +444,11 @@ List<UserRanking> orderUserList(List<UserModel> userList, TypeOfSorting type) {
   // create user ranking by the ordenation
   userList.asMap().forEach((index, value) {
     userRanking.add(UserRanking(
-        id: value.id, name: value.name, score: value.score, rank: index));
+        id: value.id,
+        name: value.name,
+        score: value.score,
+        rank: index,
+        photo: value.photo));
   });
 
   // if it's ordered by score ascending (rank descending) sort again

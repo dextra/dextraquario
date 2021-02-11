@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/components/custom_dropdown.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../common.dart';
 import '../services/contribution_service.dart';
 import '../models/contribution_model.dart';
 
+// ignore: must_be_immutable
 class AddContributionScreenOverlay extends StatelessWidget {
   final Function onClick;
   final User user;
