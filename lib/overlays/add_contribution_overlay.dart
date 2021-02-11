@@ -11,19 +11,9 @@ import '../common.dart';
 import '../services/contribution_service.dart';
 import '../models/contribution_model.dart';
 
-class AddContributionScreenOverlay extends StatefulWidget {
+class AddContributionScreenOverlay extends StatelessWidget {
   final Function onClick;
   final User user;
-
-  AddContributionScreenOverlay({this.onClick, this.user});
-
-  @override
-  _AddContributionScreenOverlayState createState() =>
-      _AddContributionScreenOverlayState();
-}
-
-class _AddContributionScreenOverlayState
-    extends State<AddContributionScreenOverlay> {
   final descricaoController = TextEditingController();
   final linkController = TextEditingController();
   final tipoController = TextEditingController();
@@ -31,6 +21,8 @@ class _AddContributionScreenOverlayState
   final ContributionServices _contributionServices = ContributionServices();
   ItemType type;
   bool dropdownValidator = false;
+
+  AddContributionScreenOverlay({this.onClick, this.user});
 
   @override
   Widget build(context) {
@@ -371,12 +363,12 @@ class _AddContributionScreenOverlayState
                                               dropdownValidator) {
                                             _contributionServices
                                                 .createContribution(
-                                                    widget.user.uid,
+                                                    user.uid,
                                                     DateTime.now(),
                                                     descricaoController.text,
                                                     linkController.text,
                                                     type);
-                                            widget.onClick?.call();
+                                            onClick?.call();
                                           }
                                         },
                                         child: Stack(
@@ -462,7 +454,7 @@ class _AddContributionScreenOverlayState
             Positioned(
               top: 0.0,
               right: 0.0,
-              child: CloseButtonWidget(onClick: widget.onClick),
+              child: CloseButtonWidget(onClick: onClick),
             ),
           ],
         ),

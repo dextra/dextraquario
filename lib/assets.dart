@@ -12,9 +12,11 @@ class Assets {
   static Sprite gear;
   static Sprite closeButton32;
   static Sprite closeButton48;
+  static Sprite acceptButton32;
   static Sprite profileMedal;
   static dui.Image panelImage;
   static dui.Image buttonImage;
+  static dui.Image logoutButton32;
   static dui.Image userEmptyBottom;
   static dui.Image userEmptyFrame;
   static dui.Image buttonShadow;
@@ -37,6 +39,9 @@ class Assets {
     final _closeButton48 = await Flame.images.load('closeButton48.png');
     closeButton48 = Sprite(_closeButton48);
 
+    final _acceptButton32 = await Flame.images.load('acceptButton32.png');
+    acceptButton32 = Sprite(_acceptButton32);
+
     userEmptyBottom = await Flame.images.load('user_image_panel_filled.png');
 
     userEmptyFrame = await Flame.images.load('user_image_panel_empty.png');
@@ -44,5 +49,6 @@ class Assets {
     buttonShadow = await Flame.images.load('button_shadow.png');
     panelImage = await Flame.images.load('panel.png');
     panelShadow = await Flame.images.load('panel_shadow.png');
+    logoutButton32 = await Flame.images.load('logoutButton32.png');
   }
 }

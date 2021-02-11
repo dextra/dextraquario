@@ -20,15 +20,10 @@ class AdminOverlay extends StatefulWidget {
 
 class _AdminOverlayState extends State<AdminOverlay> {
   final ScrollController _scrollController = ScrollController();
-  Future<List<ContributionModel>> _dbContributions;
-  Future<List<UserModel>> _dbUsers;
 
   @override
   void initState() {
     super.initState();
-    _dbContributions = ContributionServices()
-        .getContributionsByApprovalStatus(ApprovalStatus.ANALYZING);
-    _dbUsers = UserServices().getAll();
   }
 
   @override
@@ -125,8 +120,10 @@ class _AdminOverlayState extends State<AdminOverlay> {
                                         child: FutureBuilder(
                                           future: Future.wait(
                                             [
-                                              _dbUsers,
-                                              _dbContributions,
+                                              UserServices().getAll(),
+                                              ContributionServices()
+                                                  .getContributionsByApprovalStatus(
+                                                      ApprovalStatus.ANALYZING)
                                             ],
                                           ),
                                           builder: (context,
@@ -140,15 +137,7 @@ class _AdminOverlayState extends State<AdminOverlay> {
                                                 scrollController:
                                                     _scrollController,
                                                 updateList: () => setState(
-                                                  () {
-                                                    _dbContributions =
-                                                        ContributionServices()
-                                                            .getContributionsByApprovalStatus(
-                                                                ApprovalStatus
-                                                                    .ANALYZING);
-                                                    _dbUsers =
-                                                        UserServices().getAll();
-                                                  },
+                                                  () {},
                                                 ),
                                               );
                                             } else {

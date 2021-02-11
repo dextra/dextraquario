@@ -37,17 +37,46 @@ class HomeScreenOverlay extends StatelessWidget {
       future: Future.wait([userModel, topUsersList, adminValidation]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
-          return page(
-              context, snapshot.data[0], snapshot.data[1], snapshot.data[2]);
+          return HomePage(
+            userModel: snapshot.data[0],
+            topUsersList: snapshot.data[1],
+            adminValidation: snapshot.data[2],
+            onUserClick: onUserClick,
+            onAddClick: onAddClick,
+            onGearClick: onGearClick,
+            onLogoutClick: onLogoutClick,
+            onRankingClick: onRankingClick,
+          );
         } else {
           return Loading();
         }
       },
     );
   }
+}
 
-  Widget page(context, UserModel userModel, List<UserModel> topUsersList,
-      bool adminValidation) {
+class HomePage extends StatelessWidget {
+  final UserModel userModel;
+  final List<UserModel> topUsersList;
+  final bool adminValidation;
+  final Function onAddClick;
+  final Function onUserClick;
+  final Function onRankingClick;
+  final Function onLogoutClick;
+  final Function onGearClick;
+
+  HomePage(
+      {this.userModel,
+      this.topUsersList,
+      this.adminValidation,
+      this.onAddClick,
+      this.onUserClick,
+      this.onLogoutClick,
+      this.onRankingClick,
+      this.onGearClick});
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         // Painel do ranking
@@ -138,7 +167,7 @@ class HomeScreenOverlay extends StatelessWidget {
                       GestureDetector(
                         child: Container(
                             padding: EdgeInsets.only(top: 44, right: 44),
-                            child: Image.asset('images/closeButton48.png')),
+                            child: Image.asset('images/closeButton32.png')),
                         onTap: () {
                           onLogoutClick?.call();
                         },
