@@ -6,7 +6,6 @@ import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../assets.dart';
 import '../common.dart';
 
