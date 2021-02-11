@@ -22,7 +22,7 @@ class ProfileOverlay extends StatelessWidget {
     return FutureBuilder(
       future: Future.wait([
         _userServices.getUserById(userID),
-        _contributionServices.getContributionByUser(userID)
+        _contributionServices.getContributionsByUser(userID)
       ]),
       builder: (ctx, snapshot) {
         if (snapshot.hasData) {

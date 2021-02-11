@@ -12,10 +12,18 @@ import '../common.dart';
 import '../services/contribution_service.dart';
 import '../models/contribution_model.dart';
 
-// ignore: must_be_immutable
-class AddContributionScreenOverlay extends StatelessWidget {
+class AddContributionScreenOverlay extends StatefulWidget {
   final Function onClick;
   final User user;
+
+  AddContributionScreenOverlay({this.onClick, this.user});
+
+  @override
+  State<StatefulWidget> createState() => _AddContributionScreenOverlay();
+}
+
+class _AddContributionScreenOverlay
+    extends State<AddContributionScreenOverlay> {
   final descricaoController = TextEditingController();
   final linkController = TextEditingController();
   final tipoController = TextEditingController();
@@ -23,8 +31,6 @@ class AddContributionScreenOverlay extends StatelessWidget {
   final ContributionServices _contributionServices = ContributionServices();
   ItemType type;
   bool dropdownValidator = false;
-
-  AddContributionScreenOverlay({this.onClick, this.user});
 
   @override
   Widget build(context) {
@@ -365,12 +371,12 @@ class AddContributionScreenOverlay extends StatelessWidget {
                                               dropdownValidator) {
                                             _contributionServices
                                                 .createContribution(
-                                                    user.uid,
+                                                    widget.user.uid,
                                                     DateTime.now(),
                                                     descricaoController.text,
                                                     linkController.text,
                                                     type);
-                                            onClick?.call();
+                                            widget.onClick?.call();
                                           }
                                         },
                                         child: Stack(
@@ -456,7 +462,7 @@ class AddContributionScreenOverlay extends StatelessWidget {
             Positioned(
               top: 0.0,
               right: 0.0,
-              child: CloseButtonWidget(onClick: onClick),
+              child: CloseButtonWidget(onClick: widget.onClick),
             ),
           ],
         ),
