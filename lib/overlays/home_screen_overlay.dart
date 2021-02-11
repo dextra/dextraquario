@@ -31,11 +31,14 @@ class HomeScreenOverlay extends StatelessWidget {
   Widget build(context) {
     final userModel = UserServices().getUserById(user.uid);
     final topUsersList = UserServices().getTopUsers();
+    final adminValidation = UserServices().isAdmin(user.uid);
+
     return FutureBuilder(
-      future: Future.wait([userModel, topUsersList]),
+      future: Future.wait([userModel, topUsersList, adminValidation]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
-          return page(context, snapshot.data[0], snapshot.data[1]);
+          return page(
+              context, snapshot.data[0], snapshot.data[1], snapshot.data[2]);
         } else {
           return Loading();
         }
@@ -43,7 +46,8 @@ class HomeScreenOverlay extends StatelessWidget {
     );
   }
 
-  Widget page(context, UserModel userModel, List<UserModel> topUsersList) {
+  Widget page(context, UserModel userModel, List<UserModel> topUsersList,
+      bool adminValidation) {
     return Stack(
       children: [
         // Painel do ranking
@@ -154,37 +158,39 @@ class HomeScreenOverlay extends StatelessWidget {
               ),
 
               // Botão de configuração
-              Container(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 44, left: 44),
-                        child: Stack(
-                          children: [
-                            Container(
-                              child: Image.asset('images/gear.png',
-                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
-                              padding: EdgeInsets.only(top: 2.0, left: 0.0),
-                            ),
-                            SpriteButton(
-                              onPressed: () => onGearClick?.call(),
-                              label: null,
-                              width: 48,
-                              height: 48,
-                              sprite: Assets.gear,
-                              pressedSprite: Assets.gear,
-                            ),
-                          ],
+              Visibility(
+                child: Container(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 44, left: 44),
+                          child: Stack(
+                            children: [
+                              Container(
+                                child: Image.asset('images/gear.png',
+                                    color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                padding: EdgeInsets.only(top: 2.0, left: 0.0),
+                              ),
+                              SpriteButton(
+                                onPressed: () => onGearClick?.call(),
+                                label: null,
+                                width: 48,
+                                height: 48,
+                                sprite: Assets.gear,
+                                pressedSprite: Assets.gear,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
+                visible: adminValidation,
               ),
-
               // Painel do canto inferior esquerdo
               GestureDetector(
                 onTap: () => onUserClick?.call(),

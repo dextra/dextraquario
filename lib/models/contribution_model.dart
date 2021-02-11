@@ -35,7 +35,7 @@ class ContributionModel {
   ItemType get category => EnumToString.fromString(ItemType.values, _category);
   String get contribution_link => _link;
   String get description => _description;
-  String get approval => _approval;  
+  String get approval => _approval;
 
   // Get the title corresponding to the item type
   String getItemTitle() {
@@ -56,7 +56,7 @@ class ContributionModel {
         return 'Chapa';
     }
 
-    return '';
+    throw Exception('Contribution category is not a valid ItemType.');
   }
 
   // GET
