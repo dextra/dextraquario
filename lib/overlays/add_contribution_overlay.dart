@@ -4,7 +4,6 @@ import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/components/custom_dropdown.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 
 import '../assets.dart';

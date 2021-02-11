@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dextraquario/assets.dart';
 import 'package:dextraquario/common.dart';
 import 'package:dextraquario/fish_info.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import '../contribution.dart';
 
 class AdminOverlay extends StatelessWidget {
   final Function onClose;
-  final List<Contribution> _pendingItems = _mockItems();
+  final List<ContributionModel> _pendingItems = _mockItems();
   final ScrollController _scrollController = ScrollController();
 
   AdminOverlay({this.onClose});

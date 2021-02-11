@@ -1,5 +1,6 @@
 import 'package:dextraquario/fish_info.dart';
 
+
 import 'read_files.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -19,7 +20,7 @@ void main() {
     return FishInfo(
         name: rawItems.last.name,
         fishColor: rawItems.last.fishColor.toLowerCase(),
-        fishItems: fishItems);
+        FishItems: fishItems);
   }).toList();
 
   fishes.sort((a, b) => b.fishItems.length - a.fishItems.length);

@@ -1,24 +1,35 @@
+import 'dart:core';
 import 'dart:math';
-import 'package:dextraquario/models/user_model.dart';
+
 import 'package:dextraquario/services/user_service.dart';
+import 'package:dextraquario/models/contribution_model.dart';
+import 'package:enum_to_string/enum_to_string.dart';
+
+import 'models/user.dart';
 
 class FishInfo {
   String name;
   String fishColor;
   int ranking;
   List<FishItem> fishItems;
-  static List<String> fishColorList = ['red', 'blue', 'yellow', 'pink', 'green'];
-  static final _random = new Random(); 
- // static UserServices _userServices = new UserServices();
- 
-  FishInfo({this.name, this.fishColor, /*this.fishItems*/});
+  UserServices _userServices = new UserServices();
+  static List<String> fishColorList = [
+    'red',
+    'blue',
+    'yellow',
+    'pink',
+    'green'
+  ];
+  static final _random = new Random();
 
-  FishInfo.fromJson(Map<String, dynamic> json)  
+  FishInfo({this.name, this.fishColor, this.fishItems});
+
+  FishInfo.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         fishColor = fishColorList[_random.nextInt(fishColorList.length)],
         ranking = json['ranking'],
         fishItems = json['items']
-            .map((fishItem) => fishItem.fromJson(fishItem))
+            .map((fishItem) => FishItem.fromJson(fishItem))
             .cast<FishItem>()
             .toList();
 
@@ -38,8 +49,7 @@ class FishItem {
   FishItem({this.name, this.description, this.link});
 
   FishItem.fromJson(Map<String, dynamic> json)
-      : name = ItemType.values
-            .firstWhere((e) => e.toString() == 'ItemType.${json['name']}'),
+      : name = json['name'],
         description = json['description'],
         link = json['link'];
 
@@ -78,14 +88,4 @@ class FishItem {
 
     return label;
   }
-}
-
-enum ItemType {
-  DESAFIO_TECNICO,
-  ENTREVISTA_PARTICIPACAO,
-  ENTREVISTA_AVALIACAO_TESTE,
-  CAFE_COM_CODIGO,
-  CONTRIBUICAO_COMUNIDADE,
-  ARTIGO_BLOG_DEXTRA,
-  CHAPA
 }

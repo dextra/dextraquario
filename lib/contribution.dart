@@ -1,6 +1,8 @@
 /* Contribution class adapted from FishInfo/FishItem */
 import 'package:intl/intl.dart';
 
+import 'package:dextraquario/models/contribution_model.dart';
+
 import 'fish_info.dart';
 
 class Contribution {
