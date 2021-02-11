@@ -167,7 +167,7 @@ class HomePage extends StatelessWidget {
                       GestureDetector(
                         child: Container(
                             padding: EdgeInsets.only(top: 44, right: 44),
-                            child: Image.asset('images/closeButton32.png')),
+                            child: Image.asset('images/logoutButton32.png')),
                         onTap: () {
                           onLogoutClick?.call();
                         },
