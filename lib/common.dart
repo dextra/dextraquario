@@ -1,7 +1,9 @@
 import 'package:dextraquario/contribution.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'assets.dart';
 
@@ -65,14 +67,17 @@ class Common {
 }
 
 class ContributionItem extends StatelessWidget {
-  final Contribution contribution;
+  final ContributionModel contribution;
   final int index;
   final bool canApprove;
+  final String author;
+  final df = DateFormat('dd/MM/yyyy');
   double scaleFactor;
 
   ContributionItem(
-      {Contribution this.contribution,
-      int this.index,
+      {this.contribution,
+      this.author,
+      this.index,
       this.canApprove,
       this.scaleFactor});
 
@@ -89,22 +94,22 @@ class ContributionItem extends StatelessWidget {
             height: 64 * scaleFactor,
             child: SpriteWidget(
               sprite: Assets.ui.getSprite(
-                  contribution.type.toString().replaceAll('ItemType.', '')),
+                  contribution.category.toString().replaceAll('ItemType.', '')),
             ),
           ),
           trailing: Text(
-            contribution.date.toString(),
+            df.format(contribution.date),
             textScaleFactor: scaleFactor,
             style: CommonText.itemTitle,
           ),
           title: Text(
-            contribution.getItemDescription(),
+            contribution.description,
             textScaleFactor: scaleFactor,
             style: CommonText.itemTitle,
           ),
           subtitle: canApprove
               ? Text(
-                  contribution.author,
+                  author,
                   textScaleFactor: scaleFactor,
                   style: CommonText.itemSubtitle,
                 )
@@ -122,7 +127,9 @@ class ContributionItem extends StatelessWidget {
                   child: Row(children: [
                     Expanded(
                       child: Text(
-                        contribution.description + "\n\n" + contribution.link,
+                        contribution.description +
+                            "\n\n" +
+                            contribution.contribution_link,
                         textScaleFactor: scaleFactor,
                         style: CommonText.itemSubtitle,
                       ),

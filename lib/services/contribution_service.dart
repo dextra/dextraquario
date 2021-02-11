@@ -10,6 +10,10 @@ extension ApprovalStatusExtension on ApprovalStatus {
   String get status => this.toString().split('.').last;
 }
 
+extension ItemTypeExtension on ItemType {
+  String get type => this.toString().split('.').last;
+}
+
 class ContributionServices {
   String collection = "contributions";
   FirebaseFirestore firebase = FirebaseFirestore.instance;
@@ -22,14 +26,14 @@ class ContributionServices {
   */
 
   void createContribution(String user_id, DateTime date, String description,
-      String contribution_link, String category,
+      String contribution_link, ItemType category,
       [ApprovalStatus approval = ApprovalStatus.ANALYZING]) {
     firebaseFirestore.collection(collection).add({
       "user_id": user_id,
       "date": date,
       "description": description,
       "contribution_link": contribution_link,
-      "category": category,
+      "category": category.type,
       "approval": approval.status,
     });
   }
@@ -41,7 +45,7 @@ class ContributionServices {
       });
 
   // Get contributions by user
-  Future< List<ContributionModel> > getContributionByUser(String id) async {
+  Future<List<ContributionModel>> getContributionsByUser(String id) async {
     List<ContributionModel> contributions = [];
 
     final data = await firebaseFirestore
@@ -54,7 +58,7 @@ class ContributionServices {
       contributions.add(ContributionModel.fromSnapshot(contribution));
     });
 
-    return contributions;    
+    return contributions;
   }
 
   // Does the contribution exists
@@ -100,14 +104,14 @@ class ContributionServices {
     String approvalStatus;
 
     if (approved) {
-      approvalStatus = ApprovalStatus.APPROVED.toString().split('.').last;
+      approvalStatus = ApprovalStatus.APPROVED.status;
 
       // Update user score
       firebaseFirestore.collection('users').doc(user_id).update({
         'score': FieldValue.increment(1),
       });
     } else {
-      approvalStatus = ApprovalStatus.DENIED.toString().split('.').last;
+      approvalStatus = ApprovalStatus.DENIED.status;
     }
 
     firebaseFirestore.collection(collection).doc(contribution_id).update({
