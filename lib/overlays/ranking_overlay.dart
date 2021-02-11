@@ -404,7 +404,7 @@ class UserItem extends StatelessWidget {
               child: Container(
                 height: 32,
                 width: 32,
-                color: Colors.grey,
+                child: Image.network(user.photo),
               ),
             ),
             Text(
@@ -426,10 +426,11 @@ class UserItem extends StatelessWidget {
 class UserRanking {
   String id;
   String name;
+  String photo;
   int score;
   int rank;
 
-  UserRanking({this.id, this.name, this.rank, this.score});
+  UserRanking({this.id, this.name, this.rank, this.score, this.photo});
 }
 
 // Sorting the users list
@@ -442,7 +443,11 @@ List<UserRanking> orderUserList(List<UserModel> userList, TypeOfSorting type) {
   // create user ranking by the ordenation
   userList.asMap().forEach((index, value) {
     userRanking.add(UserRanking(
-        id: value.id, name: value.name, score: value.score, rank: index));
+        id: value.id,
+        name: value.name,
+        score: value.score,
+        rank: index,
+        photo: value.photo));
   });
 
   // if it's ordered by score ascending (rank descending) sort again
