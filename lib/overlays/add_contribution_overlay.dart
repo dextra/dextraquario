@@ -140,7 +140,6 @@ class _AddContributionScreenOverlayState
                                         padding: EdgeInsets.only(
                                             top: 23 * scaleFactor),
                                         width: 486 * scaleFactor,
-                                        height: 96 * scaleFactor,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -164,15 +163,19 @@ class _AddContributionScreenOverlayState
                                                 ],
                                               ),
                                             ),
-                                            Container(
+                                            Padding(
                                               padding: EdgeInsets.only(
-                                                  top: 10.0 * scaleFactor),
-                                              height: 56 * scaleFactor,
-                                              child: CustomDropdown(
-                                                onClick: (String option) {
-                                                  tipoController.text = option;
-                                                },
-                                                scaleFactor: scaleFactor,
+                                                  top: 10 * scaleFactor,
+                                                  bottom: 24 * scaleFactor),
+                                              child: Container(
+                                                height: 56 * scaleFactor,
+                                                child: CustomDropdown(
+                                                  onClick: (String option) {
+                                                    tipoController.text =
+                                                        option;
+                                                  },
+                                                  scaleFactor: scaleFactor,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -180,9 +183,6 @@ class _AddContributionScreenOverlayState
                                       ),
                                       Container(
                                         width: 486 * scaleFactor,
-                                        height: 133 * scaleFactor,
-                                        padding: EdgeInsets.only(
-                                            top: 24 * scaleFactor),
                                         child: Column(
                                           children: [
                                             Row(
@@ -235,54 +235,58 @@ class _AddContributionScreenOverlayState
                                                 ),
                                               ],
                                             ),
-                                            Container(
-                                              width: 486 * scaleFactor,
-                                              height: 56 * scaleFactor,
-                                              margin: EdgeInsets.only(
+                                            Padding(
+                                              padding: EdgeInsets.only(
                                                   top: 10 * scaleFactor,
                                                   bottom: 23 * scaleFactor),
-                                              decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color(CommonColors
-                                                        .boxInsetBackground),
-                                                  ),
-                                                ],
-                                                border:
-                                                    _insetBorder(scaleFactor),
-                                              ),
                                               child: Container(
-                                                padding: EdgeInsets.only(
-                                                    left: 16 * scaleFactor),
-                                                child: TextFormField(
-                                                  controller: linkController,
-                                                  cursorColor: Colors.black,
-                                                  decoration:
-                                                      new InputDecoration(
-                                                    border: InputBorder.none,
-                                                    focusedBorder:
-                                                        InputBorder.none,
-                                                    enabledBorder:
-                                                        InputBorder.none,
-                                                    errorBorder:
-                                                        InputBorder.none,
-                                                    disabledBorder:
-                                                        InputBorder.none,
-                                                  ),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14 * scaleFactor,
-                                                    height: 1.5,
-                                                    shadows: <Shadow>[
-                                                      Shadow(
-                                                        blurRadius: 0,
-                                                        offset: Offset(
-                                                            1.0 * scaleFactor,
-                                                            1.0 * scaleFactor),
-                                                        color: Color.fromRGBO(
-                                                            0, 0, 0, 0.75),
-                                                      ),
-                                                    ],
+                                                width: 486 * scaleFactor,
+                                                height: 56 * scaleFactor,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Color(CommonColors
+                                                          .boxInsetBackground),
+                                                    ),
+                                                  ],
+                                                  border:
+                                                      _insetBorder(scaleFactor),
+                                                ),
+                                                child: Container(
+                                                  padding: EdgeInsets.only(
+                                                      left: 16 * scaleFactor),
+                                                  child: TextFormField(
+                                                    controller: linkController,
+                                                    cursorColor: Colors.black,
+                                                    decoration:
+                                                        new InputDecoration(
+                                                      border: InputBorder.none,
+                                                      focusedBorder:
+                                                          InputBorder.none,
+                                                      enabledBorder:
+                                                          InputBorder.none,
+                                                      errorBorder:
+                                                          InputBorder.none,
+                                                      disabledBorder:
+                                                          InputBorder.none,
+                                                    ),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          14 * scaleFactor,
+                                                      height: 1.5,
+                                                      shadows: <Shadow>[
+                                                        Shadow(
+                                                          blurRadius: 0,
+                                                          offset: Offset(
+                                                              1.0 * scaleFactor,
+                                                              1.0 *
+                                                                  scaleFactor),
+                                                          color: Color.fromRGBO(
+                                                              0, 0, 0, 0.75),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -292,7 +296,6 @@ class _AddContributionScreenOverlayState
                                       ),
                                       Container(
                                         width: 486 * scaleFactor,
-                                        height: 211 * scaleFactor,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -316,81 +319,86 @@ class _AddContributionScreenOverlayState
                                                 ],
                                               ),
                                             ),
-                                            Container(
-                                              width: 486 * scaleFactor,
-                                              height: 152 * scaleFactor,
-                                              margin: EdgeInsets.only(
+                                            Padding(
+                                              padding: EdgeInsets.only(
                                                   top: 10 * scaleFactor,
                                                   bottom: 29 * scaleFactor),
-                                              decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Color(CommonColors
-                                                        .boxInsetBackground),
-                                                  ),
-                                                ],
-                                                border:
-                                                    _insetBorder(scaleFactor),
-                                              ),
                                               child: Container(
-                                                padding: EdgeInsets.only(
-                                                    left: 16 * scaleFactor),
-                                                child: TextFormField(
-                                                  controller:
-                                                      descricaoController,
-                                                  cursorColor: Colors.black,
-                                                  maxLines: 6,
-                                                  maxLength: 140,
-                                                  buildCounter: (_,
-                                                          {currentLength,
-                                                          maxLength,
-                                                          isFocused}) =>
-                                                      Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 5),
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      child: Text(currentLength
-                                                              .toString() +
-                                                          "/" +
-                                                          maxLength.toString()),
+                                                width: 486 * scaleFactor,
+                                                height: 152 * scaleFactor,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Color(CommonColors
+                                                          .boxInsetBackground),
                                                     ),
-                                                  ),
-                                                  decoration:
-                                                      new InputDecoration(
-                                                    border: InputBorder.none,
-                                                    focusedBorder:
-                                                        InputBorder.none,
-                                                    enabledBorder:
-                                                        InputBorder.none,
-                                                    errorBorder:
-                                                        InputBorder.none,
-                                                    disabledBorder:
-                                                        InputBorder.none,
-                                                  ),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14 * scaleFactor,
-                                                    height: 1.5,
-                                                    shadows: <Shadow>[
-                                                      Shadow(
-                                                        blurRadius: 0,
-                                                        offset: Offset(
-                                                            1.0 * scaleFactor,
-                                                            1.0 * scaleFactor),
-                                                        color: Color.fromRGBO(
-                                                            0, 0, 0, 0.75),
+                                                  ],
+                                                  border:
+                                                      _insetBorder(scaleFactor),
+                                                ),
+                                                child: Container(
+                                                  padding: EdgeInsets.only(
+                                                      left: 16 * scaleFactor),
+                                                  child: TextFormField(
+                                                    controller:
+                                                        descricaoController,
+                                                    cursorColor: Colors.black,
+                                                    maxLines: 6,
+                                                    maxLength: 140,
+                                                    buildCounter: (_,
+                                                            {currentLength,
+                                                            maxLength,
+                                                            isFocused}) =>
+                                                        Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 5),
+                                                      child: Container(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: Text(currentLength
+                                                                .toString() +
+                                                            "/" +
+                                                            maxLength
+                                                                .toString()),
                                                       ),
-                                                    ],
+                                                    ),
+                                                    decoration:
+                                                        new InputDecoration(
+                                                      border: InputBorder.none,
+                                                      focusedBorder:
+                                                          InputBorder.none,
+                                                      enabledBorder:
+                                                          InputBorder.none,
+                                                      errorBorder:
+                                                          InputBorder.none,
+                                                      disabledBorder:
+                                                          InputBorder.none,
+                                                    ),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          14 * scaleFactor,
+                                                      height: 1.5,
+                                                      shadows: <Shadow>[
+                                                        Shadow(
+                                                          blurRadius: 0,
+                                                          offset: Offset(
+                                                              1.0 * scaleFactor,
+                                                              1.0 *
+                                                                  scaleFactor),
+                                                          color: Color.fromRGBO(
+                                                              0, 0, 0, 0.75),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    validator: (value) {
+                                                      if (value.isEmpty) {
+                                                        return 'Uma descrição deve ser inserida';
+                                                      }
+                                                      return null;
+                                                    },
                                                   ),
-                                                  validator: (value) {
-                                                    if (value.isEmpty) {
-                                                      return 'Uma descrição deve ser inserida';
-                                                    }
-                                                    return null;
-                                                  },
                                                 ),
                                               ),
                                             ),
