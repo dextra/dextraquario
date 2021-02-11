@@ -77,7 +77,7 @@ class ContributionItem extends StatelessWidget {
       {ContributionModel this.contribution,
       String this.author,
       int this.index,
-      this.canApprove}) {}
+      this.canApprove});
 
   @override
   Widget build(BuildContext context) {

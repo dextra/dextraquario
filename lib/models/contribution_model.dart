@@ -32,10 +32,7 @@ class ContributionModel {
   String get contribution_id => _contributionid;
   String get user_id => _userid;
   DateTime get date => _date.toDate();
-  ItemType get category {
-    return EnumToString.fromString(ItemType.values, _category);
-  }
-
+  ItemType get category => EnumToString.fromString(ItemType.values, _category);
   String get contribution_link => _link;
   String get description => _description;
   String get approval => _approval;
@@ -44,9 +41,9 @@ class ContributionModel {
   String getItemTitle() {
     switch (category) {
       case ItemType.DESAFIO_TECNICO:
-        return 'Desafio técnico';
+        return 'Desafio Técnico';
       case ItemType.ENTREVISTA_PARTICIPACAO:
-        return 'Apoio técnico em entrevista';
+        return 'Apoio técnico em Entrevista';
       case ItemType.ENTREVISTA_AVALIACAO_TESTE:
         return 'Avaliação de código de candidato';
       case ItemType.CAFE_COM_CODIGO:
