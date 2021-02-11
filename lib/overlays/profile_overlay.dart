@@ -36,7 +36,7 @@ class ProfileOverlay extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               return ProfileScreen(
                   onClose: this.onClose,
-                  user: snapshot.data,
+                  user: snapshot.data[0],
                   contributions: snapshot.data[1],
                   scaleFactor: scaleFactor);
             } else {
