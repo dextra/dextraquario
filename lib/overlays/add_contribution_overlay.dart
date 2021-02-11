@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/components/custom_dropdown.dart';
 import 'package:dextraquario/utils/scale_factor_calculator.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flutter/material.dart';
@@ -408,7 +409,7 @@ class _AddContributionScreenOverlayState
                                                       DateTime.now(),
                                                       descricaoController.text,
                                                       linkController.text,
-                                                      tipoController.text);
+                                                      ItemType.CAFE_COM_CODIGO);
                                             }
                                           },
                                           child: Stack(
