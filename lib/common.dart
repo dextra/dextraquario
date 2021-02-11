@@ -74,10 +74,7 @@ class ContributionItem extends StatelessWidget {
   final df = new DateFormat('dd/MM/yyyy');
 
   ContributionItem(
-      {ContributionModel this.contribution,
-      String this.author,
-      int this.index,
-      this.canApprove});
+      {this.contribution, String this.author, int this.index, this.canApprove});
 
   @override
   Widget build(BuildContext context) {
