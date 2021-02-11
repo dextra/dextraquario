@@ -71,10 +71,15 @@ class ContributionItem extends StatelessWidget {
   final String author;
   final int index;
   final bool canApprove;
+  final Function updateList;
   final df = new DateFormat('dd/MM/yyyy');
 
   ContributionItem(
-      {this.contribution, String this.author, int this.index, this.canApprove});
+      {this.contribution,
+      String this.author,
+      int this.index,
+      this.canApprove,
+      this.updateList});
 
   @override
   Widget build(BuildContext context) {
@@ -135,20 +140,38 @@ class ContributionItem extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(right: 16),
                               child: SpriteButton(
-                                  width: 32,
-                                  height: 32,
-                                  onPressed: null,
-                                  label: null,
-                                  sprite: Assets.closeButton32,
-                                  pressedSprite: Assets.closeButton32),
-                            ),
-                            SpriteButton(
                                 width: 32,
                                 height: 32,
-                                onPressed: null,
+                                onPressed: () {
+                                  ContributionServices()
+                                      .updateContributionApproval(
+                                    contribution.contribution_id,
+                                    false,
+                                    contribution.user_id,
+                                  );
+                                  updateList?.call();
+                                },
                                 label: null,
                                 sprite: Assets.closeButton32,
-                                pressedSprite: Assets.closeButton32),
+                                pressedSprite: Assets.closeButton32,
+                              ),
+                            ),
+                            SpriteButton(
+                              width: 32,
+                              height: 32,
+                              onPressed: () {
+                                ContributionServices()
+                                    .updateContributionApproval(
+                                  contribution.contribution_id,
+                                  true,
+                                  contribution.user_id,
+                                );
+                                updateList?.call();
+                              },
+                              label: null,
+                              sprite: Assets.closeButton32,
+                              pressedSprite: Assets.closeButton32,
+                            ),
                           ],
                         ),
                       )
