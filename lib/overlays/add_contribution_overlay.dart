@@ -138,7 +138,7 @@ class _AddContributionScreenOverlayState
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: 24 * scaleFactor),
+                                            top: 23 * scaleFactor),
                                         width: 486 * scaleFactor,
                                         height: 96 * scaleFactor,
                                         child: Column(
