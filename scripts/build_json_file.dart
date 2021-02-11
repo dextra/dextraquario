@@ -1,4 +1,5 @@
 import 'package:dextraquario/fish_info.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 
 import 'read_files.dart';
 import 'dart:io';

@@ -1,3 +1,5 @@
+import 'package:dextraquario/models/contribution_model.dart';
+
 class FishInfo {
   String name;
   String fishColor;
@@ -71,14 +73,4 @@ class FishItem {
 
     return label;
   }
-}
-
-enum ItemType {
-  DESAFIO_TECNICO,
-  ENTREVISTA_PARTICIPACAO,
-  ENTREVISTA_AVALIACAO_TESTE,
-  CAFE_COM_CODIGO,
-  CONTRIBUICAO_COMUNIDADE,
-  ARTIGO_BLOG_DEXTRA,
-  CHAPA
 }

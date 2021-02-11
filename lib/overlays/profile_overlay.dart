@@ -1,6 +1,7 @@
 import 'package:dextraquario/components/close_button_widget.dart';
-import 'package:dextraquario/fish_info.dart';
+import 'package:dextraquario/models/contribution_model.dart';
 import 'package:dextraquario/models/user_model.dart';
+import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_button.dart';
@@ -11,33 +12,27 @@ import '../assets.dart';
 import '../common.dart';
 import '../contribution.dart';
 
-// ignore: must_be_immutable
-class ProfileOverlay extends StatefulWidget {
-  final Function onClose;
-  String userID;
+class ProfileOverlay extends StatelessWidget {
+  final Function onClose;  
+  final String userID;  
+  final UserServices _userServices = UserServices();
+  final ContributionServices _contributionServices = ContributionServices();
 
   ProfileOverlay({this.onClose, this.userID});
 
   @override
-  State<StatefulWidget> createState() =>
-      _ProfileOverlayState(onClose: this.onClose, userID: this.userID);
-}
-
-class _ProfileOverlayState extends State<ProfileOverlay> {
-  final Function onClose;
-  final String userID;
-
-  _ProfileOverlayState({this.onClose, this.userID});
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: UserServices().getUserById(userID),
+      future: Future.wait([
+        _userServices.getUserById(userID), 
+        _contributionServices.getContributionsByUser(userID)
+      ]),
       builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData) {
           return ProfileScreen(
             onClose: this.onClose,
-            user: snapshot.data,
+            user: snapshot.data[0],
+            contributions: snapshot.data[1],
           );
         } else {
           return Column(
@@ -63,11 +58,11 @@ class _ProfileOverlayState extends State<ProfileOverlay> {
 
 class ProfileScreen extends StatelessWidget {
   final Function onClose;
-  final List<Contribution> _contributions = _mockItems();
   final ScrollController _scrollController = ScrollController();
   final UserModel user;
+  final List<ContributionModel> contributions;
 
-  ProfileScreen({this.onClose, this.user});
+  ProfileScreen({this.onClose, this.user, this.contributions});
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                                       Container(
                                         width: 126,
                                         height: 126,
-                                        color: Colors.grey,
+                                        child: Image.network(user.photo),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(left: 16),
@@ -147,7 +142,9 @@ class ProfileScreen extends StatelessWidget {
                                                 bottom: 20,
                                               ),
                                               child: Text(
-                                                '${_contributions.length} contribuições',
+                                                user.score == 1
+                                                    ? '1 contribuição'
+                                                    : '${user.score} contribuições',
                                                 style: CommonText.itemTitle,
                                               ),
                                             ),
@@ -158,33 +155,33 @@ class ProfileScreen extends StatelessWidget {
                                                 ContributionNumber(
                                                   ItemType
                                                       .CONTRIBUICAO_COMUNIDADE,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.DESAFIO_TECNICO,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType
                                                       .ENTREVISTA_PARTICIPACAO,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType
                                                       .ENTREVISTA_AVALIACAO_TESTE,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.CAFE_COM_CODIGO,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.ARTIGO_BLOG_DEXTRA,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                                 ContributionNumber(
                                                   ItemType.CHAPA,
-                                                  _contributions,
+                                                  contributions,
                                                 ),
                                               ],
                                             )
@@ -240,14 +237,16 @@ class ProfileScreen extends StatelessWidget {
                                           child: ListView.builder(
                                             padding: EdgeInsets.only(top: 8),
                                             controller: _scrollController,
-                                            itemCount: _contributions.length,
-                                            itemBuilder: (ctx, index) =>
-                                                ContributionItem(
-                                              contribution:
-                                                  _contributions[index],
-                                              index: index,
-                                              canApprove: false,
-                                            ),
+                                            itemCount: contributions.length,
+                                            itemBuilder: (context, index) {
+                                              return new ContributionItem(
+                                                contribution:
+                                                    contributions[index],
+                                                author: user.name,
+                                                index: index,
+                                                canApprove: false,
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
@@ -295,7 +294,7 @@ class ProfileScreen extends StatelessWidget {
 
 class ContributionNumber extends StatelessWidget {
   final ItemType type;
-  final List<Contribution> contribs;
+  final List<ContributionModel> contribs;
 
   ContributionNumber(this.type, this.contribs);
 
@@ -303,8 +302,9 @@ class ContributionNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     int count = 0;
 
-    contribs.forEach((e) {
-      e.type == type ? count += 1 : null;
+    contribs.forEach((contribution) {
+      if (contribution.category.toString().split('.').last ==
+          type.toString().split('.').last) count++;
     });
 
     return Column(
@@ -343,88 +343,4 @@ String _getUserRankMedal(int rank) {
     default:
       return "wood_medal48";
   }
-}
-
-List _mockItems() {
-  return <Contribution>[
-    Contribution(
-      DateTime(2020, DateTime.september, 10),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Melhoria no Dextraquario para lidar com o gerenciamento de visibilidade da janela do browser',
-      link: 'https://github.com/dextra/dextraquario/pull/54',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CAFE_COM_CODIGO,
-      description: 'This is a mockup description.',
-      link: 'https://github.com/dextra/dextraquario/pull/yournumberhere',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.ARTIGO_BLOG_DEXTRA,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CHAPA,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-    Contribution(
-      DateTime(2021, DateTime.january, 1),
-      author: 'Vinicius Levorato',
-      type: ItemType.CONTRIBUICAO_COMUNIDADE,
-      description:
-          'Criação de efeito RGB shift para simular o efeito de televisões antigas de tubo em jogo open source.',
-      link: 'https://github.com/dextra/dextraquario/pull/35',
-    ),
-  ];
 }
