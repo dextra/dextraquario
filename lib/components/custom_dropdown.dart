@@ -234,8 +234,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 
   void setDropdownClickState(ItemType option, String title) {
+    widget.onClick(option);
     setState(() {
-      widget.onClick(option);
       text = title;
       floatingDropdown.remove();
       angleArrow = 90;
