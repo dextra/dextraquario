@@ -5,13 +5,10 @@ import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:dextraquario/utils/scale_factor_calculator.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../assets.dart';
 import '../common.dart';
-import '../contribution.dart';
 
 class ProfileOverlay extends StatelessWidget {
   final Function onClose;
@@ -33,7 +30,7 @@ class ProfileOverlay extends StatelessWidget {
             _contributionServices.getContributionsByUser(userID)
           ]),
           builder: (ctx, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
               return ProfileScreen(
                   onClose: this.onClose,
                   user: snapshot.data[0],
@@ -46,11 +43,17 @@ class ProfileOverlay extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'Loading...',
-                        textScaleFactor: scaleFactor,
-                        style: CommonText.panelTitle,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Loading...',
+                            textScaleFactor: scaleFactor,
+                            style: CommonText.panelTitle,
+                          ),
+                        ],
                       ),
                     ],
                   ),

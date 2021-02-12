@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:dextraquario/utils/scale_factor_calculator.dart';
 import 'package:flutter/material.dart';
 import '../common.dart';
+import '../models/contribution_model.dart';
 
 class CustomDropdown extends StatefulWidget {
   final Function onClick;
@@ -22,7 +23,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   OverlayEntry floatingDropdown;
   double angleArrow;
   EdgeInsets paddingArrow;
-  String text = 'Tipo de Contribuição';
+  String text = 'Tipo de contribuição';
   double itemHeight;
 
   @override
@@ -51,105 +52,103 @@ class _CustomDropdownState extends State<CustomDropdown> {
         var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
             constraints.maxWidth, constraints.maxHeight);
 
-        return Container(
-          width: width,
-          padding: EdgeInsets.only(
-            left:
-                (MediaQuery.of(context).size.width - (width * scaleFactor)) / 2,
-            top: yPosition + height,
-            right:
-                (MediaQuery.of(context).size.width - (width * scaleFactor)) / 2,
-          ),
-          child: Expanded(
-            child: Column(
-              children: <Widget>[
-                Material(
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              setDropdownClickState('Desafio Técnico');
-                            });
-                          },
-                          child: DropDownItem.first(
-                            text: 'Desafio Técnico',
-                            scaleFactor: widget.scaleFactor,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              setDropdownClickState('Entrevista Participação');
-                            });
-                          },
-                          child: DropDownItem(
-                            text: 'Entrevista Participação',
-                            scaleFactor: widget.scaleFactor,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
+        return Expanded(
+          child: Container(
+            width: width,
+            padding: EdgeInsets.only(
+              left:
+                  (MediaQuery.of(context).size.width - (width * scaleFactor)) /
+                      2,
+              top: yPosition + height,
+              right:
+                  (MediaQuery.of(context).size.width - (width * scaleFactor)) /
+                      2,
+            ),
+            child: Expanded(
+              child: Column(
+                children: <Widget>[
+                  Material(
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
                               setDropdownClickState(
-                                  'Entrevista Avaliação Teste');
-                            });
-                          },
-                          child: DropDownItem(
-                            text: 'Entrevista Avaliação Teste',
-                            scaleFactor: widget.scaleFactor,
+                                  ItemType.DESAFIO_TECNICO, 'Desafio técnico');
+                            },
+                            child: DropDownItem.first(
+                              text: 'Desafio técnico',
+                              scaleFactor: widget.scaleFactor,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              setDropdownClickState('Café com Código');
-                            });
-                          },
-                          child: DropDownItem(
-                            text: 'Café com código',
-                            scaleFactor: widget.scaleFactor,
+                          GestureDetector(
+                            onTap: () {
+                              setDropdownClickState(
+                                  ItemType.ENTREVISTA_PARTICIPACAO,
+                                  'Apoio técnico em entrevista');
+                            },
+                            child: DropDownItem(
+                              text: 'Apoio técnico em entrevista',
+                              scaleFactor: widget.scaleFactor,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              setDropdownClickState('Contribuição Comunidade');
-                            });
-                          },
-                          child: DropDownItem(
-                            text: 'Contribuição Comunidade',
-                            scaleFactor: widget.scaleFactor,
+                          GestureDetector(
+                            onTap: () {
+                              setDropdownClickState(
+                                  ItemType.ENTREVISTA_AVALIACAO_TESTE,
+                                  'Avaliação de código de candidato');
+                            },
+                            child: DropDownItem(
+                              text: 'Avaliação de código de candidato',
+                              scaleFactor: widget.scaleFactor,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              setDropdownClickState('Artigo Blog Dextra');
-                            });
-                          },
-                          child: DropDownItem(
-                            text: 'Artigo Blog Dextra',
-                            scaleFactor: widget.scaleFactor,
+                          GestureDetector(
+                            onTap: () {
+                              setDropdownClickState(
+                                  ItemType.CAFE_COM_CODIGO, 'Café com código');
+                            },
+                            child: DropDownItem(
+                              text: 'Café com código',
+                              scaleFactor: widget.scaleFactor,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              setDropdownClickState('Chapa');
-                            });
-                          },
-                          child: DropDownItem.last(
-                            text: 'Chapa',
-                            scaleFactor: widget.scaleFactor,
+                          GestureDetector(
+                            onTap: () {
+                              setDropdownClickState(
+                                  ItemType.CONTRIBUICAO_COMUNIDADE,
+                                  'Contribuição para comunidade');
+                            },
+                            child: DropDownItem(
+                              text: 'Contribuição para comunidade',
+                              scaleFactor: widget.scaleFactor,
+                            ),
                           ),
-                        ),
-                      ],
+                          GestureDetector(
+                            onTap: () {
+                              setDropdownClickState(ItemType.ARTIGO_BLOG_DEXTRA,
+                                  'Artigo no blog da Dextra');
+                            },
+                            child: DropDownItem(
+                              text: 'Artigo no blog da Dextra',
+                              scaleFactor: widget.scaleFactor,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setDropdownClickState(ItemType.CHAPA, 'Chapa');
+                            },
+                            child: DropDownItem.last(
+                              text: 'Chapa',
+                              scaleFactor: widget.scaleFactor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -258,13 +257,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
     );
   }
 
-  void setDropdownClickState(String option) {
+  void setDropdownClickState(ItemType option, String title) {
     widget.onClick(option);
-    text = option;
-    floatingDropdown.remove();
-    angleArrow = 90;
-    paddingArrow = EdgeInsets.only(left: 0, top: 0);
-    isDropdownOpened = false;
+    setState(() {
+      text = title;
+      floatingDropdown.remove();
+      angleArrow = 90;
+      paddingArrow = EdgeInsets.only(left: 0, top: 0);
+      isDropdownOpened = false;
+    });
   }
 }
 

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../assets.dart';
 import '../common.dart';
 import '../services/contribution_service.dart';
+import '../models/contribution_model.dart';
 
 class AddContributionScreenOverlay extends StatefulWidget {
   final Function onClick;
@@ -19,17 +20,18 @@ class AddContributionScreenOverlay extends StatefulWidget {
   AddContributionScreenOverlay({this.onClick, this.user});
 
   @override
-  _AddContributionScreenOverlayState createState() =>
-      _AddContributionScreenOverlayState();
+  State<StatefulWidget> createState() => _AddContributionScreenOverlay();
 }
 
-class _AddContributionScreenOverlayState
+class _AddContributionScreenOverlay
     extends State<AddContributionScreenOverlay> {
   final descricaoController = TextEditingController();
   final linkController = TextEditingController();
   final tipoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final ContributionServices _contributionServices = ContributionServices();
+  ItemType type;
+  bool dropdownValidator = false;
 
   @override
   Widget build(context) {
@@ -410,14 +412,15 @@ class _AddContributionScreenOverlayState
                                         child: GestureDetector(
                                           onTap: () {
                                             if (_formKey.currentState
-                                                .validate()) {
+                                                    .validate() &&
+                                                dropdownValidator) {
                                               _contributionServices
                                                   .createContribution(
                                                       widget.user.uid,
                                                       DateTime.now(),
                                                       descricaoController.text,
                                                       linkController.text,
-                                                      ItemType.CAFE_COM_CODIGO);
+                                                      type);
                                             }
                                           },
                                           child: Stack(

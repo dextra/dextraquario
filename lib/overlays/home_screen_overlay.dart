@@ -32,28 +32,59 @@ class HomeScreenOverlay extends StatelessWidget {
   Widget build(context) {
     final userModel = UserServices().getUserById(user.uid);
     final topUsersList = UserServices().getTopUsers();
+    final adminValidation = UserServices().isAdmin(user.uid);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
-            constraints.maxWidth, constraints.maxHeight);
-        return FutureBuilder(
-          future: Future.wait([userModel, topUsersList]),
-          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            if (snapshot.hasData) {
-              return page(
-                  context, snapshot.data[0], snapshot.data[1], scaleFactor);
-            } else {
-              return Loading();
-            }
-          },
-        );
-      },
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+          constraints.maxWidth, constraints.maxHeight);
+      return FutureBuilder(
+        future: Future.wait([userModel, topUsersList, adminValidation]),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            return HomePage(
+              userModel: snapshot.data[0],
+              topUsersList: snapshot.data[1],
+              adminValidation: snapshot.data[2],
+              onUserClick: onUserClick,
+              onAddClick: onAddClick,
+              onGearClick: onGearClick,
+              onLogoutClick: onLogoutClick,
+              onRankingClick: onRankingClick,
+              scaleFactor: scaleFactor,
+            );
+          } else {
+            return Loading();
+          }
+        },
+      );
+    });
   }
+}
 
-  Widget page(context, UserModel userModel, List<UserModel> topUsersList,
-      double scaleFactor) {
+class HomePage extends StatelessWidget {
+  final UserModel userModel;
+  final List<UserModel> topUsersList;
+  final bool adminValidation;
+  final Function onAddClick;
+  final Function onUserClick;
+  final Function onRankingClick;
+  final Function onLogoutClick;
+  final Function onGearClick;
+  final double scaleFactor;
+
+  HomePage(
+      {this.userModel,
+      this.topUsersList,
+      this.adminValidation,
+      this.onAddClick,
+      this.onUserClick,
+      this.onLogoutClick,
+      this.onRankingClick,
+      this.onGearClick,
+      this.scaleFactor});
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         // Painel do ranking
@@ -165,7 +196,7 @@ class HomeScreenOverlay extends StatelessWidget {
                         child: Container(
                             padding: EdgeInsets.only(
                                 top: 44 * scaleFactor, right: 44 * scaleFactor),
-                            child: Image.asset('images/closeButton48.png',
+                            child: Image.asset('images/logoutButton32.png',
                                 scale: 1 / scaleFactor)),
                         onTap: () {
                           onLogoutClick?.call();
@@ -188,41 +219,43 @@ class HomeScreenOverlay extends StatelessWidget {
               ),
 
               // Botão de configuração
-              Container(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 44 * scaleFactor, left: 44 * scaleFactor),
-                        child: Stack(
-                          children: [
-                            Container(
-                              child: Image.asset('images/gear.png',
-                                  scale: 1 / scaleFactor,
-                                  color: Color.fromRGBO(0, 0, 0, 0.5)),
-                              padding: EdgeInsets.only(
-                                  top: 2.0 * scaleFactor,
-                                  left: 0.0 * scaleFactor),
-                            ),
-                            SpriteButton(
-                              onPressed: () => onGearClick?.call(),
-                              label: null,
-                              width: 48 * scaleFactor,
-                              height: 48 * scaleFactor,
-                              sprite: Assets.gear,
-                              pressedSprite: Assets.gear,
-                            ),
-                          ],
+              Visibility(
+                child: Container(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 44 * scaleFactor, left: 44 * scaleFactor),
+                          child: Stack(
+                            children: [
+                              Container(
+                                child: Image.asset('images/gear.png',
+                                    scale: 1 / scaleFactor,
+                                    color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                padding: EdgeInsets.only(
+                                    top: 2.0 * scaleFactor,
+                                    left: 0.0 * scaleFactor),
+                              ),
+                              SpriteButton(
+                                onPressed: () => onGearClick?.call(),
+                                label: null,
+                                width: 48 * scaleFactor,
+                                height: 48 * scaleFactor,
+                                sprite: Assets.gear,
+                                pressedSprite: Assets.gear,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
+                visible: adminValidation,
               ),
-
               // Painel do canto inferior esquerdo
               GestureDetector(
                 onTap: () => onUserClick?.call(),
