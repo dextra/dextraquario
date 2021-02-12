@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dextraquario/components/close_button_widget.dart';
 import 'package:dextraquario/models/contribution_model.dart';
 import 'package:dextraquario/models/user_model.dart';
@@ -69,225 +71,237 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CloseButtonWidget(onClick: onClose),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 3,
-                        offset: Offset(2, 4),
-                      ),
-                    ],
-                  ),
-                  child: NineTileBox(
-                    image: Assets.panelImage,
-                    tileSize: 12,
-                    destTileSize: 36,
-                    width: 976,
-                    height: 736,
-                    padding: EdgeInsets.only(top: 32, left: 40, right: 40),
-                    child: Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 20),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      // Photo container
-                                      Container(
-                                        width: 126,
-                                        height: 126,
-                                        child: Image.network(user.photo),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 16),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '${user.name}',
-                                              style: CommonText.heightOneShadow(
-                                                  20),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                top: 8,
-                                                bottom: 20,
-                                              ),
-                                              child: Text(
-                                                user.score == 1
-                                                    ? '1 contribuição'
-                                                    : '${user.score} contribuições',
-                                                style: CommonText.itemTitle,
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                ContributionNumber(
-                                                  ItemType
-                                                      .CONTRIBUICAO_COMUNIDADE,
-                                                  contributions,
-                                                ),
-                                                ContributionNumber(
-                                                  ItemType.DESAFIO_TECNICO,
-                                                  contributions,
-                                                ),
-                                                ContributionNumber(
-                                                  ItemType
-                                                      .ENTREVISTA_PARTICIPACAO,
-                                                  contributions,
-                                                ),
-                                                ContributionNumber(
-                                                  ItemType
-                                                      .ENTREVISTA_AVALIACAO_TESTE,
-                                                  contributions,
-                                                ),
-                                                ContributionNumber(
-                                                  ItemType.CAFE_COM_CODIGO,
-                                                  contributions,
-                                                ),
-                                                ContributionNumber(
-                                                  ItemType.ARTIGO_BLOG_DEXTRA,
-                                                  contributions,
-                                                ),
-                                                ContributionNumber(
-                                                  ItemType.CHAPA,
-                                                  contributions,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: 894,
-                                  height: 471,
-                                  margin: EdgeInsets.only(top: 32),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(
-                                            CommonColors.boxInsetBackground),
-                                      ),
-                                    ],
-                                    border: Common.insetBorder,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 42,
-                                        color: Color(CommonColors.listHeader),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 32,
-                                            right: 54,
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Contribuição',
-                                                style: CommonText.itemSubtitle,
-                                              ),
-                                              Text(
-                                                'Data',
-                                                style: CommonText.itemSubtitle,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Scrollbar(
-                                          isAlwaysShown: true,
-                                          controller: _scrollController,
-                                          child: ListView.builder(
-                                            padding: EdgeInsets.only(top: 8),
-                                            controller: _scrollController,
-                                            itemCount: contributions.length,
-                                            itemBuilder: (context, index) {
-                                              return new ContributionItem(
-                                                contribution:
-                                                    contributions[index],
-                                                author: user.name,
-                                                index: index,
-                                                canApprove: false,
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Positioned(
-                          left: 800,
-                          top: 24,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 48,
-                                width: 48,
-                                margin: EdgeInsets.only(bottom: 16),
-                                child: Image.asset(
-                                  "images/${_getUserRankMedal(userRanking)}.png",
-                                ),
-                              ),
-                              Text(
-                                '#${userRanking}',
-                                style: CommonText.heightOneShadow(18),
-                              ),
-                            ],
-                          ),
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: 7,
+        sigmaY: 7,
+      ),
+      child: Stack(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CloseButtonWidget(onClick: onClose),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: Offset(2, 4),
                         ),
                       ],
                     ),
+                    child: NineTileBox(
+                      image: Assets.panelImage,
+                      tileSize: 12,
+                      destTileSize: 36,
+                      width: 976,
+                      height: 736,
+                      padding: EdgeInsets.only(top: 32, left: 40, right: 40),
+                      child: Stack(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        // Photo container
+                                        Container(
+                                          width: 126,
+                                          height: 126,
+                                          child: Image.network(user.photo),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(left: 16),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${user.name}',
+                                                style:
+                                                    CommonText.heightOneShadow(
+                                                        20),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  top: 8,
+                                                  bottom: 20,
+                                                ),
+                                                child: Text(
+                                                  user.score == 1
+                                                      ? '1 contribuição'
+                                                      : '${user.score} contribuições',
+                                                  style: CommonText.itemTitle,
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  ContributionNumber(
+                                                    ItemType
+                                                        .CONTRIBUICAO_COMUNIDADE,
+                                                    contributions,
+                                                  ),
+                                                  ContributionNumber(
+                                                    ItemType.DESAFIO_TECNICO,
+                                                    contributions,
+                                                  ),
+                                                  ContributionNumber(
+                                                    ItemType
+                                                        .ENTREVISTA_PARTICIPACAO,
+                                                    contributions,
+                                                  ),
+                                                  ContributionNumber(
+                                                    ItemType
+                                                        .ENTREVISTA_AVALIACAO_TESTE,
+                                                    contributions,
+                                                  ),
+                                                  ContributionNumber(
+                                                    ItemType.CAFE_COM_CODIGO,
+                                                    contributions,
+                                                  ),
+                                                  ContributionNumber(
+                                                    ItemType.ARTIGO_BLOG_DEXTRA,
+                                                    contributions,
+                                                  ),
+                                                  ContributionNumber(
+                                                    ItemType.CHAPA,
+                                                    contributions,
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 894,
+                                    height: 471,
+                                    margin: EdgeInsets.only(top: 32),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(
+                                              CommonColors.boxInsetBackground),
+                                        ),
+                                      ],
+                                      border: Common.insetBorder,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 42,
+                                          color: Color(CommonColors.listHeader),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              left: 32,
+                                              right: 54,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Contribuição',
+                                                  style:
+                                                      CommonText.itemSubtitle,
+                                                ),
+                                                Text(
+                                                  'Data',
+                                                  style:
+                                                      CommonText.itemSubtitle,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Scrollbar(
+                                            isAlwaysShown: true,
+                                            controller: _scrollController,
+                                            child: ListView.builder(
+                                              padding: EdgeInsets.only(top: 8),
+                                              controller: _scrollController,
+                                              itemCount: contributions.length,
+                                              itemBuilder: (context, index) {
+                                                return new ContributionItem(
+                                                  contribution:
+                                                      contributions[index],
+                                                  author: user.name,
+                                                  index: index,
+                                                  canApprove: false,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            left: 800,
+                            top: 24,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 48,
+                                  width: 48,
+                                  margin: EdgeInsets.only(bottom: 16),
+                                  child: Image.asset(
+                                    "images/${_getUserRankMedal(userRanking)}.png",
+                                  ),
+                                ),
+                                Text(
+                                  '#${userRanking}',
+                                  style: CommonText.heightOneShadow(18),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
