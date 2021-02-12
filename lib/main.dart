@@ -27,7 +27,6 @@ void main() async {
   await Firebase.initializeApp();
   await _googleSignIn.disconnect();
   final fishes = await LoadFishes.loadFishes();
-  print('PEIXES $fishes');
   final game = DextraQuario();
   int mostContributions = fishes.fold(
     0,

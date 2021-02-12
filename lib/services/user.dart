@@ -26,7 +26,7 @@ class UserServices {
     .doc(id)
     .get()
     .then((value) => value.exists);
-  Future<List<UserModel>> getAll() async =>
+  Future<List<UserModel>> getAll() =>
     firebaseFirestore.collection(collection).get().then((result) {
         List<UserModel> users = [];
         for (DocumentSnapshot user in result.docs) {
