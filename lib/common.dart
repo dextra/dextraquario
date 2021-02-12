@@ -1,5 +1,5 @@
-import 'package:dextraquario/contribution.dart';
 import 'package:dextraquario/models/contribution_model.dart';
+import 'package:dextraquario/services/contribution_service.dart';
 import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
@@ -68,13 +68,18 @@ class Common {
 
 class ContributionItem extends StatelessWidget {
   final ContributionModel contribution;
+  final String author;
   final int index;
   final bool canApprove;
-  final String author;
-  final df = DateFormat('dd/MM/yyyy');
+  final Function updateList;
+  final df = new DateFormat('dd/MM/yyyy');
 
   ContributionItem(
-      {this.contribution, this.author, this.index, this.canApprove});
+      {this.contribution,
+      String this.author,
+      int this.index,
+      this.canApprove,
+      this.updateList});
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +92,16 @@ class ContributionItem extends StatelessWidget {
             height: 64,
             child: SpriteWidget(
               sprite: Assets.ui.getSprite(
-                contribution.category.toString().replaceAll('ItemType.', ''),
+                contribution.category.type,
               ),
             ),
           ),
           trailing: Text(
-            df.format(contribution.date),            
+            df.format(contribution.date),
             style: CommonText.itemTitle,
           ),
           title: Text(
-            contribution.description,
+            contribution.getItemTitle(),
             style: CommonText.itemTitle,
           ),
           subtitle: canApprove
@@ -112,16 +117,18 @@ class ContributionItem extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
-                  child: Row(children: [
-                    Expanded(
-                      child: Text(
-                        contribution.description +
-                            "\n\n" +
-                            contribution.contribution_link,
-                        style: CommonText.itemSubtitle,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          contribution.description +
+                              "\n\n" +
+                              contribution.contribution_link,
+                          style: CommonText.itemSubtitle,
+                        ),
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
                 ),
                 canApprove
                     ? Padding(
@@ -133,20 +140,38 @@ class ContributionItem extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(right: 16),
                               child: SpriteButton(
-                                  width: 32,
-                                  height: 32,
-                                  onPressed: null,
-                                  label: null,
-                                  sprite: Assets.closeButton32,
-                                  pressedSprite: Assets.closeButton32),
-                            ),
-                            SpriteButton(
                                 width: 32,
                                 height: 32,
-                                onPressed: null,
+                                onPressed: () {
+                                  ContributionServices()
+                                      .updateContributionApproval(
+                                    contribution.contribution_id,
+                                    false,
+                                    contribution.user_id,
+                                  );
+                                  updateList?.call();
+                                },
                                 label: null,
                                 sprite: Assets.closeButton32,
-                                pressedSprite: Assets.closeButton32),
+                                pressedSprite: Assets.closeButton32,
+                              ),
+                            ),
+                            SpriteButton(
+                              width: 32,
+                              height: 32,
+                              onPressed: () {
+                                ContributionServices()
+                                    .updateContributionApproval(
+                                  contribution.contribution_id,
+                                  true,
+                                  contribution.user_id,
+                                );
+                                updateList?.call();
+                              },
+                              label: null,
+                              sprite: Assets.closeButton32,
+                              pressedSprite: Assets.closeButton32,
+                            ),
                           ],
                         ),
                       )

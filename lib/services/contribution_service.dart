@@ -45,11 +45,7 @@ class ContributionServices {
       });
 
   // Get contributions by user
-<<<<<<< HEAD
-  Future< List<ContributionModel> > getContributionsByUser(String id) async {
-=======
   Future<List<ContributionModel>> getContributionsByUser(String id) async {
->>>>>>> 52c192ec9046bd8189a9b76b6577947bd5b60222
     List<ContributionModel> contributions = [];
 
     final data = await firebaseFirestore

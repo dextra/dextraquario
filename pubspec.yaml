@@ -41,7 +41,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/atlases/
-  
+
   fonts:
     - family: Press Start 2P
       fonts:

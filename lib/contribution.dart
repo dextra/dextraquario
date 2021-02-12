@@ -2,13 +2,10 @@
 import 'package:dextraquario/models/contribution_model.dart';
 import 'package:intl/intl.dart';
 
-<<<<<<< HEAD
 import 'package:dextraquario/models/contribution_model.dart';
 
 import 'fish_info.dart';
 
-=======
->>>>>>> 52c192ec9046bd8189a9b76b6577947bd5b60222
 class Contribution {
   String author;
   ItemType type;

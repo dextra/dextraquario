@@ -4,17 +4,14 @@ import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/services/user_service.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
-import 'package:flame/widgets/sprite_button.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../assets.dart';
 import '../common.dart';
-import '../contribution.dart';
 
 class ProfileOverlay extends StatelessWidget {
-  final Function onClose;  
-  final String userID;  
+  final Function onClose;
+  final String userID;
   final UserServices _userServices = UserServices();
   final ContributionServices _contributionServices = ContributionServices();
 
@@ -24,7 +21,7 @@ class ProfileOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Future.wait([
-        _userServices.getUserById(userID), 
+        _userServices.getUserById(userID),
         _contributionServices.getContributionsByUser(userID)
       ]),
       builder: (ctx, snapshot) {
