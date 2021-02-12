@@ -10,6 +10,7 @@ import 'models/user.dart';
 class FishInfo {
   String name;
   String fishColor;
+  String userID;
   int ranking;
   List<FishItem> fishItems;
   UserServices _userServices = new UserServices();
@@ -28,6 +29,7 @@ class FishInfo {
       : name = json['name'],
         fishColor = fishColorList[_random.nextInt(fishColorList.length)],
         ranking = json['ranking'],
+        userID = json['user_id'],
         fishItems = json['items']
             .map((fishItem) => FishItem.fromJson(fishItem))
             .cast<FishItem>()
