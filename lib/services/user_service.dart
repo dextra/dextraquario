@@ -44,6 +44,7 @@ class UserServices {
     return user.admin;
   }
 
+  // Get the top 3 users on ranking
   Future<List<UserModel>> getTopUsers() async => firebaseFirestore
           .collection(collection)
           .orderBy("score", descending: true)
@@ -56,5 +57,27 @@ class UserServices {
           users.add(UserModel.fromSnapshot(user));
         }
         return users;
+      });
+
+  // Get user placement on ranking
+  Future<int> getUserPlacement(String user_id) async => firebaseFirestore
+          .collection(collection)
+          .orderBy("score", descending: true)
+          .orderBy("name")
+          .get()
+          .then((result) {
+        List<UserModel> users = [];
+
+        for (DocumentSnapshot user in result.docs) {
+          users.add(UserModel.fromSnapshot(user));
+        }
+
+        for (int count = 0; count < users.length; count++) {
+          if (users[count].id == user_id) {
+            return count + 1;
+          }
+        }
+
+        return null;
       });
 }

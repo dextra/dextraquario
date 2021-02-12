@@ -21,55 +21,59 @@ import './components/fish.dart';
 import './assets.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  GoogleSignIn _googleSignIn = GoogleSignIn();
-  await Assets.load();
-  await Firebase.initializeApp();
-  await _googleSignIn.disconnect();
-  final fishes = await LoadFishes.loadFishes();
-  final game = DextraQuario();
-  int mostContributions = fishes.fold(
-    0,
-    (value, current) => max(value, current.fishItems.length),
-  );
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    GoogleSignIn _googleSignIn = GoogleSignIn();
+    await Assets.load();
+    await Firebase.initializeApp();
+    await _googleSignIn.disconnect();
+    final fishes = await LoadFishes.loadFishes();
+    final game = DextraQuario();
+    int mostContributions = fishes.fold(
+      0,
+      (value, current) => max(value, current.fishItems.length),
+    );
 
-  window.addEventListener('visibilitychange', (Event event) {
-    if (window.document.visibilityState == 'visible') {
-      game.resumeEngine();
-    } else {
-      game.pauseEngine();
-    }
-  });
+    window.addEventListener('visibilitychange', (Event event) {
+      if (window.document.visibilityState == 'visible') {
+        game.resumeEngine();
+      } else {
+        game.pauseEngine();
+      }
+    });
 
-  fishes.forEach((fishInfo) {
-    game.add(
-      Fish(
-        fishInfo: fishInfo,
-        fishSize: fishInfo.fishItems.length / mostContributions,
+    fishes.forEach((fishInfo) {
+      game.add(
+        Fish(
+          fishInfo: fishInfo,
+          fishSize: fishInfo.fishItems.length / mostContributions,
+        ),
+      );
+    });
+
+    WidgetsFlutterBinding.ensureInitialized();
+
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: AppProvider()),
+          ChangeNotifierProvider.value(value: AuthProvider.init()),
+        ],
+        child: MaterialApp(
+          title: 'Dextraquario',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            fontFamily: 'Press Start 2P',
+            dividerColor: Colors.transparent,
+            highlightColor: Color(0xFFA15531),
+          ),
+          home: AppScreensController(game: game),
+        ),
       ),
     );
-  });
-
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: AppProvider()),
-        ChangeNotifierProvider.value(value: AuthProvider.init()),
-      ],
-      child: MaterialApp(
-        title: 'Dextraquario',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Press Start 2P',
-          dividerColor: Colors.transparent,
-          highlightColor: Color(0xFFA15531),
-        ),
-        home: AppScreensController(game: game),
-      ),
-    ),
-  );
+  } catch (err) {
+    print(err);
+  }
 }
 
 class AppScreensController extends StatelessWidget {

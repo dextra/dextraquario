@@ -44,7 +44,7 @@ class ContributionServices {
         return ContributionModel.fromSnapshot(doc);
       });
 
-  // Get contributions by user
+  // Get approved contributions by user
   Future<List<ContributionModel>> getContributionsByUser(String id) async {
     List<ContributionModel> contributions = [];
 
@@ -58,7 +58,9 @@ class ContributionServices {
       contributions.add(ContributionModel.fromSnapshot(contribution));
     });
 
-    return contributions;
+    return contributions
+        .where((e) => e.approval == ApprovalStatus.APPROVED.status)
+        .toList();
   }
 
   // Does the contribution exists

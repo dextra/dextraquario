@@ -27,7 +27,8 @@ class ProfileOverlay extends StatelessWidget {
         return FutureBuilder(
           future: Future.wait([
             _userServices.getUserById(userID),
-            _contributionServices.getContributionsByUser(userID)
+            _contributionServices.getContributionsByUser(userID),
+            _userServices.getUserPlacement(userID),
           ]),
           builder: (ctx, snapshot) {
             if (snapshot.hasData) {
@@ -35,6 +36,7 @@ class ProfileOverlay extends StatelessWidget {
                   onClose: this.onClose,
                   user: snapshot.data[0],
                   contributions: snapshot.data[1],
+                  userRanking: snapshot.data[2],
                   scaleFactor: scaleFactor);
             } else {
               return Column(
@@ -43,17 +45,11 @@ class ProfileOverlay extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Loading...',
-                            textScaleFactor: scaleFactor,
-                            style: CommonText.panelTitle,
-                          ),
-                        ],
+                      Text(
+                        'Loading...',
+                        textScaleFactor: scaleFactor,
+                        style: CommonText.panelTitle,
                       ),
                     ],
                   ),
@@ -71,17 +67,19 @@ class ProfileScreen extends StatelessWidget {
   final Function onClose;
   final ScrollController _scrollController = ScrollController();
   final UserModel user;
+  final int userRanking;
   final List<ContributionModel> contributions;
   double scaleFactor;
 
   ProfileScreen(
-      {this.onClose, this.user, this.contributions, this.scaleFactor});
+      {this.onClose,
+      this.user,
+      this.contributions,
+      this.userRanking,
+      this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
-    // User fetched ranking position
-    int rank = 3;
-
     return Stack(
       children: [
         Column(
@@ -289,12 +287,12 @@ class ProfileScreen extends StatelessWidget {
                                 margin:
                                     EdgeInsets.only(bottom: 16 * scaleFactor),
                                 child: Image.asset(
-                                  "images/${_getUserRankMedal(rank)}.png",
+                                  "images/${_getUserRankMedal(userRanking)}.png",
                                   scale: 1 / scaleFactor,
                                 ),
                               ),
                               Text(
-                                '#${rank}',
+                                '#${userRanking}',
                                 textScaleFactor: scaleFactor,
                                 style: CommonText.heightOneShadow(18),
                               ),
