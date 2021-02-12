@@ -20,16 +20,20 @@ class ProfileOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([
-        _userServices.getUserById(userID),
-        _contributionServices.getContributionsByUser(userID)
-      ]),
+      future: Future.wait(
+        [
+          _userServices.getUserById(userID),
+          _contributionServices.getContributionsByUser(userID),
+          _userServices.getUserPlacement(userID),
+        ],
+      ),
       builder: (ctx, snapshot) {
         if (snapshot.hasData) {
           return ProfileScreen(
             onClose: this.onClose,
             user: snapshot.data[0],
             contributions: snapshot.data[1],
+            userRanking: snapshot.data[2],
           );
         } else {
           return Column(
@@ -57,15 +61,14 @@ class ProfileScreen extends StatelessWidget {
   final Function onClose;
   final ScrollController _scrollController = ScrollController();
   final UserModel user;
+  final int userRanking;
   final List<ContributionModel> contributions;
 
-  ProfileScreen({this.onClose, this.user, this.contributions});
+  ProfileScreen(
+      {this.onClose, this.user, this.contributions, this.userRanking});
 
   @override
   Widget build(BuildContext context) {
-    // User fetched ranking position
-    int rank = 3;
-
     return Stack(
       children: [
         Row(
@@ -266,11 +269,11 @@ class ProfileScreen extends StatelessWidget {
                                 width: 48,
                                 margin: EdgeInsets.only(bottom: 16),
                                 child: Image.asset(
-                                  "images/${_getUserRankMedal(rank)}.png",
+                                  "images/${_getUserRankMedal(userRanking)}.png",
                                 ),
                               ),
                               Text(
-                                '#${rank}',
+                                '#${userRanking}',
                                 style: CommonText.heightOneShadow(18),
                               ),
                             ],

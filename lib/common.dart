@@ -169,8 +169,8 @@ class ContributionItem extends StatelessWidget {
                                 updateList?.call();
                               },
                               label: null,
-                              sprite: Assets.closeButton32,
-                              pressedSprite: Assets.closeButton32,
+                              sprite: Assets.acceptButton32,
+                              pressedSprite: Assets.acceptButton32,
                             ),
                           ],
                         ),
