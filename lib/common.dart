@@ -72,6 +72,7 @@ class ContributionItem extends StatelessWidget {
   final int index;
   final bool canApprove;
   final Function updateList;
+  final double scaleFactor;
   final df = new DateFormat('dd/MM/yyyy');
 
   ContributionItem(
@@ -79,6 +80,7 @@ class ContributionItem extends StatelessWidget {
       String this.author,
       int this.index,
       this.canApprove,
+      this.scaleFactor,
       this.updateList});
 
   @override
@@ -87,9 +89,11 @@ class ContributionItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ExpansionTile(
+          tilePadding: EdgeInsets.symmetric(
+              vertical: 1.0 * scaleFactor, horizontal: 16.0 * scaleFactor),
           leading: Container(
-            width: 64,
-            height: 64,
+            width: 64 * scaleFactor,
+            height: 64 * scaleFactor,
             child: SpriteWidget(
               sprite: Assets.ui.getSprite(
                 contribution.category.type,
@@ -98,15 +102,18 @@ class ContributionItem extends StatelessWidget {
           ),
           trailing: Text(
             df.format(contribution.date),
+            textScaleFactor: scaleFactor,
             style: CommonText.itemTitle,
           ),
           title: Text(
             contribution.getItemTitle(),
+            textScaleFactor: scaleFactor,
             style: CommonText.itemTitle,
           ),
           subtitle: canApprove
               ? Text(
                   author,
+                  textScaleFactor: scaleFactor,
                   style: CommonText.itemSubtitle,
                 )
               : null,
@@ -116,7 +123,10 @@ class ContributionItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 92, right: 64, bottom: 16),
+                  padding: EdgeInsets.only(
+                      left: 92 * scaleFactor,
+                      right: 64 * scaleFactor,
+                      bottom: 16 * scaleFactor),
                   child: Row(
                     children: [
                       Expanded(
@@ -124,6 +134,7 @@ class ContributionItem extends StatelessWidget {
                           contribution.description +
                               "\n\n" +
                               contribution.contribution_link,
+                          textScaleFactor: scaleFactor,
                           style: CommonText.itemSubtitle,
                         ),
                       ),
@@ -132,29 +143,37 @@ class ContributionItem extends StatelessWidget {
                 ),
                 canApprove
                     ? Padding(
-                        padding: EdgeInsets.only(right: 48, bottom: 12),
+                        padding: EdgeInsets.only(
+                            right: 48 * scaleFactor, bottom: 12 * scaleFactor),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(right: 16),
+                              padding: EdgeInsets.only(right: 16 * scaleFactor),
                               child: SpriteButton(
-                                width: 32,
-                                height: 32,
-                                onPressed: () {
-                                  ContributionServices()
-                                      .updateContributionApproval(
-                                    contribution.contribution_id,
-                                    false,
-                                    contribution.user_id,
-                                  );
-                                  updateList?.call();
-                                },
-                                label: null,
-                                sprite: Assets.closeButton32,
-                                pressedSprite: Assets.closeButton32,
-                              ),
+                                  width: 32 * scaleFactor,
+                                  height: 32 * scaleFactor,
+                                  onPressed: () {
+                                    ContributionServices()
+                                        .updateContributionApproval(
+                                      contribution.contribution_id,
+                                      false,
+                                      contribution.user_id,
+                                    );
+                                    updateList?.call();
+                                  },
+                                  label: null,
+                                  sprite: Assets.closeButton32,
+                                  pressedSprite: Assets.closeButton32),
+                            ),
+                            SpriteButton(
+                              width: 32 * scaleFactor,
+                              height: 32 * scaleFactor,
+                              onPressed: null,
+                              label: null,
+                              sprite: Assets.closeButton32,
+                              pressedSprite: Assets.closeButton32,
                             ),
                             SpriteButton(
                               width: 32,
@@ -182,8 +201,10 @@ class ContributionItem extends StatelessWidget {
         ),
         Divider(
           color: Colors.black26,
-          indent: 20,
-          endIndent: 20,
+          height: 16 * scaleFactor,
+          thickness: 1 * scaleFactor,
+          indent: 20 * scaleFactor,
+          endIndent: 20 * scaleFactor,
         ),
       ],
     );

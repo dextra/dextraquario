@@ -9,6 +9,7 @@ import 'package:flame/widgets/sprite_button.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import 'package:dextraquario/widgets/loading.dart';
+import 'package:dextraquario/utils/scale_factor_calculator.dart';
 
 class HomeScreenOverlay extends StatelessWidget {
   final Function onGearClick;
@@ -33,25 +34,30 @@ class HomeScreenOverlay extends StatelessWidget {
     final topUsersList = UserServices().getTopUsers();
     final adminValidation = UserServices().isAdmin(user.uid);
 
-    return FutureBuilder(
-      future: Future.wait([userModel, topUsersList, adminValidation]),
-      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          return HomePage(
-            userModel: snapshot.data[0],
-            topUsersList: snapshot.data[1],
-            adminValidation: snapshot.data[2],
-            onUserClick: onUserClick,
-            onAddClick: onAddClick,
-            onGearClick: onGearClick,
-            onLogoutClick: onLogoutClick,
-            onRankingClick: onRankingClick,
-          );
-        } else {
-          return Loading();
-        }
-      },
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      var scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+          constraints.maxWidth, constraints.maxHeight);
+      return FutureBuilder(
+        future: Future.wait([userModel, topUsersList, adminValidation]),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            return HomePage(
+              userModel: snapshot.data[0],
+              topUsersList: snapshot.data[1],
+              adminValidation: snapshot.data[2],
+              onUserClick: onUserClick,
+              onAddClick: onAddClick,
+              onGearClick: onGearClick,
+              onLogoutClick: onLogoutClick,
+              onRankingClick: onRankingClick,
+              scaleFactor: scaleFactor,
+            );
+          } else {
+            return Loading();
+          }
+        },
+      );
+    });
   }
 }
 
@@ -64,6 +70,7 @@ class HomePage extends StatelessWidget {
   final Function onRankingClick;
   final Function onLogoutClick;
   final Function onGearClick;
+  final double scaleFactor;
 
   HomePage(
       {this.userModel,
@@ -73,7 +80,8 @@ class HomePage extends StatelessWidget {
       this.onUserClick,
       this.onLogoutClick,
       this.onRankingClick,
-      this.onGearClick});
+      this.onGearClick,
+      this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +100,11 @@ class HomePage extends StatelessWidget {
                     children: [
                       Positioned(
                         top: 0,
-                        right: 720,
-                        child: Image.asset('images/ranking_panel.png'),
+                        right: 720 * scaleFactor,
+                        child: Image.asset(
+                          'images/ranking_panel.png',
+                          scale: 1 / scaleFactor,
+                        ),
                       ),
                     ],
                   ),
@@ -105,24 +116,31 @@ class HomePage extends StatelessWidget {
                 children: [
                   // Segundo lugar
                   Container(
-                    width: 280,
-                    padding: EdgeInsets.only(top: 24, left: 26),
+                    width: 280 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 24 * scaleFactor, left: 26 * scaleFactor),
                     child: Text(topUsersList[1].getShortName(),
+                        textScaleFactor: scaleFactor,
                         style: CommonText.itemText),
                   ),
 
                   //Primeiro lugar
                   Container(
-                      width: 175,
-                      padding: EdgeInsets.only(top: 24, left: 20),
-                      child: Text(topUsersList[0].getShortName(),
-                          style: CommonText.itemTitle)),
+                    width: 175 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 24 * scaleFactor, left: 20 * scaleFactor),
+                    child: Text(topUsersList[0].getShortName(),
+                        textScaleFactor: scaleFactor,
+                        style: CommonText.itemTitle),
+                  ),
 
                   //Terceiro Lugar
                   Container(
-                    width: 280,
-                    padding: EdgeInsets.only(top: 24, left: 132),
+                    width: 280 * scaleFactor,
+                    padding: EdgeInsets.only(
+                        top: 24 * scaleFactor, left: 132 * scaleFactor),
                     child: Text(topUsersList[2].getShortName(),
+                        textScaleFactor: scaleFactor,
                         style: CommonText.itemText),
                   ),
                 ],
@@ -133,8 +151,12 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 14, right: 740),
-                    child: Image.asset('images/silver_medal33.png'),
+                    padding: EdgeInsets.only(
+                        top: 14 * scaleFactor, right: 740 * scaleFactor),
+                    child: Image.asset(
+                      'images/silver_medal33.png',
+                      scale: 1 / scaleFactor,
+                    ),
                   ),
                 ],
               ),
@@ -142,8 +164,12 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 8, right: 200),
-                    child: Image.asset('images/gold_medal.png'),
+                    padding: EdgeInsets.only(
+                        top: 8 * scaleFactor, right: 200 * scaleFactor),
+                    child: Image.asset(
+                      'images/gold_medal.png',
+                      scale: 1 / scaleFactor,
+                    ),
                   ),
                 ],
               ),
@@ -151,8 +177,10 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 14, left: 380),
-                    child: Image.asset('images/bronze_medal33.png'),
+                    padding: EdgeInsets.only(
+                        top: 14 * scaleFactor, left: 380 * scaleFactor),
+                    child: Image.asset('images/bronze_medal33.png',
+                        scale: 1 / scaleFactor),
                   ),
                 ],
               ),
@@ -166,17 +194,21 @@ class HomePage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         child: Container(
-                            padding: EdgeInsets.only(top: 44, right: 44),
-                            child: Image.asset('images/logoutButton32.png')),
+                            padding: EdgeInsets.only(
+                                top: 44 * scaleFactor, right: 44 * scaleFactor),
+                            child: Image.asset('images/logoutButton32.png',
+                                scale: 1 / scaleFactor)),
                         onTap: () {
                           onLogoutClick?.call();
                         },
                       ),
                       GestureDetector(
                         child: Container(
-                            padding:
-                                EdgeInsets.only(bottom: 111.0, right: 89.0),
-                            child: Image.asset('images/add_button.png')),
+                            padding: EdgeInsets.only(
+                                bottom: 111.0 * scaleFactor,
+                                right: 89.0 * scaleFactor),
+                            child: Image.asset('images/add_button.png',
+                                scale: 1 / scaleFactor)),
                         onTap: () {
                           onAddClick?.call();
                         },
@@ -195,19 +227,23 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 44, left: 44),
+                          padding: EdgeInsets.only(
+                              top: 44 * scaleFactor, left: 44 * scaleFactor),
                           child: Stack(
                             children: [
                               Container(
                                 child: Image.asset('images/gear.png',
+                                    scale: 1 / scaleFactor,
                                     color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                padding: EdgeInsets.only(top: 2.0, left: 0.0),
+                                padding: EdgeInsets.only(
+                                    top: 2.0 * scaleFactor,
+                                    left: 0.0 * scaleFactor),
                               ),
                               SpriteButton(
                                 onPressed: () => onGearClick?.call(),
                                 label: null,
-                                width: 48,
-                                height: 48,
+                                width: 48 * scaleFactor,
+                                height: 48 * scaleFactor,
                                 sprite: Assets.gear,
                                 pressedSprite: Assets.gear,
                               ),
@@ -226,36 +262,38 @@ class HomePage extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned(
-                      bottom: 108,
-                      left: 192,
+                      bottom: 108 * scaleFactor,
+                      left: 192 * scaleFactor,
                       child: NineTileBox(
                         image: Assets.panelImage,
                         tileSize: 12,
-                        destTileSize: 16,
-                        width: 288,
-                        height: 80,
+                        destTileSize: 16 * scaleFactor,
+                        width: 288 * scaleFactor,
+                        height: 80 * scaleFactor,
                       ),
                     ),
                     Positioned(
-                      bottom: 128,
-                      left: 222,
+                      bottom: 128 * scaleFactor,
+                      left: 222 * scaleFactor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             userModel.getShortName(),
+                            textScaleFactor: scaleFactor,
                             style: CommonText.itemTitle,
                           ),
 
                           // Botão de configuração
                           Container(
-                            padding: EdgeInsets.only(top: 10.0),
+                            padding: EdgeInsets.only(top: 10.0 * scaleFactor),
                             child: Text(
                               userModel.score.toString() +
                                   (userModel.score > 1
                                       ? " contribuições"
                                       : " contribuição"),
+                              textScaleFactor: scaleFactor,
                               style: CommonText.itemTitle,
                             ),
                           ),
@@ -263,31 +301,32 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 100,
-                      left: 96,
+                      bottom: 100 * scaleFactor,
+                      left: 96 * scaleFactor,
                       child: Stack(
                         children: [
                           NineTileBox(
                             image: Assets.userEmptyBottom,
                             tileSize: 16,
-                            destTileSize: 24,
-                            width: 96,
-                            height: 96,
+                            destTileSize: 24 * scaleFactor,
+                            width: 96 * scaleFactor,
+                            height: 96 * scaleFactor,
                           ),
                           Container(
-                            padding: EdgeInsets.only(top: 16, left: 16),
+                            padding: EdgeInsets.only(
+                                top: 16 * scaleFactor, left: 16 * scaleFactor),
                             child: Image.network(
                               userModel.photo,
-                              width: 64,
-                              height: 64,
+                              width: 64 * scaleFactor,
+                              height: 64 * scaleFactor,
                             ),
                           ),
                           NineTileBox(
                             image: Assets.userEmptyFrame,
                             tileSize: 16,
-                            destTileSize: 24,
-                            width: 96,
-                            height: 96,
+                            destTileSize: 24 * scaleFactor,
+                            width: 96 * scaleFactor,
+                            height: 96 * scaleFactor,
                           ),
                         ],
                       ),
