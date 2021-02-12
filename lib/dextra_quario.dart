@@ -3,7 +3,6 @@ import 'package:flame/gestures.dart';
 import 'package:flame/game.dart';
 
 import 'dart:ui';
-import 'dart:math';
 
 import './fish_info.dart';
 import './components/background.dart';
