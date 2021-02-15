@@ -1,7 +1,0 @@
-{
-    "name": "Erick Zanardo",
-    "fishColor": "GREEN",
-    "contributionType": "DESAFIO_TECNICO",
-    "contributionDescription": "Criação de efeito de RGB shift para simular efeito de telivisões antigas de tubo em um jogo",
-    "contributionLinkRepository": "https://github.com/fireslime/rogue_shooter/tree/feat/crt-playground"
-}
