@@ -29,8 +29,13 @@ class _AddContributionScreenOverlay
   final tipoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final ContributionServices _contributionServices = ContributionServices();
+  OverlayEntry floatingDropdown;
   ItemType type;
   bool dropdownValidator = false;
+
+  void setFloatingReference(OverlayEntry dropdown) {
+    floatingDropdown = dropdown;
+  }
 
   @override
   Widget build(context) {
@@ -163,6 +168,8 @@ class _AddContributionScreenOverlay
                                                   dropdownValidator = true;
                                                 }
                                               },
+                                              setFloatingDropdown:
+                                                  setFloatingReference,
                                             ),
                                           ),
                                         ],
@@ -421,18 +428,18 @@ class _AddContributionScreenOverlay
                                                               height: 1,
                                                               shadows: <Shadow>[
                                                                 Shadow(
-                                                                    blurRadius:
-                                                                        0,
-                                                                    offset:
-                                                                        Offset(
-                                                                            1.0,
-                                                                            1.0),
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            0.75))
+                                                                  blurRadius: 0,
+                                                                  offset:
+                                                                      Offset(
+                                                                          1.0,
+                                                                          1.0),
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          0.75),
+                                                                )
                                                               ],
                                                             ),
                                                           ),
@@ -462,7 +469,12 @@ class _AddContributionScreenOverlay
             Positioned(
               top: 0.0,
               right: 0.0,
-              child: CloseButtonWidget(onClick: widget.onClick),
+              child: CloseButtonWidget(
+                onClick: () {
+                  widget.onClick?.call();
+                  if (floatingDropdown.mounted) floatingDropdown.remove();
+                },
+              ),
             ),
           ],
         ),

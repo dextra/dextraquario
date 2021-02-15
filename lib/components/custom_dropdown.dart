@@ -8,7 +8,10 @@ import '../models/contribution_model.dart';
 
 class CustomDropdown extends StatefulWidget {
   final Function onClick;
-  CustomDropdown({Key key, this.onClick}) : super(key: key);
+  final Function setFloatingDropdown;
+
+  CustomDropdown({Key key, this.onClick, this.setFloatingDropdown})
+      : super(key: key);
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();
@@ -162,6 +165,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
             findDropdownData();
             floatingDropdown = _createFloatingDropdown();
             Overlay.of(context).insert(floatingDropdown);
+            widget.setFloatingDropdown(floatingDropdown);
             angleArrow = 270;
             paddingArrow = EdgeInsets.only(left: 4, top: 0);
           }
@@ -235,13 +239,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   void setDropdownClickState(ItemType option, String title) {
     widget.onClick(option);
-    setState(() {
-      text = title;
-      floatingDropdown.remove();
-      angleArrow = 90;
-      paddingArrow = EdgeInsets.only(left: 0, top: 0);
-      isDropdownOpened = false;
-    });
+    setState(
+      () {
+        text = title;
+        floatingDropdown.remove();
+        angleArrow = 90;
+        paddingArrow = EdgeInsets.only(left: 0, top: 0);
+        isDropdownOpened = false;
+      },
+    );
   }
 }
 
