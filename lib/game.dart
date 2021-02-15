@@ -27,6 +27,9 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     final AppProvider appProvider = Provider.of<AppProvider>(context);
+
+    game.setAuthUser(authProvider.user);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -51,8 +54,8 @@ class GameScreen extends StatelessWidget {
                     String message = result['message'];
 
                     if (!success) {
-                      ScaffoldMessenger.of(ctx)
-                          .showSnackBar(SnackBar(content: Text(message)));
+                      ScaffoldMessenger.of(ctx).showSnackBar(
+                          SnackBar(content: Text('Erro ao fazer login!')));
                       appProvider.changeLoading();
                     } else {
                       appProvider.changeLoading();
@@ -81,6 +84,8 @@ class GameScreen extends StatelessWidget {
                     },
                     onLogoutClick: () async {
                       await authProvider.signOut();
+
+                      authProvider.nullUser();
 
                       game.overlays.remove('homeScreenOverlay');
 

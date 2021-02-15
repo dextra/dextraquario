@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/extensions/vector2.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/game.dart';
@@ -14,12 +15,18 @@ class DextraQuario extends BaseGame with TapDetector {
   static const GAME_WIDTH = 1440;
   static const GAME_HEIGHT = 900;
 
+  User authUser;
+
   double _scaleFactor;
   Vector2 _translateFactor;
 
   Offset mousePos;
 
   FishInfo currentFishInfo;
+
+  void setAuthUser(User authUser) {
+    this.authUser = authUser;
+  }
 
   @override
   Future<void> onLoad() async {
@@ -115,8 +122,10 @@ class DextraQuario extends BaseGame with TapDetector {
   }
 
   void showFishInfo(FishInfo fishInfo) {
-    currentFishInfo = fishInfo;
-    overlays.add('fishOverlay');
-    overlays.remove('homeScreenOverlay');
+    if (authUser != null) {
+      currentFishInfo = fishInfo;
+      overlays.add('fishOverlay');
+      overlays.remove('homeScreenOverlay');
+    }
   }
 }

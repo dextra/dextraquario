@@ -23,6 +23,10 @@ class AuthProvider with ChangeNotifier {
   Status get status => _status;
   User get user => _user;
 
+  void nullUser() {
+    this._user = null;
+  }
+
   AuthProvider.init() {
     _fireSetUp();
   }
