@@ -3,6 +3,7 @@ import 'package:dextraquario/models/contribution_model.dart';
 import 'package:dextraquario/models/user_model.dart';
 import 'package:dextraquario/services/contribution_service.dart';
 import 'package:dextraquario/services/user_service.dart';
+import 'package:dextraquario/utils/scale_factor_calculator.dart';
 import 'package:flame/widgets/nine_tile_box.dart';
 import 'package:flame/widgets/sprite_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,41 +20,49 @@ class ProfileOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.wait(
-        [
-          _userServices.getUserById(userID),
-          _contributionServices.getContributionsByUser(userID),
-          _userServices.getUserPlacement(userID),
-        ],
-      ),
-      builder: (ctx, snapshot) {
-        if (snapshot.hasData) {
-          return ProfileScreen(
-            onClose: this.onClose,
-            user: snapshot.data[0],
-            contributions: snapshot.data[1],
-            userRanking: snapshot.data[2],
-          );
-        } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
+    return LayoutBuilder(builder: (context, constraints) {
+      double scaleFactor = ScaleFactorCalculator.calcScaleFactor(
+          constraints.maxWidth, constraints.maxHeight);
+
+      return Transform.scale(
+        scale: scaleFactor,
+        child: FutureBuilder(
+          future: Future.wait(
+            [
+              _userServices.getUserById(userID),
+              _contributionServices.getContributionsByUser(userID),
+              _userServices.getUserPlacement(userID),
+            ],
+          ),
+          builder: (ctx, snapshot) {
+            if (snapshot.hasData) {
+              return ProfileScreen(
+                onClose: this.onClose,
+                user: snapshot.data[0],
+                contributions: snapshot.data[1],
+                userRanking: snapshot.data[2],
+              );
+            } else {
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Loading...',
-                    style: CommonText.panelTitle,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Loading...',
+                        style: CommonText.panelTitle,
+                      ),
+                    ],
                   ),
                 ],
-              ),
-            ],
-          );
-        }
-      },
-    );
+              );
+            }
+          },
+        ),
+      );
+    });
   }
 }
 
