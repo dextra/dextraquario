@@ -64,8 +64,7 @@ class ProfileScreen extends StatelessWidget {
   final int userRanking;
   final List<ContributionModel> contributions;
 
-  ProfileScreen(
-      {this.onClose, this.user, this.contributions, this.userRanking});
+  ProfileScreen({this.onClose, this.user, this.contributions, this.userRanking});
 
   @override
   Widget build(BuildContext context) {

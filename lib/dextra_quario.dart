@@ -117,5 +117,6 @@ class DextraQuario extends BaseGame with TapDetector {
   void showFishInfo(FishInfo fishInfo) {
     currentFishInfo = fishInfo;
     overlays.add('fishOverlay');
+    overlays.remove('homeScreenOverlay');
   }
 }

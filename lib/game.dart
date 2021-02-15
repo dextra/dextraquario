@@ -36,11 +36,13 @@ class GameScreen extends StatelessWidget {
               overlayBuilderMap: {
                 'fishOverlay': (ctx, game) {
                   return FishOverlay(
-                      fishInfo: game.currentFishInfo,
-                      onCloseInfo: () {
-                        game.overlays.remove('fishOverlay');
-                        game.currentFishInfo = null;
-                      });
+                    fishInfo: game.currentFishInfo,
+                    onCloseInfo: () {
+                      game.overlays.remove('fishOverlay');
+                      game.currentFishInfo = null;
+                      game.overlays.add('homeScreenOverlay');
+                    },
+                  );
                 },
                 'loginScreenOverlay': (ctx, game) {
                   return LoginScreenOverlay(onClick: () async {
